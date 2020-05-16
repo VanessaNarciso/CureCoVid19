@@ -1,44 +1,70 @@
-
+'''
 programa :  PROGRAMA ID SEMICOLON declara_vars declara_fun principal
+'''
 
+'''
 declara_vars : vars declara_vars
     | empty
-
+'''
+'''
 vars : VAR type ID dimension SEMICOLON
+'''
 
+'''
 type : INT
     | FLOAT
     | CHAR
     | STRING
     | DATAFRAME
+'''
 
+'''
 dimension : LBRACKET CTEINT RBRACKET
     | LBRACKET CTEINT RBRACKET
     | empty
+'''
 
-
+'''
 declara_fun : functions
+'''
 
+'''
 functions : function_t functions
     | function_v functions
     | empty
+'''
 
+'''
 function_t : FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun
+'''
 
+'''
 functionI : type ID
+'''
 
+'''
 function2 : LPAREN function3 RPAREN
+'''
 
+'''
 function3 : funParam function5
     | empty
+'''
 
+'''
 funParam : type ID
+'''
 
+'''
 inicia_fun : LCURBRACKET
+'''
 
+'''
 function4 : statement function4
     | empty
+'''
 
+'''
 statement : assignment
     | condition
     | write
@@ -47,123 +73,302 @@ statement : assignment
     | loadData
     | funCall SEMICOLON
     | return
+'''
 
+'''
 assignment : id equals assignment3 SEMICOLON
+'''
 
+'''
 id : identifier indice_dimension
+'''
 
+'''
 identifier : ID
+'''
 
+'''
 indice_dimension : LBRACKET exp RBRACKET LBRACKET exp RBRACKET
     | LBRACKET exp RBRACKET
     | empty
+'''
 
+'''
 equals : EQUALS
+'''
 
+'''
 assignment3 : exp
     | read
+'''
 
+'''
 condition : SI head_condition ENTONCES body condition1
+'''
 
+'''
 head_condition : LPAREN expression close_condition
+'''
 
+'''
 body : LCURBRACKET body1 RCURBRACKET
+'''
 
+'''
 body1 : statement body1
     |empty
+'''
 
+'''
 condition1 : SINO body
     | empty
+'''
 
+'''
 close_condition : RPAREN
+'''
 
+'''
 write : WRITE LPAREN expression RPAREN SEMICOLON
+'''
 
+'''
 expression: exp loper exp
     | exp
+'''
 
+'''
 loper : GREATERTHAN
     | LESSTHAN
     | GREATEREQ
     | LESSEQ
     | NOTEQUAL
     | ISEQUAL
+'''
 
+'''
 exp : term
     | term exp_o exp
+'''
 
+'''
 exp_o : PLUS
     | TIMES
+'''
 
+'''
 term : factor term_o term
+'''
 
+'''
 factor : vcte
     | leftP expression rightP
+'''
 
+'''
 leftP : LPAREN
+'''
 
+'''
 rightP : RPAREN
+'''
 
+'''
 vcte : cte_int
     | cte_float
     | cte_string
     | id
     | funCall
     | vectorMatriz
+'''
 
+'''
+cte_int : negativo CTEINT
+'''
 
+'''
+cte_float : negativo CTEFLOAT
+'''
+
+'''
+cte_string : negativo CTESTRING
+'''
+
+'''
+negativo : MINUS
+    | empty
+'''
+
+'''
+vectorMatriz : LBRACKET vm1 RBRACKET
+    | vm1
+'''
+
+'''
+vm1 : LBRACKET vm2 RBRACKET COMMA vm1
+    | LBRACKET vm2 RBRACKET
+'''
+
+'''
+vm2 : exp COMMA vm2
+    | exp
+    | empty
+'''
+
+'''
 term_o : TIMES
     | DIVIDE
+'''
 
-
+'''
 loop : mientras
     | desde
+'''
 
-mientras : mientras1 body
+'''
+mientras : mientras1 HAZ body
+'''
 
+'''
+mientras1 : mientras_w LPAREN expression RPAREN
+'''
 
+'''
+mientras_w : MIENTRAS
+'''
+
+'''
+expression : exp loper exp
+    | exp
+'''
+
+'''
 desde : nuevo_desde desdeBody
+'''
 
+'''
+nuevo_desde : DESDE id EQUALS desde2 HASTA desde2 HACER
+'''
+
+'''
+desde2: exp
+'''
+
+'''
+desdeBody : body
+'''
+
+'''
 read : LEE LPAREN id read1 RPAREN SEMICOLON
+'''
 
+'''
 read1 : LBRACKET exp RBRACKET  LBRACKET exp RBRACKET
     | LBRACKET exp RBRACKET
     | empty
+'''
 
+'''
 loadData : LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+'''
 
+'''
 route : CTESTRING
+'''
 
+'''
 maxVariables : CTEINT
+'''
 
+'''
 maxRows : CTEINT
+'''
 
+'''
 funCall : ID iniciaFunCall funCall2 terminaFunCall
+'''
 
+'''
 iniciaFunCall : LPAREN
+'''
 
+'''
 funCall2 : funCallParam funCall3
     | empty
+'''
 
+'''
+funcallParam : exp
+'''
+
+'''
+funCall3 : COMMA funCallParam funCall3
+    | empty
+'''
+
+'''
 terminaFunCall : RPAREN
+'''
 
+'''
 return : REGRESA return1 SEMICOLON
+'''
 
+'''
 return1 : vcte
     | exp
+'''
 
+'''
 function5 : COMMA funParam function5
     | empty
+'''
 
+'''
 termina_fun : RCURBRACKET
+'''
 
+'''
 function_v : FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun
+'''
 
+'''
 functionV : VOID ID
+'''
 
+'''
 function9 : stmt_v function9
     | empty
+'''
 
-principal :
+'''
+stmt_v : assignment
+    | condition
+    | write
+    | loop
+    | read
+    | loadData
+    | funCall SEMICOLON
+    | return
+'''
 
+'''
+principal : principalI declara_vars principal1 RCURBRACKET
+'''
+
+'''
+principalI : principalS LCURBRACKET
+'''
+
+'''
+principalS : PRINCIPAL
+'''
+
+'''
+prncipal1 : smt_v principal1
+    | empty
+'''
+
+'''
 empty :
+'''
