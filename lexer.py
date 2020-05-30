@@ -16,6 +16,7 @@ keywords = {
     'sino' : 'SINO',
     'void' : 'VOID',
     'mientras' : 'MIENTRAS',
+    'haz' : 'HAZ',
     'principal' : 'PRINCIPAL',
     'lee' : 'LEE',
     'inicia' : 'INICIA',
@@ -105,24 +106,23 @@ def t_ID(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = keywords.get(t.value, 'ID')
     return t
+def t_COMMENT (t):
+    r'\%%.*'
+    pass
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
 
 def t_error(t):
-    print('Illegal characters!')
+    print("Ilegal Character: " + str(t.value[0]))
     t.lexer.skip(1)
-
-def t_COMMENT (t):
-    r'\%%.*'
-    pass
 
 
 lex.lex()
 
-###############################
-## PRUEBA CON CÓDIGO DE EJEMPLO
+##############################
+# PRUEBA CON CÓDIGO DE EJEMPLO
 # lexer = lex.lex()
 # lexer.input("""
 # programa Covid19;
@@ -188,3 +188,4 @@ lex.lex()
 #     if not tok:
 #         break
 #     print(tok)
+
