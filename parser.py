@@ -1,19 +1,41 @@
 import ply.yacc as yacc
+import os
 from lexer import tokens
 from sys import stdin
 import sys
 import codecs
+import re
+import os
 
-#Funcion inicial del programa
+precedence = (
+    ('nonassoc','SEMICOLON'),
+    ('right', 'EQUALS'),
+    ('left', 'NOTEQUAL'),
+    ('nonassoc','LESSTHAN','LESSEQ','GREATERTHAN','GREATEREQ')
+    ('left','PLUS','MINUS'),
+    ('left','TIMES','DIVIDE'),
+    ('left','LPAREN','RPAREN'),
+    ('left','LCURBRACKET','RCURBRACKET'),
+    ('left','LBRACKET','RBRACKET')
+)
+
+# INICIO DE UN PROGRAMA
 def p_programa(p):
     '''
     programa :  PROGRAMA ID SEMICOLON declara_vars declara_fun principal
     '''
     print("programa")
 
+def p_declara_vars(p):
+    '''
+    declara_vars : var
+        | empty
+    '''
+    print("declara_vars")
+
 def p_declara_fun(p):
     '''
-    declara_fun : functions
+    declara_fun : funcion declara_fun
     '''
     print("declara fun")
 
@@ -25,14 +47,184 @@ def p_functions(p):
     '''
     print("functions")
 
-#PRINCIPAL
-
 def p_principal(p):
     '''
-    principal : principalI declara_vars principal1 RCURBRACKET
+    principal : PRINCIPAL principal2 LPAREN RPAREN bloque
     '''
     print("principal")
 
+
+# DECLARACIÓN DE VARIABLES
+def p_var(p):
+    'var : VAR var2'
+    print("VAR")
+
+def p_var2(p):
+    'var2 : type SEMICOLON ids var3'
+    print("VAR2")
+
+def p_var3(p):
+    '''
+    var3 : var2
+         | empty
+    '''
+    print("VAR3")
+
+def p_type(p): #type1 = simple, type2=compuesto
+    '''
+    type : type1
+         | type2
+    '''
+    print("P_TYPE")
+
+# DECLARACIÓN DE FUNCIONES
+def p_funcion(p):
+    'funcion : FUNCION fun_type ID funDec1 LPAREN parametros RPAREN funDec4 var1 bloque funDec7'
+    print("FUNCION")
+
+def p_fun_type(p):
+    '''
+    fun_type : VOID setCurrentType
+             | type1
+    '''
+    print("FUN_TYPE")
+
+def p_parametros(p):
+    '''
+    parametros : param
+               | empty
+    '''
+    print("PARAMETROS")
+
+def p_param(p):
+    'param : type1 ID funDec2 param1'
+    print("PARAM")
+
+def p_param1(p):
+    '''
+    param1 : COMMA param
+           | empty
+    '''
+
+
+# TIPOS
+def p_type1(p):
+    '''
+    type1 : INT setCurrentType
+        | FLOAT setCurrentType
+        | CHAR setCurrentType
+    '''
+    print("P_TYPE1")
+
+def p_type2(p):
+    '''
+    type2 : DATAFRAME setCurrentType
+        | STRING setCurrentType
+    '''
+    print("P_TYPE2")
+
+# IDs
+def p_ids(p): #Lista de IDs
+    'ids : lista SEMICOLON'
+    print("IDs")
+
+def p_lista(p):
+    'lista : ID addVariable dd lista1'
+    print("lista")
+
+def p_dd(p):
+    '''
+    dd : dim_dec dimDec8
+       | empty
+    '''
+    print("dd")
+
+def p_lista1(p):
+    '''
+    lista1 : COMMA lista
+           | empty
+    '''
+    print("lista1")
+
+# DIMENSIONES
+def p_dim_dec(p):
+    'dim_dec : LBRACKET dimDec2 CTEINT dimDec5 RBRACKET decRenglones dim_dec1'
+    print("dim_dec")
+
+def p_dim_dec1(p):
+    '''
+    dim_dec1 : LBRACKET CTEINT dimDec6 RBRACKET decColumnas
+             | empty
+    '''
+    print("dim_dec1")
+
+def p_dim_index(p):
+    '''
+    dim_index : LBRACKET dimAccess2 exp6 exp activaArray arregloAcc RBRACKET exp7 dim_index1
+    '''
+    print("dim_index")
+
+def p_dim_index1(p):
+    '''
+    dim_index1 : LBRACKET exp6 exp activaArray RBRACKET exp7 matrizAcc
+               | empty
+    '''
+    print("dim_index1")
+
+# BLOQUE
+def p_bloque(p):
+    'bloque : LCURBRACKET est RCURBRACKET'
+    print("BLOQUE")
+
+def p_est(p):
+    '''
+    est : estatutos est
+        | empty
+    '''
+    print("EST")
+
+def p_estatutos(p):
+    '''
+    estatutos : asignacion
+              | llamada
+              | retorno
+              | lectura
+              | escritura
+              | carga_datos
+              | decision
+              | condicional
+              | ciclo
+              | funciones_especiales
+    '''
+    print("ESTATUTOS")
+
+# ESTATUTOS
+def p_asignacion(p):
+    'asignacion : variable EQUALS sec1 exp SEMICOLON sec2'
+    print("ASIGNACION")
+
+def p_variable(p):
+    'variable : ID exp1 di'
+    print("VARIABLE")
+
+def p_di(p):
+    '''
+    di : dim_index
+       | empty
+    '''
+    print("di")
+
+def p_llamada(p):
+    'llamada :  ID funCall1 LPAREN llamada1 RPAREN funCall_5'
+    print("LLAMADA")
+
+def p_llamada1(p):
+    '''
+    llamada1 : exp pnFunCall_3 llamada2
+             | empty
+    '''
+
+    
 def p_principalI(p):
     '''
     principalI : principalS LCURBRACKET
@@ -52,18 +244,13 @@ def p_principal1(p):
     '''
     print("principal1")
 
-def p_declara_vars(p):
-    '''
-    declara_vars : vars declara_vars
-        | empty
-    '''
-    print("declara_vars")
 
-def p_vars(p):
+
+def p_var(p):
     '''
-    vars : VAR type ID dimension SEMICOLON
+    var : VAR type ID dimension SEMICOLON
     '''
-    print("vars")
+    print("var")
 
 def p_type(p):
     '''
