@@ -6,9 +6,9 @@ keywords = {
     'var' : 'VAR',
     'int' : 'INT',
     'float': 'FLOAT',
+    'char': 'CHAR',
+    'string': 'STRING',
     'dataframe' : 'DATAFRAME',
-    'string' : 'STRING',
-    'char' : 'CHAR',
     'funcion' : 'FUNCION',
     'si' : 'SI',
     'entonces' : 'ENTONCES',
@@ -16,6 +16,7 @@ keywords = {
     'sino' : 'SINO',
     'void' : 'VOID',
     'mientras' : 'MIENTRAS',
+    'haz' : 'HAZ',
     'principal' : 'PRINCIPAL',
     'lee' : 'LEE',
     'inicia' : 'INICIA',
@@ -23,14 +24,19 @@ keywords = {
     'hasta' : 'HASTA',
     'hacer' : 'HACER',
     'cargaArchivo' : 'CARGAARCHIVO',
-    'variables' : 'VARIABLES',
+    'Variables' : 'VARIABLES',
     'escribe' : 'ESCRIBE',
-    'correlaciona' : 'CORRELACIONA',
-    'media': 'MEDIA'
+    'Media' : 'MEDIA',
+    'Moda' : 'MODA',
+    'Varianza' : 'VARIANZA',
+    'Correlaciona' : 'CORRELACIONA',
+    'lineal' : 'LINEAL',
+    'histograma' : 'HISTOGRAMA'
 }
 
 tokens = [
     'ID',
+    'COLON',
     'SEMICOLON',
     'COMMA',
     'LBRACKET',
@@ -46,6 +52,7 @@ tokens = [
     'DIVIDE',
     'CTEINT',
     'CTEFLOAT',
+    'CTECHAR',
     'CTESTRING',
     'LESSTHAN',
     'GREATERTHAN',
@@ -55,11 +62,10 @@ tokens = [
     'OR',
     'ISEQUAL',
     'NOTEQUAL',
-    'RQUOTES',
     'COMMENT'
 ]+list(keywords.values())
 
-
+t_COLON = r'\:'
 t_SEMICOLON = r'\;'
 t_COMMA = r'\,'
 t_LBRACKET = r'\['
@@ -83,7 +89,7 @@ t_ISEQUAL = r'\=='
 t_NOTEQUAL = r'\!='
 t_COMMENT = r'\%%'
 
-t_ignore = r' '
+t_ignore = ' \t'
 
 def t_CTEFLOAT(t):
     r'[+-]?[0-9]+\.[0-9]+'
@@ -95,9 +101,13 @@ def t_CTEINT(t):
     t.value = int(t.value)
     return t
 
+def t_CHAR(t):
+    r"'[a-zA-Z]'"
+    t.value = str(t.value)
+    return t
+
 def t_CTESTRING(t):
-    # r'"[a-zA-Z][a-zA-Z_0-9]*"'
-    r'\"(\\.|[^"\\])*\"'
+    r"(\"([^\\\"]|\\.)+\")|(\'([^\\\']|\\.)+\')"
     t.value = str(t.value)
     return t
 
@@ -106,25 +116,25 @@ def t_ID(t):
     t.type = keywords.get(t.value, 'ID')
     return t
 
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += t.value.count("\n")
-
-def t_error(t):
-    print('Illegal characters!')
-    t.lexer.skip(1)
-
 def t_COMMENT (t):
     r'\%%.*'
     pass
 
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
-lex.lex()
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
-###############################
-## PRUEBA CON CÓDIGO DE EJEMPLO
-# lexer = lex.lex()
-# lexer.input("""
+
+lexer = lex.lex()
+
+##############################
+# PRUEBA CON CÓDIGO DE EJEMPLO
+#
+# data ='''
 # programa Covid19;
 # var
 #     float number;
@@ -181,10 +191,11 @@ lex.lex()
 #         i = i-1;
 #     }
 # }
-# """)
+# '''
 #
+# lexer.input(data)
 # while True:
 #     tok = lexer.token()
-#     if not tok:
-#         break
+#     if not tok : break
 #     print(tok)
+
