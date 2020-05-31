@@ -24,12 +24,14 @@ keywords = {
     'hasta' : 'HASTA',
     'hacer' : 'HACER',
     'cargaArchivo' : 'CARGAARCHIVO',
-    'variables' : 'VARIABLES',
+    'Variables' : 'VARIABLES',
     'escribe' : 'ESCRIBE',
-    'media' : 'MEDIA',
-    'moda' : 'MODA',
-    'varianza' : 'VARIANZA',
-
+    'Media' : 'MEDIA',
+    'Moda' : 'MODA',
+    'Varianza' : 'VARIANZA',
+    'Correlaciona' : 'CORRELACIONA',
+    'lineal' : 'LINEAL',
+    'histograma' : 'HISTOGRAMA'
 }
 
 tokens = [

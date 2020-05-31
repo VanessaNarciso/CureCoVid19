@@ -1,0 +1,4714 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    COMMENT
+    CORRELACIONA
+    INICIA
+    MEDIA
+    OR
+    RQUOTES
+    VARIABLES
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA ID SEMICOLON declara_vars declara_fun principal
+Rule 2     declara_fun -> functions
+Rule 3     functions -> function_t functions
+Rule 4     functions -> function_v functions
+Rule 5     functions -> empty
+Rule 6     principal -> principalI declara_vars principal1 RCURBRACKET
+Rule 7     principalI -> principalS LCURBRACKET
+Rule 8     principalS -> PRINCIPAL
+Rule 9     principal1 -> stmt_v principal1
+Rule 10    principal1 -> empty
+Rule 11    declara_vars -> vars declara_vars
+Rule 12    declara_vars -> empty
+Rule 13    vars -> VAR type ID dimension SEMICOLON
+Rule 14    type -> INT
+Rule 15    type -> FLOAT
+Rule 16    type -> CHAR
+Rule 17    type -> STRING
+Rule 18    type -> DATAFRAME
+Rule 19    dimension -> LBRACKET CTEINT RBRACKET
+Rule 20    dimension -> LBRACKET CTEINT RBRACKET LBRACKET CTEINT RBRACKET
+Rule 21    dimension -> empty
+Rule 22    function_t -> FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun
+Rule 23    functionI -> type ID
+Rule 24    function2 -> LPAREN function3 RPAREN
+Rule 25    function3 -> funParam function5
+Rule 26    function3 -> empty
+Rule 27    funParam -> type ID
+Rule 28    inicia_fun -> LCURBRACKET
+Rule 29    function4 -> statement function4
+Rule 30    function4 -> empty
+Rule 31    statement -> assignment
+Rule 32    statement -> condition
+Rule 33    statement -> write
+Rule 34    statement -> loop
+Rule 35    statement -> read
+Rule 36    statement -> loadData
+Rule 37    statement -> funCall SEMICOLON
+Rule 38    statement -> return
+Rule 39    assignment -> id equals assignment3 SEMICOLON
+Rule 40    id -> identifier indice_dimension
+Rule 41    identifier -> ID
+Rule 42    indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET
+Rule 43    indice_dimension -> LBRACKET exp RBRACKET
+Rule 44    indice_dimension -> empty
+Rule 45    equals -> EQUALS
+Rule 46    assignment3 -> exp
+Rule 47    assignment3 -> read
+Rule 48    condition -> SI head_condition ENTONCES body condition1
+Rule 49    head_condition -> LPAREN expression close_condition
+Rule 50    body -> LCURBRACKET body1 RCURBRACKET
+Rule 51    body1 -> statement body1
+Rule 52    body1 -> empty
+Rule 53    condition1 -> SINO body
+Rule 54    condition1 -> empty
+Rule 55    close_condition -> RPAREN
+Rule 56    write -> ESCRIBE LPAREN expression RPAREN SEMICOLON
+Rule 57    expression -> exp loper exp
+Rule 58    expression -> exp
+Rule 59    loper -> GREATERTHAN
+Rule 60    loper -> LESSTHAN
+Rule 61    loper -> GREATEREQ
+Rule 62    loper -> LESSEQ
+Rule 63    loper -> NOTEQUAL
+Rule 64    loper -> ISEQUAL
+Rule 65    exp -> term
+Rule 66    exp -> term exp_o exp
+Rule 67    exp_o -> PLUS
+Rule 68    exp_o -> MINUS
+Rule 69    term -> factor term_o term
+Rule 70    term -> factor
+Rule 71    factor -> vcte
+Rule 72    factor -> leftP expression rightP
+Rule 73    leftP -> LPAREN
+Rule 74    rightP -> RPAREN
+Rule 75    vcte -> cte_int
+Rule 76    vcte -> cte_float
+Rule 77    vcte -> cte_string
+Rule 78    vcte -> id
+Rule 79    vcte -> funCall
+Rule 80    vcte -> vectorMatriz
+Rule 81    cte_int -> negativo CTEINT
+Rule 82    cte_float -> negativo CTEFLOAT
+Rule 83    cte_string -> negativo CTESTRING
+Rule 84    negativo -> MINUS
+Rule 85    negativo -> empty
+Rule 86    vectorMatriz -> LBRACKET vm1 RBRACKET
+Rule 87    vectorMatriz -> vm1
+Rule 88    vm1 -> LBRACKET vm2 RBRACKET COMMA vm1
+Rule 89    vm1 -> LBRACKET vm2 RBRACKET
+Rule 90    vm2 -> exp COMMA vm2
+Rule 91    vm2 -> exp
+Rule 92    vm2 -> empty
+Rule 93    term_o -> TIMES
+Rule 94    term_o -> DIVIDE
+Rule 95    loop -> mientras
+Rule 96    loop -> desde
+Rule 97    mientras -> mientras1 HAZ body
+Rule 98    mientras1 -> mientras_w LPAREN expression RPAREN
+Rule 99    mientras_w -> MIENTRAS
+Rule 100   desde -> nuevo_desde desdeBody
+Rule 101   nuevo_desde -> DESDE id EQUALS desde2 HASTA desde2 HACER
+Rule 102   desde2 -> exp
+Rule 103   desdeBody -> body
+Rule 104   read -> LEE LPAREN id read1 RPAREN SEMICOLON
+Rule 105   read1 -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET
+Rule 106   read1 -> LBRACKET exp RBRACKET
+Rule 107   read1 -> empty
+Rule 108   loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+Rule 109   route -> CTESTRING
+Rule 110   maxVariables -> CTEINT
+Rule 111   maxRows -> CTEINT
+Rule 112   funCall -> ID iniciaFunCall funCall2 terminaFunCall
+Rule 113   iniciaFunCall -> LPAREN
+Rule 114   funCall2 -> funcallParam funCall3
+Rule 115   funCall2 -> empty
+Rule 116   funcallParam -> exp
+Rule 117   funCall3 -> COMMA funcallParam funCall3
+Rule 118   funCall3 -> empty
+Rule 119   terminaFunCall -> RPAREN
+Rule 120   return -> REGRESA return1 SEMICOLON
+Rule 121   return1 -> vcte
+Rule 122   return1 -> exp
+Rule 123   function5 -> COMMA funParam function5
+Rule 124   function5 -> empty
+Rule 125   termina_fun -> RCURBRACKET
+Rule 126   function_v -> FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun
+Rule 127   functionV -> VOID ID
+Rule 128   function9 -> stmt_v function9
+Rule 129   function9 -> empty
+Rule 130   stmt_v -> assignment
+Rule 131   stmt_v -> condition
+Rule 132   stmt_v -> write
+Rule 133   stmt_v -> loop
+Rule 134   stmt_v -> read
+Rule 135   stmt_v -> loadData
+Rule 136   stmt_v -> funCall SEMICOLON
+Rule 137   stmt_v -> return
+Rule 138   empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 
+CARGAARCHIVO         : 108
+CHAR                 : 16
+COMMA                : 88 90 117 123
+COMMENT              : 
+CORRELACIONA         : 
+CTEFLOAT             : 82
+CTEINT               : 19 20 20 81 110 111
+CTESTRING            : 83 109
+DATAFRAME            : 18
+DESDE                : 101
+DIVIDE               : 94
+ENTONCES             : 48
+EQUALS               : 45 101
+ESCRIBE              : 56
+FLOAT                : 15
+FUNCION              : 22 126
+GREATEREQ            : 61
+GREATERTHAN          : 59
+HACER                : 101
+HASTA                : 101
+HAZ                  : 97
+ID                   : 1 13 23 27 41 108 112 127
+INICIA               : 
+INT                  : 14
+ISEQUAL              : 64
+LBRACKET             : 19 20 20 42 42 43 86 88 89 105 105 106
+LCURBRACKET          : 7 28 50
+LEE                  : 104
+LESSEQ               : 62
+LESSTHAN             : 60
+LPAREN               : 24 49 56 73 98 104 108 113
+MEDIA                : 
+MIENTRAS             : 99
+MINUS                : 68 84
+NOTEQUAL             : 63
+OR                   : 
+PLUS                 : 67
+PRINCIPAL            : 8
+PROGRAMA             : 1
+RBRACKET             : 19 20 20 42 42 43 86 88 89 105 105 106
+RCURBRACKET          : 6 50 125
+REGRESA              : 120
+RPAREN               : 24 55 56 74 98 104 108 119
+RQUOTES              : 
+SEMICOLON            : 1 13 37 39 56 104 108 120 136
+SI                   : 48
+SINO                 : 53
+STRING               : 17
+TIMES                : 93
+VAR                  : 13
+VARIABLES            : 
+VOID                 : 127
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 31 130
+assignment3          : 39
+body                 : 48 53 97 103
+body1                : 50 51
+close_condition      : 49
+condition            : 32 131
+condition1           : 48
+cte_float            : 76
+cte_int              : 75
+cte_string           : 77
+declara_fun          : 1
+declara_vars         : 1 6 11 22 126
+desde                : 96
+desde2               : 101 101
+desdeBody            : 100
+dimension            : 13
+empty                : 5 10 12 21 26 30 44 52 54 85 92 107 115 118 124 129
+equals               : 39
+exp                  : 42 42 43 46 57 57 58 66 90 91 102 105 105 106 116 122
+exp_o                : 66
+expression           : 49 56 72 98
+factor               : 69 70
+funCall              : 37 79 136
+funCall2             : 112
+funCall3             : 114 117
+funParam             : 25 123
+funcallParam         : 114 117
+function2            : 22 126
+function3            : 24
+function4            : 22 29
+function5            : 25 123
+function9            : 126 128
+functionI            : 22
+functionV            : 126
+function_t           : 3
+function_v           : 4
+functions            : 2 3 4
+head_condition       : 48
+id                   : 39 78 101 104
+identifier           : 40
+indice_dimension     : 40
+iniciaFunCall        : 112
+inicia_fun           : 22 126
+leftP                : 72
+loadData             : 36 135
+loop                 : 34 133
+loper                : 57
+maxRows              : 108
+maxVariables         : 108
+mientras             : 95
+mientras1            : 97
+mientras_w           : 98
+negativo             : 81 82 83
+nuevo_desde          : 100
+principal            : 1
+principal1           : 6 9
+principalI           : 6
+principalS           : 7
+programa             : 0
+read                 : 35 47 134
+read1                : 104
+return               : 38 137
+return1              : 120
+rightP               : 72
+route                : 108
+statement            : 29 51
+stmt_v               : 9 128
+term                 : 65 66 69
+term_o               : 69
+terminaFunCall       : 112
+termina_fun          : 22 126
+type                 : 13 23 27
+vars                 : 11
+vcte                 : 71 121
+vectorMatriz         : 80
+vm1                  : 86 87 88
+vm2                  : 88 89 90
+write                : 33 132
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAMA ID SEMICOLON declara_vars declara_fun principal
+
+    PROGRAMA        shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAMA . ID SEMICOLON declara_vars declara_fun principal
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAMA ID . SEMICOLON declara_vars declara_fun principal
+
+    SEMICOLON       shift and go to state 4
+
+
+state 4
+
+    (1) programa -> PROGRAMA ID SEMICOLON . declara_vars declara_fun principal
+    (11) declara_vars -> . vars declara_vars
+    (12) declara_vars -> . empty
+    (13) vars -> . VAR type ID dimension SEMICOLON
+    (138) empty -> .
+
+    VAR             shift and go to state 8
+    FUNCION         reduce using rule 138 (empty -> .)
+    PRINCIPAL       reduce using rule 138 (empty -> .)
+
+    declara_vars                   shift and go to state 5
+    vars                           shift and go to state 6
+    empty                          shift and go to state 7
+
+state 5
+
+    (1) programa -> PROGRAMA ID SEMICOLON declara_vars . declara_fun principal
+    (2) declara_fun -> . functions
+    (3) functions -> . function_t functions
+    (4) functions -> . function_v functions
+    (5) functions -> . empty
+    (22) function_t -> . FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun
+    (126) function_v -> . FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun
+    (138) empty -> .
+
+    FUNCION         shift and go to state 14
+    PRINCIPAL       reduce using rule 138 (empty -> .)
+
+    declara_fun                    shift and go to state 9
+    functions                      shift and go to state 10
+    function_t                     shift and go to state 11
+    function_v                     shift and go to state 12
+    empty                          shift and go to state 13
+
+state 6
+
+    (11) declara_vars -> vars . declara_vars
+    (11) declara_vars -> . vars declara_vars
+    (12) declara_vars -> . empty
+    (13) vars -> . VAR type ID dimension SEMICOLON
+    (138) empty -> .
+
+    VAR             shift and go to state 8
+    FUNCION         reduce using rule 138 (empty -> .)
+    PRINCIPAL       reduce using rule 138 (empty -> .)
+    SI              reduce using rule 138 (empty -> .)
+    ESCRIBE         reduce using rule 138 (empty -> .)
+    LEE             reduce using rule 138 (empty -> .)
+    CARGAARCHIVO    reduce using rule 138 (empty -> .)
+    ID              reduce using rule 138 (empty -> .)
+    REGRESA         reduce using rule 138 (empty -> .)
+    DESDE           reduce using rule 138 (empty -> .)
+    MIENTRAS        reduce using rule 138 (empty -> .)
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+
+    vars                           shift and go to state 6
+    declara_vars                   shift and go to state 15
+    empty                          shift and go to state 7
+
+state 7
+
+    (12) declara_vars -> empty .
+
+    FUNCION         reduce using rule 12 (declara_vars -> empty .)
+    PRINCIPAL       reduce using rule 12 (declara_vars -> empty .)
+    SI              reduce using rule 12 (declara_vars -> empty .)
+    ESCRIBE         reduce using rule 12 (declara_vars -> empty .)
+    LEE             reduce using rule 12 (declara_vars -> empty .)
+    CARGAARCHIVO    reduce using rule 12 (declara_vars -> empty .)
+    ID              reduce using rule 12 (declara_vars -> empty .)
+    REGRESA         reduce using rule 12 (declara_vars -> empty .)
+    DESDE           reduce using rule 12 (declara_vars -> empty .)
+    MIENTRAS        reduce using rule 12 (declara_vars -> empty .)
+    RCURBRACKET     reduce using rule 12 (declara_vars -> empty .)
+
+
+state 8
+
+    (13) vars -> VAR . type ID dimension SEMICOLON
+    (14) type -> . INT
+    (15) type -> . FLOAT
+    (16) type -> . CHAR
+    (17) type -> . STRING
+    (18) type -> . DATAFRAME
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 20
+    DATAFRAME       shift and go to state 21
+
+    type                           shift and go to state 16
+
+state 9
+
+    (1) programa -> PROGRAMA ID SEMICOLON declara_vars declara_fun . principal
+    (6) principal -> . principalI declara_vars principal1 RCURBRACKET
+    (7) principalI -> . principalS LCURBRACKET
+    (8) principalS -> . PRINCIPAL
+
+    PRINCIPAL       shift and go to state 25
+
+    principal                      shift and go to state 22
+    principalI                     shift and go to state 23
+    principalS                     shift and go to state 24
+
+state 10
+
+    (2) declara_fun -> functions .
+
+    PRINCIPAL       reduce using rule 2 (declara_fun -> functions .)
+
+
+state 11
+
+    (3) functions -> function_t . functions
+    (3) functions -> . function_t functions
+    (4) functions -> . function_v functions
+    (5) functions -> . empty
+    (22) function_t -> . FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun
+    (126) function_v -> . FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun
+    (138) empty -> .
+
+    FUNCION         shift and go to state 14
+    PRINCIPAL       reduce using rule 138 (empty -> .)
+
+    function_t                     shift and go to state 11
+    functions                      shift and go to state 26
+    function_v                     shift and go to state 12
+    empty                          shift and go to state 13
+
+state 12
+
+    (4) functions -> function_v . functions
+    (3) functions -> . function_t functions
+    (4) functions -> . function_v functions
+    (5) functions -> . empty
+    (22) function_t -> . FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun
+    (126) function_v -> . FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun
+    (138) empty -> .
+
+    FUNCION         shift and go to state 14
+    PRINCIPAL       reduce using rule 138 (empty -> .)
+
+    function_v                     shift and go to state 12
+    functions                      shift and go to state 27
+    function_t                     shift and go to state 11
+    empty                          shift and go to state 13
+
+state 13
+
+    (5) functions -> empty .
+
+    PRINCIPAL       reduce using rule 5 (functions -> empty .)
+
+
+state 14
+
+    (22) function_t -> FUNCION . functionI function2 inicia_fun declara_vars function4 termina_fun
+    (126) function_v -> FUNCION . functionV function2 inicia_fun declara_vars function9 termina_fun
+    (23) functionI -> . type ID
+    (127) functionV -> . VOID ID
+    (14) type -> . INT
+    (15) type -> . FLOAT
+    (16) type -> . CHAR
+    (17) type -> . STRING
+    (18) type -> . DATAFRAME
+
+    VOID            shift and go to state 31
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 20
+    DATAFRAME       shift and go to state 21
+
+    functionI                      shift and go to state 28
+    functionV                      shift and go to state 29
+    type                           shift and go to state 30
+
+state 15
+
+    (11) declara_vars -> vars declara_vars .
+
+    FUNCION         reduce using rule 11 (declara_vars -> vars declara_vars .)
+    PRINCIPAL       reduce using rule 11 (declara_vars -> vars declara_vars .)
+    SI              reduce using rule 11 (declara_vars -> vars declara_vars .)
+    ESCRIBE         reduce using rule 11 (declara_vars -> vars declara_vars .)
+    LEE             reduce using rule 11 (declara_vars -> vars declara_vars .)
+    CARGAARCHIVO    reduce using rule 11 (declara_vars -> vars declara_vars .)
+    ID              reduce using rule 11 (declara_vars -> vars declara_vars .)
+    REGRESA         reduce using rule 11 (declara_vars -> vars declara_vars .)
+    DESDE           reduce using rule 11 (declara_vars -> vars declara_vars .)
+    MIENTRAS        reduce using rule 11 (declara_vars -> vars declara_vars .)
+    RCURBRACKET     reduce using rule 11 (declara_vars -> vars declara_vars .)
+
+
+state 16
+
+    (13) vars -> VAR type . ID dimension SEMICOLON
+
+    ID              shift and go to state 32
+
+
+state 17
+
+    (14) type -> INT .
+
+    ID              reduce using rule 14 (type -> INT .)
+
+
+state 18
+
+    (15) type -> FLOAT .
+
+    ID              reduce using rule 15 (type -> FLOAT .)
+
+
+state 19
+
+    (16) type -> CHAR .
+
+    ID              reduce using rule 16 (type -> CHAR .)
+
+
+state 20
+
+    (17) type -> STRING .
+
+    ID              reduce using rule 17 (type -> STRING .)
+
+
+state 21
+
+    (18) type -> DATAFRAME .
+
+    ID              reduce using rule 18 (type -> DATAFRAME .)
+
+
+state 22
+
+    (1) programa -> PROGRAMA ID SEMICOLON declara_vars declara_fun principal .
+
+    $end            reduce using rule 1 (programa -> PROGRAMA ID SEMICOLON declara_vars declara_fun principal .)
+
+
+state 23
+
+    (6) principal -> principalI . declara_vars principal1 RCURBRACKET
+    (11) declara_vars -> . vars declara_vars
+    (12) declara_vars -> . empty
+    (13) vars -> . VAR type ID dimension SEMICOLON
+    (138) empty -> .
+
+    VAR             shift and go to state 8
+    SI              reduce using rule 138 (empty -> .)
+    ESCRIBE         reduce using rule 138 (empty -> .)
+    LEE             reduce using rule 138 (empty -> .)
+    CARGAARCHIVO    reduce using rule 138 (empty -> .)
+    ID              reduce using rule 138 (empty -> .)
+    REGRESA         reduce using rule 138 (empty -> .)
+    DESDE           reduce using rule 138 (empty -> .)
+    MIENTRAS        reduce using rule 138 (empty -> .)
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+
+    declara_vars                   shift and go to state 33
+    vars                           shift and go to state 6
+    empty                          shift and go to state 7
+
+state 24
+
+    (7) principalI -> principalS . LCURBRACKET
+
+    LCURBRACKET     shift and go to state 34
+
+
+state 25
+
+    (8) principalS -> PRINCIPAL .
+
+    LCURBRACKET     reduce using rule 8 (principalS -> PRINCIPAL .)
+
+
+state 26
+
+    (3) functions -> function_t functions .
+
+    PRINCIPAL       reduce using rule 3 (functions -> function_t functions .)
+
+
+state 27
+
+    (4) functions -> function_v functions .
+
+    PRINCIPAL       reduce using rule 4 (functions -> function_v functions .)
+
+
+state 28
+
+    (22) function_t -> FUNCION functionI . function2 inicia_fun declara_vars function4 termina_fun
+    (24) function2 -> . LPAREN function3 RPAREN
+
+    LPAREN          shift and go to state 36
+
+    function2                      shift and go to state 35
+
+state 29
+
+    (126) function_v -> FUNCION functionV . function2 inicia_fun declara_vars function9 termina_fun
+    (24) function2 -> . LPAREN function3 RPAREN
+
+    LPAREN          shift and go to state 36
+
+    function2                      shift and go to state 37
+
+state 30
+
+    (23) functionI -> type . ID
+
+    ID              shift and go to state 38
+
+
+state 31
+
+    (127) functionV -> VOID . ID
+
+    ID              shift and go to state 39
+
+
+state 32
+
+    (13) vars -> VAR type ID . dimension SEMICOLON
+    (19) dimension -> . LBRACKET CTEINT RBRACKET
+    (20) dimension -> . LBRACKET CTEINT RBRACKET LBRACKET CTEINT RBRACKET
+    (21) dimension -> . empty
+    (138) empty -> .
+
+    LBRACKET        shift and go to state 41
+    SEMICOLON       reduce using rule 138 (empty -> .)
+
+    dimension                      shift and go to state 40
+    empty                          shift and go to state 42
+
+state 33
+
+    (6) principal -> principalI declara_vars . principal1 RCURBRACKET
+    (9) principal1 -> . stmt_v principal1
+    (10) principal1 -> . empty
+    (130) stmt_v -> . assignment
+    (131) stmt_v -> . condition
+    (132) stmt_v -> . write
+    (133) stmt_v -> . loop
+    (134) stmt_v -> . read
+    (135) stmt_v -> . loadData
+    (136) stmt_v -> . funCall SEMICOLON
+    (137) stmt_v -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    principal1                     shift and go to state 43
+    stmt_v                         shift and go to state 44
+    empty                          shift and go to state 45
+    assignment                     shift and go to state 46
+    condition                      shift and go to state 47
+    write                          shift and go to state 48
+    loop                           shift and go to state 49
+    read                           shift and go to state 50
+    loadData                       shift and go to state 51
+    funCall                        shift and go to state 52
+    return                         shift and go to state 53
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 34
+
+    (7) principalI -> principalS LCURBRACKET .
+
+    VAR             reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    SI              reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    ESCRIBE         reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    LEE             reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    CARGAARCHIVO    reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    ID              reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    REGRESA         reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    DESDE           reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    MIENTRAS        reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+    RCURBRACKET     reduce using rule 7 (principalI -> principalS LCURBRACKET .)
+
+
+state 35
+
+    (22) function_t -> FUNCION functionI function2 . inicia_fun declara_vars function4 termina_fun
+    (28) inicia_fun -> . LCURBRACKET
+
+    LCURBRACKET     shift and go to state 70
+
+    inicia_fun                     shift and go to state 69
+
+state 36
+
+    (24) function2 -> LPAREN . function3 RPAREN
+    (25) function3 -> . funParam function5
+    (26) function3 -> . empty
+    (27) funParam -> . type ID
+    (138) empty -> .
+    (14) type -> . INT
+    (15) type -> . FLOAT
+    (16) type -> . CHAR
+    (17) type -> . STRING
+    (18) type -> . DATAFRAME
+
+    RPAREN          reduce using rule 138 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 20
+    DATAFRAME       shift and go to state 21
+
+    function3                      shift and go to state 71
+    funParam                       shift and go to state 72
+    empty                          shift and go to state 73
+    type                           shift and go to state 74
+
+state 37
+
+    (126) function_v -> FUNCION functionV function2 . inicia_fun declara_vars function9 termina_fun
+    (28) inicia_fun -> . LCURBRACKET
+
+    LCURBRACKET     shift and go to state 70
+
+    inicia_fun                     shift and go to state 75
+
+state 38
+
+    (23) functionI -> type ID .
+
+    LPAREN          reduce using rule 23 (functionI -> type ID .)
+
+
+state 39
+
+    (127) functionV -> VOID ID .
+
+    LPAREN          reduce using rule 127 (functionV -> VOID ID .)
+
+
+state 40
+
+    (13) vars -> VAR type ID dimension . SEMICOLON
+
+    SEMICOLON       shift and go to state 76
+
+
+state 41
+
+    (19) dimension -> LBRACKET . CTEINT RBRACKET
+    (20) dimension -> LBRACKET . CTEINT RBRACKET LBRACKET CTEINT RBRACKET
+
+    CTEINT          shift and go to state 77
+
+
+state 42
+
+    (21) dimension -> empty .
+
+    SEMICOLON       reduce using rule 21 (dimension -> empty .)
+
+
+state 43
+
+    (6) principal -> principalI declara_vars principal1 . RCURBRACKET
+
+    RCURBRACKET     shift and go to state 78
+
+
+state 44
+
+    (9) principal1 -> stmt_v . principal1
+    (9) principal1 -> . stmt_v principal1
+    (10) principal1 -> . empty
+    (130) stmt_v -> . assignment
+    (131) stmt_v -> . condition
+    (132) stmt_v -> . write
+    (133) stmt_v -> . loop
+    (134) stmt_v -> . read
+    (135) stmt_v -> . loadData
+    (136) stmt_v -> . funCall SEMICOLON
+    (137) stmt_v -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    stmt_v                         shift and go to state 44
+    principal1                     shift and go to state 79
+    empty                          shift and go to state 45
+    assignment                     shift and go to state 46
+    condition                      shift and go to state 47
+    write                          shift and go to state 48
+    loop                           shift and go to state 49
+    read                           shift and go to state 50
+    loadData                       shift and go to state 51
+    funCall                        shift and go to state 52
+    return                         shift and go to state 53
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 45
+
+    (10) principal1 -> empty .
+
+    RCURBRACKET     reduce using rule 10 (principal1 -> empty .)
+
+
+state 46
+
+    (130) stmt_v -> assignment .
+
+    SI              reduce using rule 130 (stmt_v -> assignment .)
+    ESCRIBE         reduce using rule 130 (stmt_v -> assignment .)
+    LEE             reduce using rule 130 (stmt_v -> assignment .)
+    CARGAARCHIVO    reduce using rule 130 (stmt_v -> assignment .)
+    ID              reduce using rule 130 (stmt_v -> assignment .)
+    REGRESA         reduce using rule 130 (stmt_v -> assignment .)
+    DESDE           reduce using rule 130 (stmt_v -> assignment .)
+    MIENTRAS        reduce using rule 130 (stmt_v -> assignment .)
+    RCURBRACKET     reduce using rule 130 (stmt_v -> assignment .)
+
+
+state 47
+
+    (131) stmt_v -> condition .
+
+    SI              reduce using rule 131 (stmt_v -> condition .)
+    ESCRIBE         reduce using rule 131 (stmt_v -> condition .)
+    LEE             reduce using rule 131 (stmt_v -> condition .)
+    CARGAARCHIVO    reduce using rule 131 (stmt_v -> condition .)
+    ID              reduce using rule 131 (stmt_v -> condition .)
+    REGRESA         reduce using rule 131 (stmt_v -> condition .)
+    DESDE           reduce using rule 131 (stmt_v -> condition .)
+    MIENTRAS        reduce using rule 131 (stmt_v -> condition .)
+    RCURBRACKET     reduce using rule 131 (stmt_v -> condition .)
+
+
+state 48
+
+    (132) stmt_v -> write .
+
+    SI              reduce using rule 132 (stmt_v -> write .)
+    ESCRIBE         reduce using rule 132 (stmt_v -> write .)
+    LEE             reduce using rule 132 (stmt_v -> write .)
+    CARGAARCHIVO    reduce using rule 132 (stmt_v -> write .)
+    ID              reduce using rule 132 (stmt_v -> write .)
+    REGRESA         reduce using rule 132 (stmt_v -> write .)
+    DESDE           reduce using rule 132 (stmt_v -> write .)
+    MIENTRAS        reduce using rule 132 (stmt_v -> write .)
+    RCURBRACKET     reduce using rule 132 (stmt_v -> write .)
+
+
+state 49
+
+    (133) stmt_v -> loop .
+
+    SI              reduce using rule 133 (stmt_v -> loop .)
+    ESCRIBE         reduce using rule 133 (stmt_v -> loop .)
+    LEE             reduce using rule 133 (stmt_v -> loop .)
+    CARGAARCHIVO    reduce using rule 133 (stmt_v -> loop .)
+    ID              reduce using rule 133 (stmt_v -> loop .)
+    REGRESA         reduce using rule 133 (stmt_v -> loop .)
+    DESDE           reduce using rule 133 (stmt_v -> loop .)
+    MIENTRAS        reduce using rule 133 (stmt_v -> loop .)
+    RCURBRACKET     reduce using rule 133 (stmt_v -> loop .)
+
+
+state 50
+
+    (134) stmt_v -> read .
+
+    SI              reduce using rule 134 (stmt_v -> read .)
+    ESCRIBE         reduce using rule 134 (stmt_v -> read .)
+    LEE             reduce using rule 134 (stmt_v -> read .)
+    CARGAARCHIVO    reduce using rule 134 (stmt_v -> read .)
+    ID              reduce using rule 134 (stmt_v -> read .)
+    REGRESA         reduce using rule 134 (stmt_v -> read .)
+    DESDE           reduce using rule 134 (stmt_v -> read .)
+    MIENTRAS        reduce using rule 134 (stmt_v -> read .)
+    RCURBRACKET     reduce using rule 134 (stmt_v -> read .)
+
+
+state 51
+
+    (135) stmt_v -> loadData .
+
+    SI              reduce using rule 135 (stmt_v -> loadData .)
+    ESCRIBE         reduce using rule 135 (stmt_v -> loadData .)
+    LEE             reduce using rule 135 (stmt_v -> loadData .)
+    CARGAARCHIVO    reduce using rule 135 (stmt_v -> loadData .)
+    ID              reduce using rule 135 (stmt_v -> loadData .)
+    REGRESA         reduce using rule 135 (stmt_v -> loadData .)
+    DESDE           reduce using rule 135 (stmt_v -> loadData .)
+    MIENTRAS        reduce using rule 135 (stmt_v -> loadData .)
+    RCURBRACKET     reduce using rule 135 (stmt_v -> loadData .)
+
+
+state 52
+
+    (136) stmt_v -> funCall . SEMICOLON
+
+    SEMICOLON       shift and go to state 80
+
+
+state 53
+
+    (137) stmt_v -> return .
+
+    SI              reduce using rule 137 (stmt_v -> return .)
+    ESCRIBE         reduce using rule 137 (stmt_v -> return .)
+    LEE             reduce using rule 137 (stmt_v -> return .)
+    CARGAARCHIVO    reduce using rule 137 (stmt_v -> return .)
+    ID              reduce using rule 137 (stmt_v -> return .)
+    REGRESA         reduce using rule 137 (stmt_v -> return .)
+    DESDE           reduce using rule 137 (stmt_v -> return .)
+    MIENTRAS        reduce using rule 137 (stmt_v -> return .)
+    RCURBRACKET     reduce using rule 137 (stmt_v -> return .)
+
+
+state 54
+
+    (39) assignment -> id . equals assignment3 SEMICOLON
+    (45) equals -> . EQUALS
+
+    EQUALS          shift and go to state 82
+
+    equals                         shift and go to state 81
+
+state 55
+
+    (48) condition -> SI . head_condition ENTONCES body condition1
+    (49) head_condition -> . LPAREN expression close_condition
+
+    LPAREN          shift and go to state 84
+
+    head_condition                 shift and go to state 83
+
+state 56
+
+    (56) write -> ESCRIBE . LPAREN expression RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 85
+
+
+state 57
+
+    (95) loop -> mientras .
+
+    SI              reduce using rule 95 (loop -> mientras .)
+    ESCRIBE         reduce using rule 95 (loop -> mientras .)
+    LEE             reduce using rule 95 (loop -> mientras .)
+    CARGAARCHIVO    reduce using rule 95 (loop -> mientras .)
+    ID              reduce using rule 95 (loop -> mientras .)
+    REGRESA         reduce using rule 95 (loop -> mientras .)
+    DESDE           reduce using rule 95 (loop -> mientras .)
+    MIENTRAS        reduce using rule 95 (loop -> mientras .)
+    RCURBRACKET     reduce using rule 95 (loop -> mientras .)
+
+
+state 58
+
+    (96) loop -> desde .
+
+    SI              reduce using rule 96 (loop -> desde .)
+    ESCRIBE         reduce using rule 96 (loop -> desde .)
+    LEE             reduce using rule 96 (loop -> desde .)
+    CARGAARCHIVO    reduce using rule 96 (loop -> desde .)
+    ID              reduce using rule 96 (loop -> desde .)
+    REGRESA         reduce using rule 96 (loop -> desde .)
+    DESDE           reduce using rule 96 (loop -> desde .)
+    MIENTRAS        reduce using rule 96 (loop -> desde .)
+    RCURBRACKET     reduce using rule 96 (loop -> desde .)
+
+
+state 59
+
+    (104) read -> LEE . LPAREN id read1 RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 86
+
+
+state 60
+
+    (108) loadData -> CARGAARCHIVO . LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 87
+
+
+state 61
+
+    (112) funCall -> ID . iniciaFunCall funCall2 terminaFunCall
+    (41) identifier -> ID .
+    (113) iniciaFunCall -> . LPAREN
+
+    LBRACKET        reduce using rule 41 (identifier -> ID .)
+    EQUALS          reduce using rule 41 (identifier -> ID .)
+    SEMICOLON       reduce using rule 41 (identifier -> ID .)
+    TIMES           reduce using rule 41 (identifier -> ID .)
+    DIVIDE          reduce using rule 41 (identifier -> ID .)
+    PLUS            reduce using rule 41 (identifier -> ID .)
+    MINUS           reduce using rule 41 (identifier -> ID .)
+    GREATERTHAN     reduce using rule 41 (identifier -> ID .)
+    LESSTHAN        reduce using rule 41 (identifier -> ID .)
+    GREATEREQ       reduce using rule 41 (identifier -> ID .)
+    LESSEQ          reduce using rule 41 (identifier -> ID .)
+    NOTEQUAL        reduce using rule 41 (identifier -> ID .)
+    ISEQUAL         reduce using rule 41 (identifier -> ID .)
+    RPAREN          reduce using rule 41 (identifier -> ID .)
+    COMMA           reduce using rule 41 (identifier -> ID .)
+    RBRACKET        reduce using rule 41 (identifier -> ID .)
+    HASTA           reduce using rule 41 (identifier -> ID .)
+    HACER           reduce using rule 41 (identifier -> ID .)
+    LPAREN          shift and go to state 89
+
+    iniciaFunCall                  shift and go to state 88
+
+state 62
+
+    (120) return -> REGRESA . return1 SEMICOLON
+    (121) return1 -> . vcte
+    (122) return1 -> . exp
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (138) empty -> .
+    (73) leftP -> . LPAREN
+
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+
+    return1                        shift and go to state 90
+    vcte                           shift and go to state 91
+    exp                            shift and go to state 92
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    term                           shift and go to state 99
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    factor                         shift and go to state 103
+    empty                          shift and go to state 105
+    leftP                          shift and go to state 106
+
+state 63
+
+    (40) id -> identifier . indice_dimension
+    (42) indice_dimension -> . LBRACKET exp RBRACKET LBRACKET exp RBRACKET
+    (43) indice_dimension -> . LBRACKET exp RBRACKET
+    (44) indice_dimension -> . empty
+    (138) empty -> .
+
+  ! shift/reduce conflict for LBRACKET resolved as shift
+    LBRACKET        shift and go to state 109
+    EQUALS          reduce using rule 138 (empty -> .)
+    SEMICOLON       reduce using rule 138 (empty -> .)
+    TIMES           reduce using rule 138 (empty -> .)
+    DIVIDE          reduce using rule 138 (empty -> .)
+    PLUS            reduce using rule 138 (empty -> .)
+    MINUS           reduce using rule 138 (empty -> .)
+    GREATERTHAN     reduce using rule 138 (empty -> .)
+    LESSTHAN        reduce using rule 138 (empty -> .)
+    GREATEREQ       reduce using rule 138 (empty -> .)
+    LESSEQ          reduce using rule 138 (empty -> .)
+    NOTEQUAL        reduce using rule 138 (empty -> .)
+    ISEQUAL         reduce using rule 138 (empty -> .)
+    RPAREN          reduce using rule 138 (empty -> .)
+    COMMA           reduce using rule 138 (empty -> .)
+    RBRACKET        reduce using rule 138 (empty -> .)
+    HASTA           reduce using rule 138 (empty -> .)
+    HACER           reduce using rule 138 (empty -> .)
+
+  ! LBRACKET        [ reduce using rule 138 (empty -> .) ]
+
+    indice_dimension               shift and go to state 108
+    empty                          shift and go to state 110
+
+state 64
+
+    (97) mientras -> mientras1 . HAZ body
+
+    HAZ             shift and go to state 111
+
+
+state 65
+
+    (100) desde -> nuevo_desde . desdeBody
+    (103) desdeBody -> . body
+    (50) body -> . LCURBRACKET body1 RCURBRACKET
+
+    LCURBRACKET     shift and go to state 114
+
+    desdeBody                      shift and go to state 112
+    body                           shift and go to state 113
+
+state 66
+
+    (98) mientras1 -> mientras_w . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 115
+
+
+state 67
+
+    (101) nuevo_desde -> DESDE . id EQUALS desde2 HASTA desde2 HACER
+    (40) id -> . identifier indice_dimension
+    (41) identifier -> . ID
+
+    ID              shift and go to state 117
+
+    id                             shift and go to state 116
+    identifier                     shift and go to state 63
+
+state 68
+
+    (99) mientras_w -> MIENTRAS .
+
+    LPAREN          reduce using rule 99 (mientras_w -> MIENTRAS .)
+
+
+state 69
+
+    (22) function_t -> FUNCION functionI function2 inicia_fun . declara_vars function4 termina_fun
+    (11) declara_vars -> . vars declara_vars
+    (12) declara_vars -> . empty
+    (13) vars -> . VAR type ID dimension SEMICOLON
+    (138) empty -> .
+
+    VAR             shift and go to state 8
+    SI              reduce using rule 138 (empty -> .)
+    ESCRIBE         reduce using rule 138 (empty -> .)
+    LEE             reduce using rule 138 (empty -> .)
+    CARGAARCHIVO    reduce using rule 138 (empty -> .)
+    ID              reduce using rule 138 (empty -> .)
+    REGRESA         reduce using rule 138 (empty -> .)
+    DESDE           reduce using rule 138 (empty -> .)
+    MIENTRAS        reduce using rule 138 (empty -> .)
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+
+    declara_vars                   shift and go to state 118
+    vars                           shift and go to state 6
+    empty                          shift and go to state 7
+
+state 70
+
+    (28) inicia_fun -> LCURBRACKET .
+
+    VAR             reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    SI              reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    ESCRIBE         reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    LEE             reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    CARGAARCHIVO    reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    ID              reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    REGRESA         reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    DESDE           reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    MIENTRAS        reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+    RCURBRACKET     reduce using rule 28 (inicia_fun -> LCURBRACKET .)
+
+
+state 71
+
+    (24) function2 -> LPAREN function3 . RPAREN
+
+    RPAREN          shift and go to state 119
+
+
+state 72
+
+    (25) function3 -> funParam . function5
+    (123) function5 -> . COMMA funParam function5
+    (124) function5 -> . empty
+    (138) empty -> .
+
+    COMMA           shift and go to state 121
+    RPAREN          reduce using rule 138 (empty -> .)
+
+    function5                      shift and go to state 120
+    empty                          shift and go to state 122
+
+state 73
+
+    (26) function3 -> empty .
+
+    RPAREN          reduce using rule 26 (function3 -> empty .)
+
+
+state 74
+
+    (27) funParam -> type . ID
+
+    ID              shift and go to state 123
+
+
+state 75
+
+    (126) function_v -> FUNCION functionV function2 inicia_fun . declara_vars function9 termina_fun
+    (11) declara_vars -> . vars declara_vars
+    (12) declara_vars -> . empty
+    (13) vars -> . VAR type ID dimension SEMICOLON
+    (138) empty -> .
+
+    VAR             shift and go to state 8
+    SI              reduce using rule 138 (empty -> .)
+    ESCRIBE         reduce using rule 138 (empty -> .)
+    LEE             reduce using rule 138 (empty -> .)
+    CARGAARCHIVO    reduce using rule 138 (empty -> .)
+    ID              reduce using rule 138 (empty -> .)
+    REGRESA         reduce using rule 138 (empty -> .)
+    DESDE           reduce using rule 138 (empty -> .)
+    MIENTRAS        reduce using rule 138 (empty -> .)
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+
+    declara_vars                   shift and go to state 124
+    vars                           shift and go to state 6
+    empty                          shift and go to state 7
+
+state 76
+
+    (13) vars -> VAR type ID dimension SEMICOLON .
+
+    VAR             reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    FUNCION         reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    PRINCIPAL       reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    SI              reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    ESCRIBE         reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    LEE             reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    ID              reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    REGRESA         reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    DESDE           reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    MIENTRAS        reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+    RCURBRACKET     reduce using rule 13 (vars -> VAR type ID dimension SEMICOLON .)
+
+
+state 77
+
+    (19) dimension -> LBRACKET CTEINT . RBRACKET
+    (20) dimension -> LBRACKET CTEINT . RBRACKET LBRACKET CTEINT RBRACKET
+
+    RBRACKET        shift and go to state 125
+
+
+state 78
+
+    (6) principal -> principalI declara_vars principal1 RCURBRACKET .
+
+    $end            reduce using rule 6 (principal -> principalI declara_vars principal1 RCURBRACKET .)
+
+
+state 79
+
+    (9) principal1 -> stmt_v principal1 .
+
+    RCURBRACKET     reduce using rule 9 (principal1 -> stmt_v principal1 .)
+
+
+state 80
+
+    (136) stmt_v -> funCall SEMICOLON .
+
+    SI              reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    ESCRIBE         reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    LEE             reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    ID              reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    REGRESA         reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    DESDE           reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    MIENTRAS        reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+    RCURBRACKET     reduce using rule 136 (stmt_v -> funCall SEMICOLON .)
+
+
+state 81
+
+    (39) assignment -> id equals . assignment3 SEMICOLON
+    (46) assignment3 -> . exp
+    (47) assignment3 -> . read
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LEE             shift and go to state 59
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    id                             shift and go to state 96
+    assignment3                    shift and go to state 126
+    exp                            shift and go to state 127
+    read                           shift and go to state 128
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 82
+
+    (45) equals -> EQUALS .
+
+    LEE             reduce using rule 45 (equals -> EQUALS .)
+    LPAREN          reduce using rule 45 (equals -> EQUALS .)
+    ID              reduce using rule 45 (equals -> EQUALS .)
+    LBRACKET        reduce using rule 45 (equals -> EQUALS .)
+    MINUS           reduce using rule 45 (equals -> EQUALS .)
+    CTEINT          reduce using rule 45 (equals -> EQUALS .)
+    CTEFLOAT        reduce using rule 45 (equals -> EQUALS .)
+    CTESTRING       reduce using rule 45 (equals -> EQUALS .)
+
+
+state 83
+
+    (48) condition -> SI head_condition . ENTONCES body condition1
+
+    ENTONCES        shift and go to state 130
+
+
+state 84
+
+    (49) head_condition -> LPAREN . expression close_condition
+    (57) expression -> . exp loper exp
+    (58) expression -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    expression                     shift and go to state 131
+    exp                            shift and go to state 132
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 85
+
+    (56) write -> ESCRIBE LPAREN . expression RPAREN SEMICOLON
+    (57) expression -> . exp loper exp
+    (58) expression -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    expression                     shift and go to state 133
+    exp                            shift and go to state 132
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 86
+
+    (104) read -> LEE LPAREN . id read1 RPAREN SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (41) identifier -> . ID
+
+    ID              shift and go to state 117
+
+    id                             shift and go to state 134
+    identifier                     shift and go to state 63
+
+state 87
+
+    (108) loadData -> CARGAARCHIVO LPAREN . ID route maxVariables maxRows RPAREN SEMICOLON
+
+    ID              shift and go to state 135
+
+
+state 88
+
+    (112) funCall -> ID iniciaFunCall . funCall2 terminaFunCall
+    (114) funCall2 -> . funcallParam funCall3
+    (115) funCall2 -> . empty
+    (116) funcallParam -> . exp
+    (138) empty -> .
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+
+    RPAREN          reduce using rule 138 (empty -> .)
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+
+    funCall2                       shift and go to state 136
+    funcallParam                   shift and go to state 137
+    empty                          shift and go to state 138
+    exp                            shift and go to state 139
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+
+state 89
+
+    (113) iniciaFunCall -> LPAREN .
+
+    LPAREN          reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    ID              reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    LBRACKET        reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    MINUS           reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    RPAREN          reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    CTEINT          reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    CTEFLOAT        reduce using rule 113 (iniciaFunCall -> LPAREN .)
+    CTESTRING       reduce using rule 113 (iniciaFunCall -> LPAREN .)
+
+
+state 90
+
+    (120) return -> REGRESA return1 . SEMICOLON
+
+    SEMICOLON       shift and go to state 140
+
+
+state 91
+
+    (121) return1 -> vcte .
+    (71) factor -> vcte .
+
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 71 (factor -> vcte .)
+    TIMES           reduce using rule 71 (factor -> vcte .)
+    DIVIDE          reduce using rule 71 (factor -> vcte .)
+    PLUS            reduce using rule 71 (factor -> vcte .)
+    MINUS           reduce using rule 71 (factor -> vcte .)
+    SEMICOLON       reduce using rule 71 (factor -> vcte .)
+
+  ! SEMICOLON       [ reduce using rule 121 (return1 -> vcte .) ]
+
+
+state 92
+
+    (122) return1 -> exp .
+
+    SEMICOLON       reduce using rule 122 (return1 -> exp .)
+
+
+state 93
+
+    (75) vcte -> cte_int .
+
+    SEMICOLON       reduce using rule 75 (vcte -> cte_int .)
+    TIMES           reduce using rule 75 (vcte -> cte_int .)
+    DIVIDE          reduce using rule 75 (vcte -> cte_int .)
+    PLUS            reduce using rule 75 (vcte -> cte_int .)
+    MINUS           reduce using rule 75 (vcte -> cte_int .)
+    GREATERTHAN     reduce using rule 75 (vcte -> cte_int .)
+    LESSTHAN        reduce using rule 75 (vcte -> cte_int .)
+    GREATEREQ       reduce using rule 75 (vcte -> cte_int .)
+    LESSEQ          reduce using rule 75 (vcte -> cte_int .)
+    NOTEQUAL        reduce using rule 75 (vcte -> cte_int .)
+    ISEQUAL         reduce using rule 75 (vcte -> cte_int .)
+    RPAREN          reduce using rule 75 (vcte -> cte_int .)
+    COMMA           reduce using rule 75 (vcte -> cte_int .)
+    RBRACKET        reduce using rule 75 (vcte -> cte_int .)
+    HASTA           reduce using rule 75 (vcte -> cte_int .)
+    HACER           reduce using rule 75 (vcte -> cte_int .)
+
+
+state 94
+
+    (76) vcte -> cte_float .
+
+    SEMICOLON       reduce using rule 76 (vcte -> cte_float .)
+    TIMES           reduce using rule 76 (vcte -> cte_float .)
+    DIVIDE          reduce using rule 76 (vcte -> cte_float .)
+    PLUS            reduce using rule 76 (vcte -> cte_float .)
+    MINUS           reduce using rule 76 (vcte -> cte_float .)
+    GREATERTHAN     reduce using rule 76 (vcte -> cte_float .)
+    LESSTHAN        reduce using rule 76 (vcte -> cte_float .)
+    GREATEREQ       reduce using rule 76 (vcte -> cte_float .)
+    LESSEQ          reduce using rule 76 (vcte -> cte_float .)
+    NOTEQUAL        reduce using rule 76 (vcte -> cte_float .)
+    ISEQUAL         reduce using rule 76 (vcte -> cte_float .)
+    RPAREN          reduce using rule 76 (vcte -> cte_float .)
+    COMMA           reduce using rule 76 (vcte -> cte_float .)
+    RBRACKET        reduce using rule 76 (vcte -> cte_float .)
+    HASTA           reduce using rule 76 (vcte -> cte_float .)
+    HACER           reduce using rule 76 (vcte -> cte_float .)
+
+
+state 95
+
+    (77) vcte -> cte_string .
+
+    SEMICOLON       reduce using rule 77 (vcte -> cte_string .)
+    TIMES           reduce using rule 77 (vcte -> cte_string .)
+    DIVIDE          reduce using rule 77 (vcte -> cte_string .)
+    PLUS            reduce using rule 77 (vcte -> cte_string .)
+    MINUS           reduce using rule 77 (vcte -> cte_string .)
+    GREATERTHAN     reduce using rule 77 (vcte -> cte_string .)
+    LESSTHAN        reduce using rule 77 (vcte -> cte_string .)
+    GREATEREQ       reduce using rule 77 (vcte -> cte_string .)
+    LESSEQ          reduce using rule 77 (vcte -> cte_string .)
+    NOTEQUAL        reduce using rule 77 (vcte -> cte_string .)
+    ISEQUAL         reduce using rule 77 (vcte -> cte_string .)
+    RPAREN          reduce using rule 77 (vcte -> cte_string .)
+    COMMA           reduce using rule 77 (vcte -> cte_string .)
+    RBRACKET        reduce using rule 77 (vcte -> cte_string .)
+    HASTA           reduce using rule 77 (vcte -> cte_string .)
+    HACER           reduce using rule 77 (vcte -> cte_string .)
+
+
+state 96
+
+    (78) vcte -> id .
+
+    SEMICOLON       reduce using rule 78 (vcte -> id .)
+    TIMES           reduce using rule 78 (vcte -> id .)
+    DIVIDE          reduce using rule 78 (vcte -> id .)
+    PLUS            reduce using rule 78 (vcte -> id .)
+    MINUS           reduce using rule 78 (vcte -> id .)
+    GREATERTHAN     reduce using rule 78 (vcte -> id .)
+    LESSTHAN        reduce using rule 78 (vcte -> id .)
+    GREATEREQ       reduce using rule 78 (vcte -> id .)
+    LESSEQ          reduce using rule 78 (vcte -> id .)
+    NOTEQUAL        reduce using rule 78 (vcte -> id .)
+    ISEQUAL         reduce using rule 78 (vcte -> id .)
+    RPAREN          reduce using rule 78 (vcte -> id .)
+    COMMA           reduce using rule 78 (vcte -> id .)
+    RBRACKET        reduce using rule 78 (vcte -> id .)
+    HASTA           reduce using rule 78 (vcte -> id .)
+    HACER           reduce using rule 78 (vcte -> id .)
+
+
+state 97
+
+    (79) vcte -> funCall .
+
+    SEMICOLON       reduce using rule 79 (vcte -> funCall .)
+    TIMES           reduce using rule 79 (vcte -> funCall .)
+    DIVIDE          reduce using rule 79 (vcte -> funCall .)
+    PLUS            reduce using rule 79 (vcte -> funCall .)
+    MINUS           reduce using rule 79 (vcte -> funCall .)
+    GREATERTHAN     reduce using rule 79 (vcte -> funCall .)
+    LESSTHAN        reduce using rule 79 (vcte -> funCall .)
+    GREATEREQ       reduce using rule 79 (vcte -> funCall .)
+    LESSEQ          reduce using rule 79 (vcte -> funCall .)
+    NOTEQUAL        reduce using rule 79 (vcte -> funCall .)
+    ISEQUAL         reduce using rule 79 (vcte -> funCall .)
+    RPAREN          reduce using rule 79 (vcte -> funCall .)
+    COMMA           reduce using rule 79 (vcte -> funCall .)
+    RBRACKET        reduce using rule 79 (vcte -> funCall .)
+    HASTA           reduce using rule 79 (vcte -> funCall .)
+    HACER           reduce using rule 79 (vcte -> funCall .)
+
+
+state 98
+
+    (80) vcte -> vectorMatriz .
+
+    SEMICOLON       reduce using rule 80 (vcte -> vectorMatriz .)
+    TIMES           reduce using rule 80 (vcte -> vectorMatriz .)
+    DIVIDE          reduce using rule 80 (vcte -> vectorMatriz .)
+    PLUS            reduce using rule 80 (vcte -> vectorMatriz .)
+    MINUS           reduce using rule 80 (vcte -> vectorMatriz .)
+    GREATERTHAN     reduce using rule 80 (vcte -> vectorMatriz .)
+    LESSTHAN        reduce using rule 80 (vcte -> vectorMatriz .)
+    GREATEREQ       reduce using rule 80 (vcte -> vectorMatriz .)
+    LESSEQ          reduce using rule 80 (vcte -> vectorMatriz .)
+    NOTEQUAL        reduce using rule 80 (vcte -> vectorMatriz .)
+    ISEQUAL         reduce using rule 80 (vcte -> vectorMatriz .)
+    RPAREN          reduce using rule 80 (vcte -> vectorMatriz .)
+    COMMA           reduce using rule 80 (vcte -> vectorMatriz .)
+    RBRACKET        reduce using rule 80 (vcte -> vectorMatriz .)
+    HASTA           reduce using rule 80 (vcte -> vectorMatriz .)
+    HACER           reduce using rule 80 (vcte -> vectorMatriz .)
+
+
+state 99
+
+    (65) exp -> term .
+    (66) exp -> term . exp_o exp
+    (67) exp_o -> . PLUS
+    (68) exp_o -> . MINUS
+
+    SEMICOLON       reduce using rule 65 (exp -> term .)
+    GREATERTHAN     reduce using rule 65 (exp -> term .)
+    LESSTHAN        reduce using rule 65 (exp -> term .)
+    GREATEREQ       reduce using rule 65 (exp -> term .)
+    LESSEQ          reduce using rule 65 (exp -> term .)
+    NOTEQUAL        reduce using rule 65 (exp -> term .)
+    ISEQUAL         reduce using rule 65 (exp -> term .)
+    RPAREN          reduce using rule 65 (exp -> term .)
+    COMMA           reduce using rule 65 (exp -> term .)
+    RBRACKET        reduce using rule 65 (exp -> term .)
+    HASTA           reduce using rule 65 (exp -> term .)
+    HACER           reduce using rule 65 (exp -> term .)
+    PLUS            shift and go to state 142
+    MINUS           shift and go to state 143
+
+    exp_o                          shift and go to state 141
+
+state 100
+
+    (81) cte_int -> negativo . CTEINT
+    (82) cte_float -> negativo . CTEFLOAT
+    (83) cte_string -> negativo . CTESTRING
+
+    CTEINT          shift and go to state 144
+    CTEFLOAT        shift and go to state 145
+    CTESTRING       shift and go to state 146
+
+
+state 101
+
+    (86) vectorMatriz -> LBRACKET . vm1 RBRACKET
+    (88) vm1 -> LBRACKET . vm2 RBRACKET COMMA vm1
+    (89) vm1 -> LBRACKET . vm2 RBRACKET
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (90) vm2 -> . exp COMMA vm2
+    (91) vm2 -> . exp
+    (92) vm2 -> . empty
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (138) empty -> .
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+
+    LBRACKET        shift and go to state 147
+    RBRACKET        reduce using rule 138 (empty -> .)
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    MINUS           shift and go to state 104
+
+    vm1                            shift and go to state 148
+    vm2                            shift and go to state 149
+    exp                            shift and go to state 150
+    empty                          shift and go to state 151
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+
+state 102
+
+    (87) vectorMatriz -> vm1 .
+
+    SEMICOLON       reduce using rule 87 (vectorMatriz -> vm1 .)
+    TIMES           reduce using rule 87 (vectorMatriz -> vm1 .)
+    DIVIDE          reduce using rule 87 (vectorMatriz -> vm1 .)
+    PLUS            reduce using rule 87 (vectorMatriz -> vm1 .)
+    MINUS           reduce using rule 87 (vectorMatriz -> vm1 .)
+    GREATERTHAN     reduce using rule 87 (vectorMatriz -> vm1 .)
+    LESSTHAN        reduce using rule 87 (vectorMatriz -> vm1 .)
+    GREATEREQ       reduce using rule 87 (vectorMatriz -> vm1 .)
+    LESSEQ          reduce using rule 87 (vectorMatriz -> vm1 .)
+    NOTEQUAL        reduce using rule 87 (vectorMatriz -> vm1 .)
+    ISEQUAL         reduce using rule 87 (vectorMatriz -> vm1 .)
+    RPAREN          reduce using rule 87 (vectorMatriz -> vm1 .)
+    COMMA           reduce using rule 87 (vectorMatriz -> vm1 .)
+    RBRACKET        reduce using rule 87 (vectorMatriz -> vm1 .)
+    HASTA           reduce using rule 87 (vectorMatriz -> vm1 .)
+    HACER           reduce using rule 87 (vectorMatriz -> vm1 .)
+
+
+state 103
+
+    (69) term -> factor . term_o term
+    (70) term -> factor .
+    (93) term_o -> . TIMES
+    (94) term_o -> . DIVIDE
+
+    PLUS            reduce using rule 70 (term -> factor .)
+    MINUS           reduce using rule 70 (term -> factor .)
+    SEMICOLON       reduce using rule 70 (term -> factor .)
+    GREATERTHAN     reduce using rule 70 (term -> factor .)
+    LESSTHAN        reduce using rule 70 (term -> factor .)
+    GREATEREQ       reduce using rule 70 (term -> factor .)
+    LESSEQ          reduce using rule 70 (term -> factor .)
+    NOTEQUAL        reduce using rule 70 (term -> factor .)
+    ISEQUAL         reduce using rule 70 (term -> factor .)
+    RPAREN          reduce using rule 70 (term -> factor .)
+    COMMA           reduce using rule 70 (term -> factor .)
+    RBRACKET        reduce using rule 70 (term -> factor .)
+    HASTA           reduce using rule 70 (term -> factor .)
+    HACER           reduce using rule 70 (term -> factor .)
+    TIMES           shift and go to state 153
+    DIVIDE          shift and go to state 154
+
+    term_o                         shift and go to state 152
+
+state 104
+
+    (84) negativo -> MINUS .
+
+    CTEINT          reduce using rule 84 (negativo -> MINUS .)
+    CTEFLOAT        reduce using rule 84 (negativo -> MINUS .)
+    CTESTRING       reduce using rule 84 (negativo -> MINUS .)
+
+
+state 105
+
+    (85) negativo -> empty .
+
+    CTEINT          reduce using rule 85 (negativo -> empty .)
+    CTEFLOAT        reduce using rule 85 (negativo -> empty .)
+    CTESTRING       reduce using rule 85 (negativo -> empty .)
+
+
+state 106
+
+    (72) factor -> leftP . expression rightP
+    (57) expression -> . exp loper exp
+    (58) expression -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    leftP                          shift and go to state 106
+    expression                     shift and go to state 155
+    exp                            shift and go to state 132
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 107
+
+    (73) leftP -> LPAREN .
+
+    LPAREN          reduce using rule 73 (leftP -> LPAREN .)
+    ID              reduce using rule 73 (leftP -> LPAREN .)
+    LBRACKET        reduce using rule 73 (leftP -> LPAREN .)
+    MINUS           reduce using rule 73 (leftP -> LPAREN .)
+    CTEINT          reduce using rule 73 (leftP -> LPAREN .)
+    CTEFLOAT        reduce using rule 73 (leftP -> LPAREN .)
+    CTESTRING       reduce using rule 73 (leftP -> LPAREN .)
+
+
+state 108
+
+    (40) id -> identifier indice_dimension .
+
+    EQUALS          reduce using rule 40 (id -> identifier indice_dimension .)
+    SEMICOLON       reduce using rule 40 (id -> identifier indice_dimension .)
+    TIMES           reduce using rule 40 (id -> identifier indice_dimension .)
+    DIVIDE          reduce using rule 40 (id -> identifier indice_dimension .)
+    PLUS            reduce using rule 40 (id -> identifier indice_dimension .)
+    MINUS           reduce using rule 40 (id -> identifier indice_dimension .)
+    GREATERTHAN     reduce using rule 40 (id -> identifier indice_dimension .)
+    LESSTHAN        reduce using rule 40 (id -> identifier indice_dimension .)
+    GREATEREQ       reduce using rule 40 (id -> identifier indice_dimension .)
+    LESSEQ          reduce using rule 40 (id -> identifier indice_dimension .)
+    NOTEQUAL        reduce using rule 40 (id -> identifier indice_dimension .)
+    ISEQUAL         reduce using rule 40 (id -> identifier indice_dimension .)
+    RPAREN          reduce using rule 40 (id -> identifier indice_dimension .)
+    LBRACKET        reduce using rule 40 (id -> identifier indice_dimension .)
+    COMMA           reduce using rule 40 (id -> identifier indice_dimension .)
+    RBRACKET        reduce using rule 40 (id -> identifier indice_dimension .)
+    HASTA           reduce using rule 40 (id -> identifier indice_dimension .)
+    HACER           reduce using rule 40 (id -> identifier indice_dimension .)
+
+
+state 109
+
+    (42) indice_dimension -> LBRACKET . exp RBRACKET LBRACKET exp RBRACKET
+    (43) indice_dimension -> LBRACKET . exp RBRACKET
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    exp                            shift and go to state 156
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 110
+
+    (44) indice_dimension -> empty .
+
+    EQUALS          reduce using rule 44 (indice_dimension -> empty .)
+    SEMICOLON       reduce using rule 44 (indice_dimension -> empty .)
+    TIMES           reduce using rule 44 (indice_dimension -> empty .)
+    DIVIDE          reduce using rule 44 (indice_dimension -> empty .)
+    PLUS            reduce using rule 44 (indice_dimension -> empty .)
+    MINUS           reduce using rule 44 (indice_dimension -> empty .)
+    GREATERTHAN     reduce using rule 44 (indice_dimension -> empty .)
+    LESSTHAN        reduce using rule 44 (indice_dimension -> empty .)
+    GREATEREQ       reduce using rule 44 (indice_dimension -> empty .)
+    LESSEQ          reduce using rule 44 (indice_dimension -> empty .)
+    NOTEQUAL        reduce using rule 44 (indice_dimension -> empty .)
+    ISEQUAL         reduce using rule 44 (indice_dimension -> empty .)
+    RPAREN          reduce using rule 44 (indice_dimension -> empty .)
+    LBRACKET        reduce using rule 44 (indice_dimension -> empty .)
+    COMMA           reduce using rule 44 (indice_dimension -> empty .)
+    RBRACKET        reduce using rule 44 (indice_dimension -> empty .)
+    HASTA           reduce using rule 44 (indice_dimension -> empty .)
+    HACER           reduce using rule 44 (indice_dimension -> empty .)
+
+
+state 111
+
+    (97) mientras -> mientras1 HAZ . body
+    (50) body -> . LCURBRACKET body1 RCURBRACKET
+
+    LCURBRACKET     shift and go to state 114
+
+    body                           shift and go to state 157
+
+state 112
+
+    (100) desde -> nuevo_desde desdeBody .
+
+    SI              reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    ESCRIBE         reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    LEE             reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    CARGAARCHIVO    reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    ID              reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    REGRESA         reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    DESDE           reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    MIENTRAS        reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+    RCURBRACKET     reduce using rule 100 (desde -> nuevo_desde desdeBody .)
+
+
+state 113
+
+    (103) desdeBody -> body .
+
+    SI              reduce using rule 103 (desdeBody -> body .)
+    ESCRIBE         reduce using rule 103 (desdeBody -> body .)
+    LEE             reduce using rule 103 (desdeBody -> body .)
+    CARGAARCHIVO    reduce using rule 103 (desdeBody -> body .)
+    ID              reduce using rule 103 (desdeBody -> body .)
+    REGRESA         reduce using rule 103 (desdeBody -> body .)
+    DESDE           reduce using rule 103 (desdeBody -> body .)
+    MIENTRAS        reduce using rule 103 (desdeBody -> body .)
+    RCURBRACKET     reduce using rule 103 (desdeBody -> body .)
+
+
+state 114
+
+    (50) body -> LCURBRACKET . body1 RCURBRACKET
+    (51) body1 -> . statement body1
+    (52) body1 -> . empty
+    (31) statement -> . assignment
+    (32) statement -> . condition
+    (33) statement -> . write
+    (34) statement -> . loop
+    (35) statement -> . read
+    (36) statement -> . loadData
+    (37) statement -> . funCall SEMICOLON
+    (38) statement -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    body1                          shift and go to state 158
+    statement                      shift and go to state 159
+    empty                          shift and go to state 160
+    assignment                     shift and go to state 161
+    condition                      shift and go to state 162
+    write                          shift and go to state 163
+    loop                           shift and go to state 164
+    read                           shift and go to state 165
+    loadData                       shift and go to state 166
+    funCall                        shift and go to state 167
+    return                         shift and go to state 168
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 115
+
+    (98) mientras1 -> mientras_w LPAREN . expression RPAREN
+    (57) expression -> . exp loper exp
+    (58) expression -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    expression                     shift and go to state 169
+    exp                            shift and go to state 132
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 116
+
+    (101) nuevo_desde -> DESDE id . EQUALS desde2 HASTA desde2 HACER
+
+    EQUALS          shift and go to state 170
+
+
+state 117
+
+    (41) identifier -> ID .
+
+    LBRACKET        reduce using rule 41 (identifier -> ID .)
+    EQUALS          reduce using rule 41 (identifier -> ID .)
+    RPAREN          reduce using rule 41 (identifier -> ID .)
+
+
+state 118
+
+    (22) function_t -> FUNCION functionI function2 inicia_fun declara_vars . function4 termina_fun
+    (29) function4 -> . statement function4
+    (30) function4 -> . empty
+    (31) statement -> . assignment
+    (32) statement -> . condition
+    (33) statement -> . write
+    (34) statement -> . loop
+    (35) statement -> . read
+    (36) statement -> . loadData
+    (37) statement -> . funCall SEMICOLON
+    (38) statement -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    function4                      shift and go to state 171
+    statement                      shift and go to state 172
+    empty                          shift and go to state 173
+    assignment                     shift and go to state 161
+    condition                      shift and go to state 162
+    write                          shift and go to state 163
+    loop                           shift and go to state 164
+    read                           shift and go to state 165
+    loadData                       shift and go to state 166
+    funCall                        shift and go to state 167
+    return                         shift and go to state 168
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 119
+
+    (24) function2 -> LPAREN function3 RPAREN .
+
+    LCURBRACKET     reduce using rule 24 (function2 -> LPAREN function3 RPAREN .)
+
+
+state 120
+
+    (25) function3 -> funParam function5 .
+
+    RPAREN          reduce using rule 25 (function3 -> funParam function5 .)
+
+
+state 121
+
+    (123) function5 -> COMMA . funParam function5
+    (27) funParam -> . type ID
+    (14) type -> . INT
+    (15) type -> . FLOAT
+    (16) type -> . CHAR
+    (17) type -> . STRING
+    (18) type -> . DATAFRAME
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 20
+    DATAFRAME       shift and go to state 21
+
+    funParam                       shift and go to state 174
+    type                           shift and go to state 74
+
+state 122
+
+    (124) function5 -> empty .
+
+    RPAREN          reduce using rule 124 (function5 -> empty .)
+
+
+state 123
+
+    (27) funParam -> type ID .
+
+    COMMA           reduce using rule 27 (funParam -> type ID .)
+    RPAREN          reduce using rule 27 (funParam -> type ID .)
+
+
+state 124
+
+    (126) function_v -> FUNCION functionV function2 inicia_fun declara_vars . function9 termina_fun
+    (128) function9 -> . stmt_v function9
+    (129) function9 -> . empty
+    (130) stmt_v -> . assignment
+    (131) stmt_v -> . condition
+    (132) stmt_v -> . write
+    (133) stmt_v -> . loop
+    (134) stmt_v -> . read
+    (135) stmt_v -> . loadData
+    (136) stmt_v -> . funCall SEMICOLON
+    (137) stmt_v -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    function9                      shift and go to state 175
+    stmt_v                         shift and go to state 176
+    empty                          shift and go to state 177
+    assignment                     shift and go to state 46
+    condition                      shift and go to state 47
+    write                          shift and go to state 48
+    loop                           shift and go to state 49
+    read                           shift and go to state 50
+    loadData                       shift and go to state 51
+    funCall                        shift and go to state 52
+    return                         shift and go to state 53
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 125
+
+    (19) dimension -> LBRACKET CTEINT RBRACKET .
+    (20) dimension -> LBRACKET CTEINT RBRACKET . LBRACKET CTEINT RBRACKET
+
+    SEMICOLON       reduce using rule 19 (dimension -> LBRACKET CTEINT RBRACKET .)
+    LBRACKET        shift and go to state 178
+
+
+state 126
+
+    (39) assignment -> id equals assignment3 . SEMICOLON
+
+    SEMICOLON       shift and go to state 179
+
+
+state 127
+
+    (46) assignment3 -> exp .
+
+    SEMICOLON       reduce using rule 46 (assignment3 -> exp .)
+
+
+state 128
+
+    (47) assignment3 -> read .
+
+    SEMICOLON       reduce using rule 47 (assignment3 -> read .)
+
+
+state 129
+
+    (71) factor -> vcte .
+
+    TIMES           reduce using rule 71 (factor -> vcte .)
+    DIVIDE          reduce using rule 71 (factor -> vcte .)
+    PLUS            reduce using rule 71 (factor -> vcte .)
+    MINUS           reduce using rule 71 (factor -> vcte .)
+    SEMICOLON       reduce using rule 71 (factor -> vcte .)
+    GREATERTHAN     reduce using rule 71 (factor -> vcte .)
+    LESSTHAN        reduce using rule 71 (factor -> vcte .)
+    GREATEREQ       reduce using rule 71 (factor -> vcte .)
+    LESSEQ          reduce using rule 71 (factor -> vcte .)
+    NOTEQUAL        reduce using rule 71 (factor -> vcte .)
+    ISEQUAL         reduce using rule 71 (factor -> vcte .)
+    RPAREN          reduce using rule 71 (factor -> vcte .)
+    COMMA           reduce using rule 71 (factor -> vcte .)
+    RBRACKET        reduce using rule 71 (factor -> vcte .)
+    HASTA           reduce using rule 71 (factor -> vcte .)
+    HACER           reduce using rule 71 (factor -> vcte .)
+
+
+state 130
+
+    (48) condition -> SI head_condition ENTONCES . body condition1
+    (50) body -> . LCURBRACKET body1 RCURBRACKET
+
+    LCURBRACKET     shift and go to state 114
+
+    body                           shift and go to state 180
+
+state 131
+
+    (49) head_condition -> LPAREN expression . close_condition
+    (55) close_condition -> . RPAREN
+
+    RPAREN          shift and go to state 182
+
+    close_condition                shift and go to state 181
+
+state 132
+
+    (57) expression -> exp . loper exp
+    (58) expression -> exp .
+    (59) loper -> . GREATERTHAN
+    (60) loper -> . LESSTHAN
+    (61) loper -> . GREATEREQ
+    (62) loper -> . LESSEQ
+    (63) loper -> . NOTEQUAL
+    (64) loper -> . ISEQUAL
+
+    RPAREN          reduce using rule 58 (expression -> exp .)
+    GREATERTHAN     shift and go to state 184
+    LESSTHAN        shift and go to state 185
+    GREATEREQ       shift and go to state 186
+    LESSEQ          shift and go to state 187
+    NOTEQUAL        shift and go to state 188
+    ISEQUAL         shift and go to state 189
+
+    loper                          shift and go to state 183
+
+state 133
+
+    (56) write -> ESCRIBE LPAREN expression . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 190
+
+
+state 134
+
+    (104) read -> LEE LPAREN id . read1 RPAREN SEMICOLON
+    (105) read1 -> . LBRACKET exp RBRACKET LBRACKET exp RBRACKET
+    (106) read1 -> . LBRACKET exp RBRACKET
+    (107) read1 -> . empty
+    (138) empty -> .
+
+    LBRACKET        shift and go to state 192
+    RPAREN          reduce using rule 138 (empty -> .)
+
+    read1                          shift and go to state 191
+    empty                          shift and go to state 193
+
+state 135
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID . route maxVariables maxRows RPAREN SEMICOLON
+    (109) route -> . CTESTRING
+
+    CTESTRING       shift and go to state 195
+
+    route                          shift and go to state 194
+
+state 136
+
+    (112) funCall -> ID iniciaFunCall funCall2 . terminaFunCall
+    (119) terminaFunCall -> . RPAREN
+
+    RPAREN          shift and go to state 197
+
+    terminaFunCall                 shift and go to state 196
+
+state 137
+
+    (114) funCall2 -> funcallParam . funCall3
+    (117) funCall3 -> . COMMA funcallParam funCall3
+    (118) funCall3 -> . empty
+    (138) empty -> .
+
+    COMMA           shift and go to state 199
+    RPAREN          reduce using rule 138 (empty -> .)
+
+    funCall3                       shift and go to state 198
+    empty                          shift and go to state 200
+
+state 138
+
+    (115) funCall2 -> empty .
+    (85) negativo -> empty .
+
+    RPAREN          reduce using rule 115 (funCall2 -> empty .)
+    CTEINT          reduce using rule 85 (negativo -> empty .)
+    CTEFLOAT        reduce using rule 85 (negativo -> empty .)
+    CTESTRING       reduce using rule 85 (negativo -> empty .)
+
+
+state 139
+
+    (116) funcallParam -> exp .
+
+    COMMA           reduce using rule 116 (funcallParam -> exp .)
+    RPAREN          reduce using rule 116 (funcallParam -> exp .)
+
+
+state 140
+
+    (120) return -> REGRESA return1 SEMICOLON .
+
+    SI              reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    ESCRIBE         reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    LEE             reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    ID              reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    REGRESA         reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    DESDE           reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    MIENTRAS        reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+    RCURBRACKET     reduce using rule 120 (return -> REGRESA return1 SEMICOLON .)
+
+
+state 141
+
+    (66) exp -> term exp_o . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    term                           shift and go to state 99
+    exp                            shift and go to state 201
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 142
+
+    (67) exp_o -> PLUS .
+
+    LPAREN          reduce using rule 67 (exp_o -> PLUS .)
+    ID              reduce using rule 67 (exp_o -> PLUS .)
+    LBRACKET        reduce using rule 67 (exp_o -> PLUS .)
+    MINUS           reduce using rule 67 (exp_o -> PLUS .)
+    CTEINT          reduce using rule 67 (exp_o -> PLUS .)
+    CTEFLOAT        reduce using rule 67 (exp_o -> PLUS .)
+    CTESTRING       reduce using rule 67 (exp_o -> PLUS .)
+
+
+state 143
+
+    (68) exp_o -> MINUS .
+
+    LPAREN          reduce using rule 68 (exp_o -> MINUS .)
+    ID              reduce using rule 68 (exp_o -> MINUS .)
+    LBRACKET        reduce using rule 68 (exp_o -> MINUS .)
+    MINUS           reduce using rule 68 (exp_o -> MINUS .)
+    CTEINT          reduce using rule 68 (exp_o -> MINUS .)
+    CTEFLOAT        reduce using rule 68 (exp_o -> MINUS .)
+    CTESTRING       reduce using rule 68 (exp_o -> MINUS .)
+
+
+state 144
+
+    (81) cte_int -> negativo CTEINT .
+
+    SEMICOLON       reduce using rule 81 (cte_int -> negativo CTEINT .)
+    TIMES           reduce using rule 81 (cte_int -> negativo CTEINT .)
+    DIVIDE          reduce using rule 81 (cte_int -> negativo CTEINT .)
+    PLUS            reduce using rule 81 (cte_int -> negativo CTEINT .)
+    MINUS           reduce using rule 81 (cte_int -> negativo CTEINT .)
+    GREATERTHAN     reduce using rule 81 (cte_int -> negativo CTEINT .)
+    LESSTHAN        reduce using rule 81 (cte_int -> negativo CTEINT .)
+    GREATEREQ       reduce using rule 81 (cte_int -> negativo CTEINT .)
+    LESSEQ          reduce using rule 81 (cte_int -> negativo CTEINT .)
+    NOTEQUAL        reduce using rule 81 (cte_int -> negativo CTEINT .)
+    ISEQUAL         reduce using rule 81 (cte_int -> negativo CTEINT .)
+    RPAREN          reduce using rule 81 (cte_int -> negativo CTEINT .)
+    COMMA           reduce using rule 81 (cte_int -> negativo CTEINT .)
+    RBRACKET        reduce using rule 81 (cte_int -> negativo CTEINT .)
+    HASTA           reduce using rule 81 (cte_int -> negativo CTEINT .)
+    HACER           reduce using rule 81 (cte_int -> negativo CTEINT .)
+
+
+state 145
+
+    (82) cte_float -> negativo CTEFLOAT .
+
+    SEMICOLON       reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    TIMES           reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    DIVIDE          reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    PLUS            reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    MINUS           reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    GREATERTHAN     reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    LESSTHAN        reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    GREATEREQ       reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    LESSEQ          reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    NOTEQUAL        reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    ISEQUAL         reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    RPAREN          reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    COMMA           reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    RBRACKET        reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    HASTA           reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+    HACER           reduce using rule 82 (cte_float -> negativo CTEFLOAT .)
+
+
+state 146
+
+    (83) cte_string -> negativo CTESTRING .
+
+    SEMICOLON       reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    TIMES           reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    DIVIDE          reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    PLUS            reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    MINUS           reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    GREATERTHAN     reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    LESSTHAN        reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    GREATEREQ       reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    LESSEQ          reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    NOTEQUAL        reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    ISEQUAL         reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    RPAREN          reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    COMMA           reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    RBRACKET        reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    HASTA           reduce using rule 83 (cte_string -> negativo CTESTRING .)
+    HACER           reduce using rule 83 (cte_string -> negativo CTESTRING .)
+
+
+state 147
+
+    (88) vm1 -> LBRACKET . vm2 RBRACKET COMMA vm1
+    (89) vm1 -> LBRACKET . vm2 RBRACKET
+    (86) vectorMatriz -> LBRACKET . vm1 RBRACKET
+    (90) vm2 -> . exp COMMA vm2
+    (91) vm2 -> . exp
+    (92) vm2 -> . empty
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (138) empty -> .
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+
+    LBRACKET        shift and go to state 147
+    RBRACKET        reduce using rule 138 (empty -> .)
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    MINUS           shift and go to state 104
+
+    vm2                            shift and go to state 149
+    vm1                            shift and go to state 148
+    exp                            shift and go to state 150
+    empty                          shift and go to state 151
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+
+state 148
+
+    (86) vectorMatriz -> LBRACKET vm1 . RBRACKET
+    (87) vectorMatriz -> vm1 .
+
+  ! shift/reduce conflict for RBRACKET resolved as shift
+    RBRACKET        shift and go to state 202
+    TIMES           reduce using rule 87 (vectorMatriz -> vm1 .)
+    DIVIDE          reduce using rule 87 (vectorMatriz -> vm1 .)
+    PLUS            reduce using rule 87 (vectorMatriz -> vm1 .)
+    MINUS           reduce using rule 87 (vectorMatriz -> vm1 .)
+    COMMA           reduce using rule 87 (vectorMatriz -> vm1 .)
+
+  ! RBRACKET        [ reduce using rule 87 (vectorMatriz -> vm1 .) ]
+
+
+state 149
+
+    (88) vm1 -> LBRACKET vm2 . RBRACKET COMMA vm1
+    (89) vm1 -> LBRACKET vm2 . RBRACKET
+
+    RBRACKET        shift and go to state 203
+
+
+state 150
+
+    (90) vm2 -> exp . COMMA vm2
+    (91) vm2 -> exp .
+
+    COMMA           shift and go to state 204
+    RBRACKET        reduce using rule 91 (vm2 -> exp .)
+
+
+state 151
+
+    (92) vm2 -> empty .
+    (85) negativo -> empty .
+
+    RBRACKET        reduce using rule 92 (vm2 -> empty .)
+    CTEINT          reduce using rule 85 (negativo -> empty .)
+    CTEFLOAT        reduce using rule 85 (negativo -> empty .)
+    CTESTRING       reduce using rule 85 (negativo -> empty .)
+
+
+state 152
+
+    (69) term -> factor term_o . term
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    factor                         shift and go to state 103
+    term                           shift and go to state 205
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 153
+
+    (93) term_o -> TIMES .
+
+    LPAREN          reduce using rule 93 (term_o -> TIMES .)
+    ID              reduce using rule 93 (term_o -> TIMES .)
+    LBRACKET        reduce using rule 93 (term_o -> TIMES .)
+    MINUS           reduce using rule 93 (term_o -> TIMES .)
+    CTEINT          reduce using rule 93 (term_o -> TIMES .)
+    CTEFLOAT        reduce using rule 93 (term_o -> TIMES .)
+    CTESTRING       reduce using rule 93 (term_o -> TIMES .)
+
+
+state 154
+
+    (94) term_o -> DIVIDE .
+
+    LPAREN          reduce using rule 94 (term_o -> DIVIDE .)
+    ID              reduce using rule 94 (term_o -> DIVIDE .)
+    LBRACKET        reduce using rule 94 (term_o -> DIVIDE .)
+    MINUS           reduce using rule 94 (term_o -> DIVIDE .)
+    CTEINT          reduce using rule 94 (term_o -> DIVIDE .)
+    CTEFLOAT        reduce using rule 94 (term_o -> DIVIDE .)
+    CTESTRING       reduce using rule 94 (term_o -> DIVIDE .)
+
+
+state 155
+
+    (72) factor -> leftP expression . rightP
+    (74) rightP -> . RPAREN
+
+    RPAREN          shift and go to state 207
+
+    rightP                         shift and go to state 206
+
+state 156
+
+    (42) indice_dimension -> LBRACKET exp . RBRACKET LBRACKET exp RBRACKET
+    (43) indice_dimension -> LBRACKET exp . RBRACKET
+
+    RBRACKET        shift and go to state 208
+
+
+state 157
+
+    (97) mientras -> mientras1 HAZ body .
+
+    SI              reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    ESCRIBE         reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    LEE             reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    CARGAARCHIVO    reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    ID              reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    REGRESA         reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    DESDE           reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    MIENTRAS        reduce using rule 97 (mientras -> mientras1 HAZ body .)
+    RCURBRACKET     reduce using rule 97 (mientras -> mientras1 HAZ body .)
+
+
+state 158
+
+    (50) body -> LCURBRACKET body1 . RCURBRACKET
+
+    RCURBRACKET     shift and go to state 209
+
+
+state 159
+
+    (51) body1 -> statement . body1
+    (51) body1 -> . statement body1
+    (52) body1 -> . empty
+    (31) statement -> . assignment
+    (32) statement -> . condition
+    (33) statement -> . write
+    (34) statement -> . loop
+    (35) statement -> . read
+    (36) statement -> . loadData
+    (37) statement -> . funCall SEMICOLON
+    (38) statement -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    statement                      shift and go to state 159
+    body1                          shift and go to state 210
+    empty                          shift and go to state 160
+    assignment                     shift and go to state 161
+    condition                      shift and go to state 162
+    write                          shift and go to state 163
+    loop                           shift and go to state 164
+    read                           shift and go to state 165
+    loadData                       shift and go to state 166
+    funCall                        shift and go to state 167
+    return                         shift and go to state 168
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 160
+
+    (52) body1 -> empty .
+
+    RCURBRACKET     reduce using rule 52 (body1 -> empty .)
+
+
+state 161
+
+    (31) statement -> assignment .
+
+    SI              reduce using rule 31 (statement -> assignment .)
+    ESCRIBE         reduce using rule 31 (statement -> assignment .)
+    LEE             reduce using rule 31 (statement -> assignment .)
+    CARGAARCHIVO    reduce using rule 31 (statement -> assignment .)
+    ID              reduce using rule 31 (statement -> assignment .)
+    REGRESA         reduce using rule 31 (statement -> assignment .)
+    DESDE           reduce using rule 31 (statement -> assignment .)
+    MIENTRAS        reduce using rule 31 (statement -> assignment .)
+    RCURBRACKET     reduce using rule 31 (statement -> assignment .)
+
+
+state 162
+
+    (32) statement -> condition .
+
+    SI              reduce using rule 32 (statement -> condition .)
+    ESCRIBE         reduce using rule 32 (statement -> condition .)
+    LEE             reduce using rule 32 (statement -> condition .)
+    CARGAARCHIVO    reduce using rule 32 (statement -> condition .)
+    ID              reduce using rule 32 (statement -> condition .)
+    REGRESA         reduce using rule 32 (statement -> condition .)
+    DESDE           reduce using rule 32 (statement -> condition .)
+    MIENTRAS        reduce using rule 32 (statement -> condition .)
+    RCURBRACKET     reduce using rule 32 (statement -> condition .)
+
+
+state 163
+
+    (33) statement -> write .
+
+    SI              reduce using rule 33 (statement -> write .)
+    ESCRIBE         reduce using rule 33 (statement -> write .)
+    LEE             reduce using rule 33 (statement -> write .)
+    CARGAARCHIVO    reduce using rule 33 (statement -> write .)
+    ID              reduce using rule 33 (statement -> write .)
+    REGRESA         reduce using rule 33 (statement -> write .)
+    DESDE           reduce using rule 33 (statement -> write .)
+    MIENTRAS        reduce using rule 33 (statement -> write .)
+    RCURBRACKET     reduce using rule 33 (statement -> write .)
+
+
+state 164
+
+    (34) statement -> loop .
+
+    SI              reduce using rule 34 (statement -> loop .)
+    ESCRIBE         reduce using rule 34 (statement -> loop .)
+    LEE             reduce using rule 34 (statement -> loop .)
+    CARGAARCHIVO    reduce using rule 34 (statement -> loop .)
+    ID              reduce using rule 34 (statement -> loop .)
+    REGRESA         reduce using rule 34 (statement -> loop .)
+    DESDE           reduce using rule 34 (statement -> loop .)
+    MIENTRAS        reduce using rule 34 (statement -> loop .)
+    RCURBRACKET     reduce using rule 34 (statement -> loop .)
+
+
+state 165
+
+    (35) statement -> read .
+
+    SI              reduce using rule 35 (statement -> read .)
+    ESCRIBE         reduce using rule 35 (statement -> read .)
+    LEE             reduce using rule 35 (statement -> read .)
+    CARGAARCHIVO    reduce using rule 35 (statement -> read .)
+    ID              reduce using rule 35 (statement -> read .)
+    REGRESA         reduce using rule 35 (statement -> read .)
+    DESDE           reduce using rule 35 (statement -> read .)
+    MIENTRAS        reduce using rule 35 (statement -> read .)
+    RCURBRACKET     reduce using rule 35 (statement -> read .)
+
+
+state 166
+
+    (36) statement -> loadData .
+
+    SI              reduce using rule 36 (statement -> loadData .)
+    ESCRIBE         reduce using rule 36 (statement -> loadData .)
+    LEE             reduce using rule 36 (statement -> loadData .)
+    CARGAARCHIVO    reduce using rule 36 (statement -> loadData .)
+    ID              reduce using rule 36 (statement -> loadData .)
+    REGRESA         reduce using rule 36 (statement -> loadData .)
+    DESDE           reduce using rule 36 (statement -> loadData .)
+    MIENTRAS        reduce using rule 36 (statement -> loadData .)
+    RCURBRACKET     reduce using rule 36 (statement -> loadData .)
+
+
+state 167
+
+    (37) statement -> funCall . SEMICOLON
+
+    SEMICOLON       shift and go to state 211
+
+
+state 168
+
+    (38) statement -> return .
+
+    SI              reduce using rule 38 (statement -> return .)
+    ESCRIBE         reduce using rule 38 (statement -> return .)
+    LEE             reduce using rule 38 (statement -> return .)
+    CARGAARCHIVO    reduce using rule 38 (statement -> return .)
+    ID              reduce using rule 38 (statement -> return .)
+    REGRESA         reduce using rule 38 (statement -> return .)
+    DESDE           reduce using rule 38 (statement -> return .)
+    MIENTRAS        reduce using rule 38 (statement -> return .)
+    RCURBRACKET     reduce using rule 38 (statement -> return .)
+
+
+state 169
+
+    (98) mientras1 -> mientras_w LPAREN expression . RPAREN
+
+    RPAREN          shift and go to state 212
+
+
+state 170
+
+    (101) nuevo_desde -> DESDE id EQUALS . desde2 HASTA desde2 HACER
+    (102) desde2 -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    id                             shift and go to state 96
+    desde2                         shift and go to state 213
+    exp                            shift and go to state 214
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 171
+
+    (22) function_t -> FUNCION functionI function2 inicia_fun declara_vars function4 . termina_fun
+    (125) termina_fun -> . RCURBRACKET
+
+    RCURBRACKET     shift and go to state 216
+
+    termina_fun                    shift and go to state 215
+
+state 172
+
+    (29) function4 -> statement . function4
+    (29) function4 -> . statement function4
+    (30) function4 -> . empty
+    (31) statement -> . assignment
+    (32) statement -> . condition
+    (33) statement -> . write
+    (34) statement -> . loop
+    (35) statement -> . read
+    (36) statement -> . loadData
+    (37) statement -> . funCall SEMICOLON
+    (38) statement -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    statement                      shift and go to state 172
+    function4                      shift and go to state 217
+    empty                          shift and go to state 173
+    assignment                     shift and go to state 161
+    condition                      shift and go to state 162
+    write                          shift and go to state 163
+    loop                           shift and go to state 164
+    read                           shift and go to state 165
+    loadData                       shift and go to state 166
+    funCall                        shift and go to state 167
+    return                         shift and go to state 168
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 173
+
+    (30) function4 -> empty .
+
+    RCURBRACKET     reduce using rule 30 (function4 -> empty .)
+
+
+state 174
+
+    (123) function5 -> COMMA funParam . function5
+    (123) function5 -> . COMMA funParam function5
+    (124) function5 -> . empty
+    (138) empty -> .
+
+    COMMA           shift and go to state 121
+    RPAREN          reduce using rule 138 (empty -> .)
+
+    function5                      shift and go to state 218
+    empty                          shift and go to state 122
+
+state 175
+
+    (126) function_v -> FUNCION functionV function2 inicia_fun declara_vars function9 . termina_fun
+    (125) termina_fun -> . RCURBRACKET
+
+    RCURBRACKET     shift and go to state 216
+
+    termina_fun                    shift and go to state 219
+
+state 176
+
+    (128) function9 -> stmt_v . function9
+    (128) function9 -> . stmt_v function9
+    (129) function9 -> . empty
+    (130) stmt_v -> . assignment
+    (131) stmt_v -> . condition
+    (132) stmt_v -> . write
+    (133) stmt_v -> . loop
+    (134) stmt_v -> . read
+    (135) stmt_v -> . loadData
+    (136) stmt_v -> . funCall SEMICOLON
+    (137) stmt_v -> . return
+    (138) empty -> .
+    (39) assignment -> . id equals assignment3 SEMICOLON
+    (48) condition -> . SI head_condition ENTONCES body condition1
+    (56) write -> . ESCRIBE LPAREN expression RPAREN SEMICOLON
+    (95) loop -> . mientras
+    (96) loop -> . desde
+    (104) read -> . LEE LPAREN id read1 RPAREN SEMICOLON
+    (108) loadData -> . CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (120) return -> . REGRESA return1 SEMICOLON
+    (40) id -> . identifier indice_dimension
+    (97) mientras -> . mientras1 HAZ body
+    (100) desde -> . nuevo_desde desdeBody
+    (41) identifier -> . ID
+    (98) mientras1 -> . mientras_w LPAREN expression RPAREN
+    (101) nuevo_desde -> . DESDE id EQUALS desde2 HASTA desde2 HACER
+    (99) mientras_w -> . MIENTRAS
+
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+    SI              shift and go to state 55
+    ESCRIBE         shift and go to state 56
+    LEE             shift and go to state 59
+    CARGAARCHIVO    shift and go to state 60
+    ID              shift and go to state 61
+    REGRESA         shift and go to state 62
+    DESDE           shift and go to state 67
+    MIENTRAS        shift and go to state 68
+
+    stmt_v                         shift and go to state 176
+    function9                      shift and go to state 220
+    empty                          shift and go to state 177
+    assignment                     shift and go to state 46
+    condition                      shift and go to state 47
+    write                          shift and go to state 48
+    loop                           shift and go to state 49
+    read                           shift and go to state 50
+    loadData                       shift and go to state 51
+    funCall                        shift and go to state 52
+    return                         shift and go to state 53
+    id                             shift and go to state 54
+    mientras                       shift and go to state 57
+    desde                          shift and go to state 58
+    identifier                     shift and go to state 63
+    mientras1                      shift and go to state 64
+    nuevo_desde                    shift and go to state 65
+    mientras_w                     shift and go to state 66
+
+state 177
+
+    (129) function9 -> empty .
+
+    RCURBRACKET     reduce using rule 129 (function9 -> empty .)
+
+
+state 178
+
+    (20) dimension -> LBRACKET CTEINT RBRACKET LBRACKET . CTEINT RBRACKET
+
+    CTEINT          shift and go to state 221
+
+
+state 179
+
+    (39) assignment -> id equals assignment3 SEMICOLON .
+
+    SI              reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    ESCRIBE         reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    LEE             reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    ID              reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    REGRESA         reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    DESDE           reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    MIENTRAS        reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+    RCURBRACKET     reduce using rule 39 (assignment -> id equals assignment3 SEMICOLON .)
+
+
+state 180
+
+    (48) condition -> SI head_condition ENTONCES body . condition1
+    (53) condition1 -> . SINO body
+    (54) condition1 -> . empty
+    (138) empty -> .
+
+    SINO            shift and go to state 223
+    SI              reduce using rule 138 (empty -> .)
+    ESCRIBE         reduce using rule 138 (empty -> .)
+    LEE             reduce using rule 138 (empty -> .)
+    CARGAARCHIVO    reduce using rule 138 (empty -> .)
+    ID              reduce using rule 138 (empty -> .)
+    REGRESA         reduce using rule 138 (empty -> .)
+    DESDE           reduce using rule 138 (empty -> .)
+    MIENTRAS        reduce using rule 138 (empty -> .)
+    RCURBRACKET     reduce using rule 138 (empty -> .)
+
+    condition1                     shift and go to state 222
+    empty                          shift and go to state 224
+
+state 181
+
+    (49) head_condition -> LPAREN expression close_condition .
+
+    ENTONCES        reduce using rule 49 (head_condition -> LPAREN expression close_condition .)
+
+
+state 182
+
+    (55) close_condition -> RPAREN .
+
+    ENTONCES        reduce using rule 55 (close_condition -> RPAREN .)
+
+
+state 183
+
+    (57) expression -> exp loper . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    exp                            shift and go to state 225
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 184
+
+    (59) loper -> GREATERTHAN .
+
+    LPAREN          reduce using rule 59 (loper -> GREATERTHAN .)
+    ID              reduce using rule 59 (loper -> GREATERTHAN .)
+    LBRACKET        reduce using rule 59 (loper -> GREATERTHAN .)
+    MINUS           reduce using rule 59 (loper -> GREATERTHAN .)
+    CTEINT          reduce using rule 59 (loper -> GREATERTHAN .)
+    CTEFLOAT        reduce using rule 59 (loper -> GREATERTHAN .)
+    CTESTRING       reduce using rule 59 (loper -> GREATERTHAN .)
+
+
+state 185
+
+    (60) loper -> LESSTHAN .
+
+    LPAREN          reduce using rule 60 (loper -> LESSTHAN .)
+    ID              reduce using rule 60 (loper -> LESSTHAN .)
+    LBRACKET        reduce using rule 60 (loper -> LESSTHAN .)
+    MINUS           reduce using rule 60 (loper -> LESSTHAN .)
+    CTEINT          reduce using rule 60 (loper -> LESSTHAN .)
+    CTEFLOAT        reduce using rule 60 (loper -> LESSTHAN .)
+    CTESTRING       reduce using rule 60 (loper -> LESSTHAN .)
+
+
+state 186
+
+    (61) loper -> GREATEREQ .
+
+    LPAREN          reduce using rule 61 (loper -> GREATEREQ .)
+    ID              reduce using rule 61 (loper -> GREATEREQ .)
+    LBRACKET        reduce using rule 61 (loper -> GREATEREQ .)
+    MINUS           reduce using rule 61 (loper -> GREATEREQ .)
+    CTEINT          reduce using rule 61 (loper -> GREATEREQ .)
+    CTEFLOAT        reduce using rule 61 (loper -> GREATEREQ .)
+    CTESTRING       reduce using rule 61 (loper -> GREATEREQ .)
+
+
+state 187
+
+    (62) loper -> LESSEQ .
+
+    LPAREN          reduce using rule 62 (loper -> LESSEQ .)
+    ID              reduce using rule 62 (loper -> LESSEQ .)
+    LBRACKET        reduce using rule 62 (loper -> LESSEQ .)
+    MINUS           reduce using rule 62 (loper -> LESSEQ .)
+    CTEINT          reduce using rule 62 (loper -> LESSEQ .)
+    CTEFLOAT        reduce using rule 62 (loper -> LESSEQ .)
+    CTESTRING       reduce using rule 62 (loper -> LESSEQ .)
+
+
+state 188
+
+    (63) loper -> NOTEQUAL .
+
+    LPAREN          reduce using rule 63 (loper -> NOTEQUAL .)
+    ID              reduce using rule 63 (loper -> NOTEQUAL .)
+    LBRACKET        reduce using rule 63 (loper -> NOTEQUAL .)
+    MINUS           reduce using rule 63 (loper -> NOTEQUAL .)
+    CTEINT          reduce using rule 63 (loper -> NOTEQUAL .)
+    CTEFLOAT        reduce using rule 63 (loper -> NOTEQUAL .)
+    CTESTRING       reduce using rule 63 (loper -> NOTEQUAL .)
+
+
+state 189
+
+    (64) loper -> ISEQUAL .
+
+    LPAREN          reduce using rule 64 (loper -> ISEQUAL .)
+    ID              reduce using rule 64 (loper -> ISEQUAL .)
+    LBRACKET        reduce using rule 64 (loper -> ISEQUAL .)
+    MINUS           reduce using rule 64 (loper -> ISEQUAL .)
+    CTEINT          reduce using rule 64 (loper -> ISEQUAL .)
+    CTEFLOAT        reduce using rule 64 (loper -> ISEQUAL .)
+    CTESTRING       reduce using rule 64 (loper -> ISEQUAL .)
+
+
+state 190
+
+    (56) write -> ESCRIBE LPAREN expression RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 226
+
+
+state 191
+
+    (104) read -> LEE LPAREN id read1 . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 227
+
+
+state 192
+
+    (105) read1 -> LBRACKET . exp RBRACKET LBRACKET exp RBRACKET
+    (106) read1 -> LBRACKET . exp RBRACKET
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    exp                            shift and go to state 228
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 193
+
+    (107) read1 -> empty .
+
+    RPAREN          reduce using rule 107 (read1 -> empty .)
+
+
+state 194
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID route . maxVariables maxRows RPAREN SEMICOLON
+    (110) maxVariables -> . CTEINT
+
+    CTEINT          shift and go to state 230
+
+    maxVariables                   shift and go to state 229
+
+state 195
+
+    (109) route -> CTESTRING .
+
+    CTEINT          reduce using rule 109 (route -> CTESTRING .)
+
+
+state 196
+
+    (112) funCall -> ID iniciaFunCall funCall2 terminaFunCall .
+
+    SEMICOLON       reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    TIMES           reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    DIVIDE          reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    PLUS            reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    MINUS           reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    GREATERTHAN     reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    LESSTHAN        reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    GREATEREQ       reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    LESSEQ          reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    NOTEQUAL        reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    ISEQUAL         reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    RPAREN          reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    COMMA           reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    RBRACKET        reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    HASTA           reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+    HACER           reduce using rule 112 (funCall -> ID iniciaFunCall funCall2 terminaFunCall .)
+
+
+state 197
+
+    (119) terminaFunCall -> RPAREN .
+
+    SEMICOLON       reduce using rule 119 (terminaFunCall -> RPAREN .)
+    TIMES           reduce using rule 119 (terminaFunCall -> RPAREN .)
+    DIVIDE          reduce using rule 119 (terminaFunCall -> RPAREN .)
+    PLUS            reduce using rule 119 (terminaFunCall -> RPAREN .)
+    MINUS           reduce using rule 119 (terminaFunCall -> RPAREN .)
+    GREATERTHAN     reduce using rule 119 (terminaFunCall -> RPAREN .)
+    LESSTHAN        reduce using rule 119 (terminaFunCall -> RPAREN .)
+    GREATEREQ       reduce using rule 119 (terminaFunCall -> RPAREN .)
+    LESSEQ          reduce using rule 119 (terminaFunCall -> RPAREN .)
+    NOTEQUAL        reduce using rule 119 (terminaFunCall -> RPAREN .)
+    ISEQUAL         reduce using rule 119 (terminaFunCall -> RPAREN .)
+    RPAREN          reduce using rule 119 (terminaFunCall -> RPAREN .)
+    COMMA           reduce using rule 119 (terminaFunCall -> RPAREN .)
+    RBRACKET        reduce using rule 119 (terminaFunCall -> RPAREN .)
+    HASTA           reduce using rule 119 (terminaFunCall -> RPAREN .)
+    HACER           reduce using rule 119 (terminaFunCall -> RPAREN .)
+
+
+state 198
+
+    (114) funCall2 -> funcallParam funCall3 .
+
+    RPAREN          reduce using rule 114 (funCall2 -> funcallParam funCall3 .)
+
+
+state 199
+
+    (117) funCall3 -> COMMA . funcallParam funCall3
+    (116) funcallParam -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    funcallParam                   shift and go to state 231
+    exp                            shift and go to state 139
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 200
+
+    (118) funCall3 -> empty .
+
+    RPAREN          reduce using rule 118 (funCall3 -> empty .)
+
+
+state 201
+
+    (66) exp -> term exp_o exp .
+
+    SEMICOLON       reduce using rule 66 (exp -> term exp_o exp .)
+    GREATERTHAN     reduce using rule 66 (exp -> term exp_o exp .)
+    LESSTHAN        reduce using rule 66 (exp -> term exp_o exp .)
+    GREATEREQ       reduce using rule 66 (exp -> term exp_o exp .)
+    LESSEQ          reduce using rule 66 (exp -> term exp_o exp .)
+    NOTEQUAL        reduce using rule 66 (exp -> term exp_o exp .)
+    ISEQUAL         reduce using rule 66 (exp -> term exp_o exp .)
+    RPAREN          reduce using rule 66 (exp -> term exp_o exp .)
+    COMMA           reduce using rule 66 (exp -> term exp_o exp .)
+    RBRACKET        reduce using rule 66 (exp -> term exp_o exp .)
+    HASTA           reduce using rule 66 (exp -> term exp_o exp .)
+    HACER           reduce using rule 66 (exp -> term exp_o exp .)
+
+
+state 202
+
+    (86) vectorMatriz -> LBRACKET vm1 RBRACKET .
+
+    SEMICOLON       reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    TIMES           reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    DIVIDE          reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    PLUS            reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    MINUS           reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    GREATERTHAN     reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    LESSTHAN        reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    GREATEREQ       reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    LESSEQ          reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    NOTEQUAL        reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    ISEQUAL         reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    RPAREN          reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    COMMA           reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    RBRACKET        reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    HASTA           reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+    HACER           reduce using rule 86 (vectorMatriz -> LBRACKET vm1 RBRACKET .)
+
+
+state 203
+
+    (88) vm1 -> LBRACKET vm2 RBRACKET . COMMA vm1
+    (89) vm1 -> LBRACKET vm2 RBRACKET .
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    COMMA           shift and go to state 232
+    SEMICOLON       reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    TIMES           reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    DIVIDE          reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    PLUS            reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    MINUS           reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    GREATERTHAN     reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    LESSTHAN        reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    GREATEREQ       reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    LESSEQ          reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    NOTEQUAL        reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    ISEQUAL         reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    RPAREN          reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    RBRACKET        reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    HASTA           reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+    HACER           reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .)
+
+  ! COMMA           [ reduce using rule 89 (vm1 -> LBRACKET vm2 RBRACKET .) ]
+
+
+state 204
+
+    (90) vm2 -> exp COMMA . vm2
+    (90) vm2 -> . exp COMMA vm2
+    (91) vm2 -> . exp
+    (92) vm2 -> . empty
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (138) empty -> .
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+
+    RBRACKET        reduce using rule 138 (empty -> .)
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+
+    exp                            shift and go to state 150
+    vm2                            shift and go to state 233
+    empty                          shift and go to state 151
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+
+state 205
+
+    (69) term -> factor term_o term .
+
+    PLUS            reduce using rule 69 (term -> factor term_o term .)
+    MINUS           reduce using rule 69 (term -> factor term_o term .)
+    SEMICOLON       reduce using rule 69 (term -> factor term_o term .)
+    GREATERTHAN     reduce using rule 69 (term -> factor term_o term .)
+    LESSTHAN        reduce using rule 69 (term -> factor term_o term .)
+    GREATEREQ       reduce using rule 69 (term -> factor term_o term .)
+    LESSEQ          reduce using rule 69 (term -> factor term_o term .)
+    NOTEQUAL        reduce using rule 69 (term -> factor term_o term .)
+    ISEQUAL         reduce using rule 69 (term -> factor term_o term .)
+    RPAREN          reduce using rule 69 (term -> factor term_o term .)
+    COMMA           reduce using rule 69 (term -> factor term_o term .)
+    RBRACKET        reduce using rule 69 (term -> factor term_o term .)
+    HASTA           reduce using rule 69 (term -> factor term_o term .)
+    HACER           reduce using rule 69 (term -> factor term_o term .)
+
+
+state 206
+
+    (72) factor -> leftP expression rightP .
+
+    TIMES           reduce using rule 72 (factor -> leftP expression rightP .)
+    DIVIDE          reduce using rule 72 (factor -> leftP expression rightP .)
+    PLUS            reduce using rule 72 (factor -> leftP expression rightP .)
+    MINUS           reduce using rule 72 (factor -> leftP expression rightP .)
+    SEMICOLON       reduce using rule 72 (factor -> leftP expression rightP .)
+    GREATERTHAN     reduce using rule 72 (factor -> leftP expression rightP .)
+    LESSTHAN        reduce using rule 72 (factor -> leftP expression rightP .)
+    GREATEREQ       reduce using rule 72 (factor -> leftP expression rightP .)
+    LESSEQ          reduce using rule 72 (factor -> leftP expression rightP .)
+    NOTEQUAL        reduce using rule 72 (factor -> leftP expression rightP .)
+    ISEQUAL         reduce using rule 72 (factor -> leftP expression rightP .)
+    RPAREN          reduce using rule 72 (factor -> leftP expression rightP .)
+    COMMA           reduce using rule 72 (factor -> leftP expression rightP .)
+    RBRACKET        reduce using rule 72 (factor -> leftP expression rightP .)
+    HASTA           reduce using rule 72 (factor -> leftP expression rightP .)
+    HACER           reduce using rule 72 (factor -> leftP expression rightP .)
+
+
+state 207
+
+    (74) rightP -> RPAREN .
+
+    TIMES           reduce using rule 74 (rightP -> RPAREN .)
+    DIVIDE          reduce using rule 74 (rightP -> RPAREN .)
+    PLUS            reduce using rule 74 (rightP -> RPAREN .)
+    MINUS           reduce using rule 74 (rightP -> RPAREN .)
+    SEMICOLON       reduce using rule 74 (rightP -> RPAREN .)
+    GREATERTHAN     reduce using rule 74 (rightP -> RPAREN .)
+    LESSTHAN        reduce using rule 74 (rightP -> RPAREN .)
+    GREATEREQ       reduce using rule 74 (rightP -> RPAREN .)
+    LESSEQ          reduce using rule 74 (rightP -> RPAREN .)
+    NOTEQUAL        reduce using rule 74 (rightP -> RPAREN .)
+    ISEQUAL         reduce using rule 74 (rightP -> RPAREN .)
+    RPAREN          reduce using rule 74 (rightP -> RPAREN .)
+    COMMA           reduce using rule 74 (rightP -> RPAREN .)
+    RBRACKET        reduce using rule 74 (rightP -> RPAREN .)
+    HASTA           reduce using rule 74 (rightP -> RPAREN .)
+    HACER           reduce using rule 74 (rightP -> RPAREN .)
+
+
+state 208
+
+    (42) indice_dimension -> LBRACKET exp RBRACKET . LBRACKET exp RBRACKET
+    (43) indice_dimension -> LBRACKET exp RBRACKET .
+
+  ! shift/reduce conflict for LBRACKET resolved as shift
+    LBRACKET        shift and go to state 234
+    EQUALS          reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    SEMICOLON       reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    TIMES           reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    DIVIDE          reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    PLUS            reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    MINUS           reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    GREATERTHAN     reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    LESSTHAN        reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    GREATEREQ       reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    LESSEQ          reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    NOTEQUAL        reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    ISEQUAL         reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    RPAREN          reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    COMMA           reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    RBRACKET        reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    HASTA           reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+    HACER           reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .)
+
+  ! LBRACKET        [ reduce using rule 43 (indice_dimension -> LBRACKET exp RBRACKET .) ]
+
+
+state 209
+
+    (50) body -> LCURBRACKET body1 RCURBRACKET .
+
+    SI              reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    ESCRIBE         reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    LEE             reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    CARGAARCHIVO    reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    ID              reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    REGRESA         reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    DESDE           reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    MIENTRAS        reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    RCURBRACKET     reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+    SINO            reduce using rule 50 (body -> LCURBRACKET body1 RCURBRACKET .)
+
+
+state 210
+
+    (51) body1 -> statement body1 .
+
+    RCURBRACKET     reduce using rule 51 (body1 -> statement body1 .)
+
+
+state 211
+
+    (37) statement -> funCall SEMICOLON .
+
+    SI              reduce using rule 37 (statement -> funCall SEMICOLON .)
+    ESCRIBE         reduce using rule 37 (statement -> funCall SEMICOLON .)
+    LEE             reduce using rule 37 (statement -> funCall SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 37 (statement -> funCall SEMICOLON .)
+    ID              reduce using rule 37 (statement -> funCall SEMICOLON .)
+    REGRESA         reduce using rule 37 (statement -> funCall SEMICOLON .)
+    DESDE           reduce using rule 37 (statement -> funCall SEMICOLON .)
+    MIENTRAS        reduce using rule 37 (statement -> funCall SEMICOLON .)
+    RCURBRACKET     reduce using rule 37 (statement -> funCall SEMICOLON .)
+
+
+state 212
+
+    (98) mientras1 -> mientras_w LPAREN expression RPAREN .
+
+    HAZ             reduce using rule 98 (mientras1 -> mientras_w LPAREN expression RPAREN .)
+
+
+state 213
+
+    (101) nuevo_desde -> DESDE id EQUALS desde2 . HASTA desde2 HACER
+
+    HASTA           shift and go to state 235
+
+
+state 214
+
+    (102) desde2 -> exp .
+
+    HASTA           reduce using rule 102 (desde2 -> exp .)
+    HACER           reduce using rule 102 (desde2 -> exp .)
+
+
+state 215
+
+    (22) function_t -> FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun .
+
+    FUNCION         reduce using rule 22 (function_t -> FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun .)
+    PRINCIPAL       reduce using rule 22 (function_t -> FUNCION functionI function2 inicia_fun declara_vars function4 termina_fun .)
+
+
+state 216
+
+    (125) termina_fun -> RCURBRACKET .
+
+    FUNCION         reduce using rule 125 (termina_fun -> RCURBRACKET .)
+    PRINCIPAL       reduce using rule 125 (termina_fun -> RCURBRACKET .)
+
+
+state 217
+
+    (29) function4 -> statement function4 .
+
+    RCURBRACKET     reduce using rule 29 (function4 -> statement function4 .)
+
+
+state 218
+
+    (123) function5 -> COMMA funParam function5 .
+
+    RPAREN          reduce using rule 123 (function5 -> COMMA funParam function5 .)
+
+
+state 219
+
+    (126) function_v -> FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun .
+
+    FUNCION         reduce using rule 126 (function_v -> FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun .)
+    PRINCIPAL       reduce using rule 126 (function_v -> FUNCION functionV function2 inicia_fun declara_vars function9 termina_fun .)
+
+
+state 220
+
+    (128) function9 -> stmt_v function9 .
+
+    RCURBRACKET     reduce using rule 128 (function9 -> stmt_v function9 .)
+
+
+state 221
+
+    (20) dimension -> LBRACKET CTEINT RBRACKET LBRACKET CTEINT . RBRACKET
+
+    RBRACKET        shift and go to state 236
+
+
+state 222
+
+    (48) condition -> SI head_condition ENTONCES body condition1 .
+
+    SI              reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    ESCRIBE         reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    LEE             reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    CARGAARCHIVO    reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    ID              reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    REGRESA         reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    DESDE           reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    MIENTRAS        reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+    RCURBRACKET     reduce using rule 48 (condition -> SI head_condition ENTONCES body condition1 .)
+
+
+state 223
+
+    (53) condition1 -> SINO . body
+    (50) body -> . LCURBRACKET body1 RCURBRACKET
+
+    LCURBRACKET     shift and go to state 114
+
+    body                           shift and go to state 237
+
+state 224
+
+    (54) condition1 -> empty .
+
+    SI              reduce using rule 54 (condition1 -> empty .)
+    ESCRIBE         reduce using rule 54 (condition1 -> empty .)
+    LEE             reduce using rule 54 (condition1 -> empty .)
+    CARGAARCHIVO    reduce using rule 54 (condition1 -> empty .)
+    ID              reduce using rule 54 (condition1 -> empty .)
+    REGRESA         reduce using rule 54 (condition1 -> empty .)
+    DESDE           reduce using rule 54 (condition1 -> empty .)
+    MIENTRAS        reduce using rule 54 (condition1 -> empty .)
+    RCURBRACKET     reduce using rule 54 (condition1 -> empty .)
+
+
+state 225
+
+    (57) expression -> exp loper exp .
+
+    RPAREN          reduce using rule 57 (expression -> exp loper exp .)
+
+
+state 226
+
+    (56) write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .
+
+    SI              reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    ESCRIBE         reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    LEE             reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    ID              reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    REGRESA         reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    DESDE           reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    MIENTRAS        reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+    RCURBRACKET     reduce using rule 56 (write -> ESCRIBE LPAREN expression RPAREN SEMICOLON .)
+
+
+state 227
+
+    (104) read -> LEE LPAREN id read1 RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 238
+
+
+state 228
+
+    (105) read1 -> LBRACKET exp . RBRACKET LBRACKET exp RBRACKET
+    (106) read1 -> LBRACKET exp . RBRACKET
+
+    RBRACKET        shift and go to state 239
+
+
+state 229
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID route maxVariables . maxRows RPAREN SEMICOLON
+    (111) maxRows -> . CTEINT
+
+    CTEINT          shift and go to state 241
+
+    maxRows                        shift and go to state 240
+
+state 230
+
+    (110) maxVariables -> CTEINT .
+
+    CTEINT          reduce using rule 110 (maxVariables -> CTEINT .)
+
+
+state 231
+
+    (117) funCall3 -> COMMA funcallParam . funCall3
+    (117) funCall3 -> . COMMA funcallParam funCall3
+    (118) funCall3 -> . empty
+    (138) empty -> .
+
+    COMMA           shift and go to state 199
+    RPAREN          reduce using rule 138 (empty -> .)
+
+    funCall3                       shift and go to state 242
+    empty                          shift and go to state 200
+
+state 232
+
+    (88) vm1 -> LBRACKET vm2 RBRACKET COMMA . vm1
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+
+    LBRACKET        shift and go to state 243
+
+    vm1                            shift and go to state 244
+
+state 233
+
+    (90) vm2 -> exp COMMA vm2 .
+
+    RBRACKET        reduce using rule 90 (vm2 -> exp COMMA vm2 .)
+
+
+state 234
+
+    (42) indice_dimension -> LBRACKET exp RBRACKET LBRACKET . exp RBRACKET
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    exp                            shift and go to state 245
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 235
+
+    (101) nuevo_desde -> DESDE id EQUALS desde2 HASTA . desde2 HACER
+    (102) desde2 -> . exp
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    id                             shift and go to state 96
+    desde2                         shift and go to state 246
+    exp                            shift and go to state 214
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 236
+
+    (20) dimension -> LBRACKET CTEINT RBRACKET LBRACKET CTEINT RBRACKET .
+
+    SEMICOLON       reduce using rule 20 (dimension -> LBRACKET CTEINT RBRACKET LBRACKET CTEINT RBRACKET .)
+
+
+state 237
+
+    (53) condition1 -> SINO body .
+
+    SI              reduce using rule 53 (condition1 -> SINO body .)
+    ESCRIBE         reduce using rule 53 (condition1 -> SINO body .)
+    LEE             reduce using rule 53 (condition1 -> SINO body .)
+    CARGAARCHIVO    reduce using rule 53 (condition1 -> SINO body .)
+    ID              reduce using rule 53 (condition1 -> SINO body .)
+    REGRESA         reduce using rule 53 (condition1 -> SINO body .)
+    DESDE           reduce using rule 53 (condition1 -> SINO body .)
+    MIENTRAS        reduce using rule 53 (condition1 -> SINO body .)
+    RCURBRACKET     reduce using rule 53 (condition1 -> SINO body .)
+
+
+state 238
+
+    (104) read -> LEE LPAREN id read1 RPAREN SEMICOLON .
+
+    SI              reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    ESCRIBE         reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    LEE             reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    ID              reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    REGRESA         reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    DESDE           reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    MIENTRAS        reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    RCURBRACKET     reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+    SEMICOLON       reduce using rule 104 (read -> LEE LPAREN id read1 RPAREN SEMICOLON .)
+
+
+state 239
+
+    (105) read1 -> LBRACKET exp RBRACKET . LBRACKET exp RBRACKET
+    (106) read1 -> LBRACKET exp RBRACKET .
+
+    LBRACKET        shift and go to state 247
+    RPAREN          reduce using rule 106 (read1 -> LBRACKET exp RBRACKET .)
+
+
+state 240
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 248
+
+
+state 241
+
+    (111) maxRows -> CTEINT .
+
+    RPAREN          reduce using rule 111 (maxRows -> CTEINT .)
+
+
+state 242
+
+    (117) funCall3 -> COMMA funcallParam funCall3 .
+
+    RPAREN          reduce using rule 117 (funCall3 -> COMMA funcallParam funCall3 .)
+
+
+state 243
+
+    (88) vm1 -> LBRACKET . vm2 RBRACKET COMMA vm1
+    (89) vm1 -> LBRACKET . vm2 RBRACKET
+    (90) vm2 -> . exp COMMA vm2
+    (91) vm2 -> . exp
+    (92) vm2 -> . empty
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (138) empty -> .
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+
+    RBRACKET        reduce using rule 138 (empty -> .)
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+
+    vm2                            shift and go to state 149
+    vm1                            shift and go to state 102
+    exp                            shift and go to state 150
+    empty                          shift and go to state 151
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+
+state 244
+
+    (88) vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .
+
+    SEMICOLON       reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    TIMES           reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    DIVIDE          reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    PLUS            reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    MINUS           reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    GREATERTHAN     reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    LESSTHAN        reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    GREATEREQ       reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    LESSEQ          reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    NOTEQUAL        reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    ISEQUAL         reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    RPAREN          reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    COMMA           reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    RBRACKET        reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    HASTA           reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+    HACER           reduce using rule 88 (vm1 -> LBRACKET vm2 RBRACKET COMMA vm1 .)
+
+
+state 245
+
+    (42) indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp . RBRACKET
+
+    RBRACKET        shift and go to state 249
+
+
+state 246
+
+    (101) nuevo_desde -> DESDE id EQUALS desde2 HASTA desde2 . HACER
+
+    HACER           shift and go to state 250
+
+
+state 247
+
+    (105) read1 -> LBRACKET exp RBRACKET LBRACKET . exp RBRACKET
+    (65) exp -> . term
+    (66) exp -> . term exp_o exp
+    (69) term -> . factor term_o term
+    (70) term -> . factor
+    (71) factor -> . vcte
+    (72) factor -> . leftP expression rightP
+    (75) vcte -> . cte_int
+    (76) vcte -> . cte_float
+    (77) vcte -> . cte_string
+    (78) vcte -> . id
+    (79) vcte -> . funCall
+    (80) vcte -> . vectorMatriz
+    (73) leftP -> . LPAREN
+    (81) cte_int -> . negativo CTEINT
+    (82) cte_float -> . negativo CTEFLOAT
+    (83) cte_string -> . negativo CTESTRING
+    (40) id -> . identifier indice_dimension
+    (112) funCall -> . ID iniciaFunCall funCall2 terminaFunCall
+    (86) vectorMatriz -> . LBRACKET vm1 RBRACKET
+    (87) vectorMatriz -> . vm1
+    (84) negativo -> . MINUS
+    (85) negativo -> . empty
+    (41) identifier -> . ID
+    (88) vm1 -> . LBRACKET vm2 RBRACKET COMMA vm1
+    (89) vm1 -> . LBRACKET vm2 RBRACKET
+    (138) empty -> .
+
+    LPAREN          shift and go to state 107
+    ID              shift and go to state 61
+    LBRACKET        shift and go to state 101
+    MINUS           shift and go to state 104
+    CTEINT          reduce using rule 138 (empty -> .)
+    CTEFLOAT        reduce using rule 138 (empty -> .)
+    CTESTRING       reduce using rule 138 (empty -> .)
+
+    exp                            shift and go to state 251
+    term                           shift and go to state 99
+    factor                         shift and go to state 103
+    vcte                           shift and go to state 129
+    leftP                          shift and go to state 106
+    cte_int                        shift and go to state 93
+    cte_float                      shift and go to state 94
+    cte_string                     shift and go to state 95
+    id                             shift and go to state 96
+    funCall                        shift and go to state 97
+    vectorMatriz                   shift and go to state 98
+    negativo                       shift and go to state 100
+    identifier                     shift and go to state 63
+    vm1                            shift and go to state 102
+    empty                          shift and go to state 105
+
+state 248
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 252
+
+
+state 249
+
+    (42) indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .
+
+    EQUALS          reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    SEMICOLON       reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    TIMES           reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    DIVIDE          reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    PLUS            reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    MINUS           reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    GREATERTHAN     reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    LESSTHAN        reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    GREATEREQ       reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    LESSEQ          reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    NOTEQUAL        reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    ISEQUAL         reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    RPAREN          reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    LBRACKET        reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    COMMA           reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    RBRACKET        reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    HASTA           reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+    HACER           reduce using rule 42 (indice_dimension -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+
+
+state 250
+
+    (101) nuevo_desde -> DESDE id EQUALS desde2 HASTA desde2 HACER .
+
+    LCURBRACKET     reduce using rule 101 (nuevo_desde -> DESDE id EQUALS desde2 HASTA desde2 HACER .)
+
+
+state 251
+
+    (105) read1 -> LBRACKET exp RBRACKET LBRACKET exp . RBRACKET
+
+    RBRACKET        shift and go to state 253
+
+
+state 252
+
+    (108) loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .
+
+    SI              reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    ESCRIBE         reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    LEE             reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    CARGAARCHIVO    reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    ID              reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    REGRESA         reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    DESDE           reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    MIENTRAS        reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+    RCURBRACKET     reduce using rule 108 (loadData -> CARGAARCHIVO LPAREN ID route maxVariables maxRows RPAREN SEMICOLON .)
+
+
+state 253
+
+    (105) read1 -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .
+
+    RPAREN          reduce using rule 105 (read1 -> LBRACKET exp RBRACKET LBRACKET exp RBRACKET .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LBRACKET in state 63 resolved as shift
+WARNING: shift/reduce conflict for RBRACKET in state 148 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 203 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 208 resolved as shift
+WARNING: reduce/reduce conflict in state 91 resolved using rule (factor -> vcte)
+WARNING: rejected rule (return1 -> vcte) in state 91
+WARNING: Rule (return1 -> vcte) is never reduced
