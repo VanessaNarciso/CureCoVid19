@@ -11,7 +11,7 @@ precedence = (
     ('nonassoc','SEMICOLON'),
     ('right', 'EQUALS'),
     ('left', 'NOTEQUAL'),
-    ('nonassoc','LESSTHAN','LESSEQ','GREATERTHAN','GREATEREQ')
+    ('nonassoc','LESSTHAN','LESSEQ','GREATERTHAN','GREATEREQ'),
     ('left','PLUS','MINUS'),
     ('left','TIMES','DIVIDE'),
     ('left','LPAREN','RPAREN'),
@@ -22,7 +22,7 @@ precedence = (
 # INICIO DE UN PROGRAMA
 def p_programa(p):
     '''
-    programa :  PROGRAMA ID SEMICOLON declara_vars declara_fun principal
+    programa :  PROGRAMA ID SEMICOLON declara_vars gotoPrincipal declara_fun principal
     '''
     print("programa")
 
@@ -36,16 +36,10 @@ def p_declara_vars(p):
 def p_declara_fun(p):
     '''
     declara_fun : funcion declara_fun
+                | empty
     '''
     print("declara fun")
 
-def p_functions(p):
-    '''
-    functions : function_t functions
-        | function_v functions
-        | empty
-    '''
-    print("functions")
 
 def p_principal(p):
     '''
@@ -60,7 +54,7 @@ def p_var(p):
     print("VAR")
 
 def p_var2(p):
-    'var2 : type SEMICOLON ids var3'
+    'var2 : type COLON ids df2 var3'
     print("VAR2")
 
 def p_var3(p):
@@ -79,7 +73,7 @@ def p_type(p): #type1 = simple, type2=compuesto
 
 # DECLARACIÓN DE FUNCIONES
 def p_funcion(p):
-    'funcion : FUNCION fun_type ID funDec1 LPAREN parametros RPAREN funDec4 var1 bloque funDec7'
+    'funcion : FUNCION fun_type ID funDec1 LPAREN parametros RPAREN funDec4 declara_vars bloque funDec7'
     print("FUNCION")
 
 def p_fun_type(p):
@@ -118,7 +112,7 @@ def p_type1(p):
 
 def p_type2(p):
     '''
-    type2 : DATAFRAME setCurrentType
+    type2 : DATAFRAME setCurrentType df
         | STRING setCurrentType
     '''
     print("P_TYPE2")
@@ -215,7 +209,7 @@ def p_di(p):
     print("di")
 
 def p_llamada(p):
-    'llamada :  ID funCall1 LPAREN llamada1 RPAREN funCall_5'
+    'llamada :  ID funCall1 LPAREN llamada1 RPAREN funCall5'
     print("LLAMADA")
 
 def p_llamada1(p):
@@ -233,7 +227,7 @@ def p_llamada2(p):
     print("LLAMADA2")
 
 def p_retorno(p):
-    'retorno : REGRESA sec3 LPAREN exp RPAREN retorno SEMICOLON'
+    'retorno : REGRESA sec3 LPAREN exp RPAREN pRetorno SEMICOLON'
     print("RETORNO")
 def p_lectura(p):
     'lectura : LEE sec3 LPAREN variable RPAREN SEMICOLON sec4 sec5'
@@ -249,7 +243,7 @@ def p_esc(p):
 
 def p_esc1(p):
     '''
-    esc1 : exp pnSec4
+    esc1 : exp sec4
     '''
     print("ESC1")
 
@@ -307,7 +301,7 @@ def p_fev(p):
 
 def p_funciones_especiales(p):
     '''
-    funciones_especiales : fe LPAREN ID COMMA v_exp RPAREN
+    funciones_especiales : fe LPAREN ID exp1 COMMA v_exp RPAREN funEsp2
                          | CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
     '''
     print("FUNCIONES_ESPECIALES")
@@ -328,7 +322,7 @@ def p_var_cte(p):#Se modificaran los PN
     '''
     var_cte : CTECHAR cteChar
             | CTESTRING cteStr
-            | SUB neg var_num
+            | MINUS neg var_num
             | var_num
     '''
     print("VAR_CTE")
@@ -387,7 +381,7 @@ def p_op_r(p):
          | GREATERTHAN exp8
          | LESSEQ exp8
          | GREATEREQ exp8
-         | NOT_EQUAL exp8
+         | NOTEQUAL exp8
          | ISEQUAL exp8
     '''
     print("OP_R")
@@ -451,21 +445,381 @@ def p_error(p):
         parser.errok()
     else:
         print("Syntax error at EOF")
-##########AQUÍ ME QUEDÉ
+
+# PRODUCCIONES DE LOS PUNTOS NEURALGICOS
+def p_gotoPrincipal(p):
+    '''
+    gotoPrincipal :
+    '''
+    print("GOTOPRINCIPAL")
+
+def p_principal2(p):
+    '''
+    principal2 :
+    '''
+    print("PRINCIPAL2")
+
+def p_df(p):
+    '''
+    df :
+    '''
+    print("DF")
+
+def p_df2(p):
+    '''
+    df2 :
+    '''
+    print("DF2")
+
+# PRODUCCIONES PARA DIRFUNC Y TABLA DE VARIABLES
+def p_setCurrentType(p):
+    '''
+    setCurrentType :
+    '''
+    print("SETCURRENTTYPE")
+
+def p_addVariable(p):
+    '''
+    addVariable :
+    '''
+    print("ADDVARIABLE")
+
+def p_decRenglones(p):
+    '''
+    decRenglones :
+    '''
+    print("DECRENGLONES")
+
+def p_decColumnas(p):
+    '''
+    decColumnas :
+    '''
+    print("DECCOLUMNAS")
+
+# GENERACIÓN DE CUADRUPLOS
+def p_funDec1(p):
+    '''
+    funDec1 :
+    '''
+    print("FUNDEC1")
+
+def p_funDec2(p):
+    '''
+    funDec2 :
+    '''
+    print("FUNDEC2")
+
+def p_funDec4(p):
+    '''
+    funDec4 :
+    '''
+    print("FUNDEC4")
+
+def p_funDec7(p):
+    '''
+    funDec7 :
+    '''
+    print("FUNDEC7")
+
+def p_funCall1(p):
+    '''
+    funCall1 :
+    '''
+    print("FUNCALL1")
+
+def p_funCall3(p):
+    '''
+    funCall3 :
+    '''
+    print("FUNCALL3")
+
+def p_funCall5(p):
+    '''
+    funCall5 :
+    '''
+    print("FUNCALL5")
 
 
+def p_funEsp1(p):
+    '''
+    funEsp1 :
+    '''
+    print("FUNESP1")
+
+def p_funEsp2(p):
+    '''
+    funEsp2 :
+    '''
+    print("FUNESP2")
+
+def p_neg(p):
+    '''
+    neg :
+    '''
+    print("NEG")
+
+def p_cteInt(p):
+    '''
+    cteInt :
+    '''
+    print("CTEINT")
+
+def p_cteFloat(p):
+    '''
+    cteFloat :
+    '''
+    print("CTEFLOAT")
+
+def p_cteChar(p):
+    '''
+    cteChar :
+    '''
+    print("CTECHAR")
+
+def p_cteStr(p):
+    '''
+    cteStr :
+    '''
+    print("CTESTR")
+
+def p_exp1(p):
+    '''
+    exp1 :
+    '''
+    print("EXP1")
+
+def p_exp2(p):
+    '''
+    exp2 :
+    '''
+    print("EXP2")
+
+def p_exp3(p):
+    '''
+    exp3 :
+    '''
+    print("EXP3")
+
+def p_exp4(p):
+    '''
+    exp4 :
+    '''
+    print("EXP4")
+
+def p_exp5(p):
+    '''
+    exp5 :
+    '''
+    print("EXP5")
+
+def p_exp6(p):
+    '''
+    exp6 :
+    '''
+    print("EXP6")
+
+def p_exp7(p):
+    '''
+    exp7 :
+    '''
+    print("EXP7")
+
+def p_exp8(p):
+    '''
+    exp8 :
+    '''
+    print("EXP8")
+
+def p_exp9(p):
+    '''
+    exp9 :
+    '''
+    print("EXP9")
+
+def p_exp10(p):
+    '''
+    exp10 :
+    '''
+    print("EXP10")
+
+def p_exp11(p):
+    '''
+    exp11 :
+    '''
+    print("EXP11")
+
+def p_sec1(p):
+    '''
+    sec1 :
+    '''
+    print("SEC1")
+
+def p_sec2(p):
+    '''
+    sec2 :
+    '''
+    print("SEC2")
+
+def p_sec3(p):
+    '''
+    sec3 :
+    '''
+    print("SEC3")
+
+def p_sec4(p):
+    '''
+    sec4 :
+    '''
+    print("SEC4")
+
+def p_sec5(p):
+    '''
+    sec5 :
+    '''
+    print("SEC5")
+
+def p_cond1(p): #IF
+    '''
+    cond1 :
+    '''
+    print("COND1")
+
+def p_cond2(p): #IF
+    '''
+    cond2 :
+    '''
+    print("COND2")
+
+def p_cond3(p): #IF
+    '''
+    cond3 :
+    '''
+    print("COND3")
+
+def p_ciclos1(p):
+    '''
+    ciclos1 :
+    '''
+    print("CICLOS1")
+
+def p_ciclos2(p):
+    '''
+    ciclos2 :
+    '''
+    print("CICLOS2")
+
+def p_ciclos3(p):
+    '''
+    ciclos3 :
+    '''
+    print("CICLOS3")
+
+def p_ciclos4(p):
+    '''
+    ciclos4 :
+    '''
+    print("CICLOS4")
+
+def p_ciclos5(p):
+    '''
+    ciclos5 :
+    '''
+    print("CICLOS5")
+
+def p_ciclos6(p):
+    '''
+    ciclos6 :
+    '''
+    print("CICLOS6")
+
+def p_ciclos7(p):
+    '''
+    ciclos7 :
+    '''
+    print("CICLOS7")
+
+def p_ciclos8(p):
+    '''
+    ciclos8 :
+    '''
+    print("CICLOS8")
+
+def p_pRetorno(p):
+    '''
+    pRetorno :
+    '''
+    print("PRETORNO")
+
+def p_dimDec2(p):
+    '''
+    dimDec2 :
+    '''
+    print("DIMDEC2")
+
+def p_dimDec5(p):
+    '''
+    dimDec5 :
+    '''
+    print("DIMDEC5")
+
+def p_dimDec6(p):
+    '''
+    dimDec6 :
+    '''
+    print("DIMDEC6")
+
+def p_dimDec8(p):
+    '''
+    dimDec8 :
+    '''
+    print("DIMDEC8")
+
+def p_dimAccess2(p):
+    '''
+    dimAccess2 :
+    '''
+    print("DIMACCESS2")
+
+def p_arregloAcc(p):
+    '''
+    arregloAcc :
+    '''
+    print("ARREGLOACC")
+
+def p_matrizAcc(p):
+    '''
+    matrizAcc :
+    '''
+    print("MATRIZACC")
+
+def p_activaArray(p):
+    '''
+    activaArray :
+    '''
+    print("ACTIVAARRAY")
 
 
+def p_carga(p):
+    '''
+    carga :
+    '''
+    print("CARGA")
 
+parser = yacc.yacc()
 
+# CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
+def main():
+    #name = input('File name: ')
+    name = "test/" + "prueba1" + ".covid" #Para probar, cambia el nombre del archivo
+    print(name)
+    try:
+        f = open(name,'r', encoding='utf-8')
+        #QuadTemporal = ('0', '0', '0', '0')
+        #pushQuad(QuadTemporal)
+        result = parser.parse(f.read())
+        print(result)
+        f.close()
+    except EOFError:
+        print (EOFError)
 
-
-
-
-
-
-
-
-
-
-
+main()
