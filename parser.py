@@ -15,8 +15,8 @@ precedence = (
     ('left','PLUS','MINUS'),
     ('left','TIMES','DIVIDE'),
     ('left','LPAREN','RPAREN'),
-    ('left','LCURBRACKET','RCURBRACKET'),
-    ('left','LBRACKET','RBRACKET')
+    ('left','LBRACKET','RBRACKET'),
+    ('left','LCURBRACKET','RCURBRACKET')
 )
 
 # INICIO DE UN PROGRAMA
@@ -198,7 +198,7 @@ def p_asignacion(p):
     print("ASIGNACION")
 
 def p_variable(p):
-    'variable : ID exp1 di'
+    'variable : ID pExp1 di'
     print("VARIABLE")
 
 def p_di(p):
@@ -255,13 +255,13 @@ def p_esc2(p):
     print("ESC2")
 
 def p_carga_datos(p):
-    'carga_datos : CARGAARCHIVO LPAREN ID COMMA CTESTRING COMMA ca COMMA ca RPAREN SEMICOLON'
+    'carga_datos : CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON carga'
     print("CARGA DATOS")
 
 def p_ca(pa):
     '''
     ca : ID
-       | CTEINT
+       | CTEINT cteInt
     '''
     print("CA")
 
@@ -301,7 +301,7 @@ def p_fev(p):
 
 def p_funciones_especiales(p):
     '''
-    funciones_especiales : fe LPAREN ID exp1 COMMA v_exp RPAREN funEsp2
+    funciones_especiales : fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
                          | CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
     '''
     print("FUNCIONES_ESPECIALES")
@@ -582,11 +582,11 @@ def p_cteStr(p):
     '''
     print("CTESTR")
 
-def p_exp1(p):
+def p_pExp1(p):
     '''
-    exp1 :
+    pExp1 :
     '''
-    print("EXP1")
+    print("PEXP1")
 
 def p_exp2(p):
     '''
@@ -810,7 +810,7 @@ parser = yacc.yacc()
 # CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
 def main():
     #name = input('File name: ')
-    name = "test/" + "prueba1" + ".covid" #Para probar, cambia el nombre del archivo
+    name = "test/" + "prueba2" + ".covid" #Para probar, cambia el nombre del archivo
     print(name)
     try:
         f = open(name,'r', encoding='utf-8')
