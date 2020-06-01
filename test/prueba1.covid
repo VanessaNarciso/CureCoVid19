@@ -1,1 +1,15 @@
-programa Covid19;
+programa operaciones;
+var int:
+a,b,sum,res,mult,div;
+
+principal()
+{
+sum = a+b;
+res = a-b;
+mult = a*b;
+div = a/b;
+
+escribe(sum,res,mult,div);
+
+}
+
