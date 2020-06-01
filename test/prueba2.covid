@@ -1,0 +1,27 @@
+%%CON FUNCIONES
+programa op_arreglos;
+var int:
+a[2],b[2],sum, res, div;
+
+funcion int suma(int a, int b){
+    regresa(a+b);
+}
+
+funcion int resta(int a, int b){
+    regresa(a-b);
+}
+
+funcion int mult(int a, int b){
+    regresa(a*b);
+}
+
+funcion int div(int a, int b){
+    regresa(a/b);
+}
+
+principal(){
+    suma(a[0],b[0])
+    resta(a[0],b[0])
+    mult(a[0],b[0])
+    div(a[0],b[0])
+}
