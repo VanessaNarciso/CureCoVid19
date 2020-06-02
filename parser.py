@@ -299,10 +299,11 @@ def p_fev(p):
     '''
     print("FEV")
 
+
 def p_funciones_especiales(p):
     '''
-    funciones_especiales : fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-                         | CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    funciones_especiales : fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+                         | CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     '''
     print("FUNCIONES_ESPECIALES")
 
@@ -551,6 +552,12 @@ def p_funEsp2(p):
     funEsp2 :
     '''
     print("FUNESP2")
+
+def p_funEsp3(p):
+    '''
+    funEsp3 :
+    '''
+    print("FUNESP3")
 
 def p_neg(p):
     '''
@@ -810,7 +817,7 @@ parser = yacc.yacc()
 # CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
 def main():
     #name = input('File name: ')
-    name = "test/" + "prueba2" + ".covid" #Para probar, cambia el nombre del archivo
+    name = "test/" + "prueba3" + ".covid" #Para probar, cambia el nombre del archivo
     print(name)
     try:
         f = open(name,'r', encoding='utf-8')

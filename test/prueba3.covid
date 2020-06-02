@@ -1,0 +1,20 @@
+programa COVID19;
+
+var
+int: i, j;
+float: p, k;
+
+principal()
+{
+i = 10;
+j = 2;
+p = 12.5;
+lee(k);
+escribe(k);
+escribe(p*3);
+escribe(i+j);
+escribe(i-j);
+escribe(i*j);
+escribe(i/j);
+
+}

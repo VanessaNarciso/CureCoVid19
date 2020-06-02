@@ -1,168 +1,115 @@
 import sys
 from varsTable import *
 
-
-
-class DirFunc:
-    '''
-    Constructor que inicializa el diccionario directorio_funciones con sus atributos, empezando con la seccion de globales.
-    '''
-
+class funcDir:
+    #Inicializa el directorio de funciones (diccionario)
     def __init__(self):
-        self.directorio_funciones = {
-            'global': {'nombre': 'global', 'tipo': 'void', 'cantParametros': 0, 'variables': TablaVars(),
-                       'cantQuads': 0}}
-        print("Funcion creada exitosamente: Global de tipo void")
+        self.directorio_funciones = {'global': {'nombre' : 'global', 'tipo' : 'void', 'numParams' : 0, 'variables': varsTable(), 'numQuads' : 0}}
+        print("Se creó funcion global void")
 
-    '''
-    Funcion que checa si ya existe una funcion en el directorio_funciones
-    '''
-
-    def func_existe(self, nombre):
+    #Verifica si la funcion ya existe en el directorio
+    def existeFunc(self, nombre):
         return nombre in self.directorio_funciones.keys()
 
-    '''
-    Funcion para agregar una funcion nueva al diccionario de directorio_funciones
-    '''
-
-    def func_add(self, nombre, tipo, cantParametros, cantQuads):
-        if self.func_existe(nombre):
-            print("Error: Declaracion multiple de funcion: ", str(nombre), "\n")
+    #Agrega función nueva al directorio
+    def addFunc(self, nombre, tipo, numParams, numQuads):
+        if self.existeFunc(nombre):
+            print ("Error: Declaracion multiple funcion: ", str(nombre), "\n")
         else:
             self.directorio_funciones[nombre] = {
                 'nombre': nombre,
                 'tipo': tipo,
-                'cantParametros': cantParametros,
-                'variables': TablaVars(),
-                'cantQuads': cantQuads
+                'numParams': numParams,
+                'variables': varsTable(),
+                'cantQuads': numQuads
             }
-            print("NUEVA Funcion creada en el Directorio de Funciones: ", nombre, " de tipo: ", tipo, "\n")
+            print ("Funcion: ", nombre, " de tipo: ", tipo, " agregada al directorio", "\n")
 
-    '''
-    Funcion que regresa todos los datos de la funcion dada. Si no existe no regresa nada.
-    '''
-
-    def func_search(self, nombre):
-        if self.func_existe(nombre):
+    #Busca la función y regresa los metadatos de ella
+    def searchFunc(self, nombre):
+        if self.existeFunc(nombre):
             return self.directorio_funciones[nombre]
         else:
             return None
 
-    '''
-    Funcion que agrega una variable a la tabla de variables linkeada a la funcion dada.
-    '''
-
-    def func_addVar(self, nombre, nombreVar, tipoVar, renglonesVar, columnasVar, memPos):
+    #Agrega variable a la tabla de variables correspondiente a la función
+    def addVarFunc(self, nombre, nombreVar, tipoVar, renglonesVar, columnasVar, memPos):
 
         if self.directorio_funciones[nombre]['variables'].var_add(nombreVar, tipoVar, renglonesVar, columnasVar,
                                                                   memPos):
-            print("Variable: ", nombreVar, " creada exitosamente, dentro de la funcion:  ", nombre)
+            print("Variable: ", nombreVar, " creada en la funcion:  ", nombre)
         else:
-            print("Error: No es posible crear la variable: ", nombreVar, " dentro de  la funcion: ", nombre)
+            print("Error: La variable: ", nombreVar, " NO fue creada en la funcion: ", nombre)
 
-    '''
-    Funcion para actualizar indicar que una variable es dimensionada
-    '''
-
-    def func_updateDim(self, nombre, nombreVar, renglones, columnas):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
+    #Verifica si una variable es dimensionada y dado el caso lo actualiza
+    def updateDimFunc(self, nombre, nombreVar, renglones, columnas):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
             if columnas > 0:
                 return self.directorio_funciones[nombre]['variables'].var_upadateDims(nombreVar, renglones, columnas)
             else:
                 return self.directorio_funciones[nombre]['variables'].var_upadateDims(nombreVar, renglones, -1)
         else:
-            print("Error: Variable ", nombreVar, "no existe en este contexto ", nombre)
+            print("Error: La variable ", nombreVar, "no existe en este contexto ", nombre)
             return None
 
-    '''
-    Funcion que dice si una variable dada es dimensionada en el contexto dado
-    '''
+    #Verifica si una variable es dimensionada en determinado contexto
+    def isDimensionadaVar(self, nombre, nombreVar):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+            print("Directorio de func de ", nombreVar, "col: ", self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'])
 
-    def func_isVarDimensionada(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
-            print("DIRECTORIO FUNC DE ", nombreVar, "col: ",
-                  self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'])
-
-            if self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'] > 0 or \
-                    self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones'] > 0:
+            if self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'] > 0 or self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones'] > 0:
                 return 1
             else:
                 return 0
         else:
-            return -1  # No existe esa variable en este contexto
+            return -1 #No existe esa variable en este contexto
 
-    '''
-    Funcion que regresa las dimensiones de una variable dimensionada en forma de lista
-    '''
-
-    def func_getDims(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
-            dim = [self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'],
-                   self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones']]
+    #Genera una lista con las dimensiones de una variable dimensionada
+    def getDimsVar(self, nombre, nombreVar):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+            dim = [self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'], self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones']]
             return dim
         else:
-            return -1  # No existe esa variable en este contexto
+            return -1 #No existe esa variable en este contexto
 
-    '''
-    Funcion que regresa el string del tipo de una variable previamente creada en las funciones
-    '''
-
-    def func_searchVarType(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
+    #Busca el tipo de una variable que ya ha sido creada
+    def searchVarType(self, nombre, nombreVar):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
             return self.directorio_funciones[nombre]['variables'].var_searchType(nombreVar)
         else:
-            print("Error: Variable: ", nombreVar, " no existe en este contexto: ", nombre)
+            print("Error: Variable: ", nombreVar ," no existe en este contexto: ", nombre)
             return None
 
-    '''
-    Funcion que regresa si existe una variable en la tabla de variables de la funcion dada
-    '''
-
-    def var_exist(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
+    #Verifica si la variable existe en la tabla de variables de una función determinada
+    def varExist(self, nombre, nombreVar):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
             return True
         else:
             return False
 
-    '''
-    Funcion para cambiar la cantidad de parametros de una funcion dada.
-    '''
-
-    def func_UpdateParametros(self, nombre, cantParametros):
-        if self.func_existe(nombre):
+    #Actualiza el número de parámetros de una función determinada
+    def updateFuncParams(self, nombre, cantParametros):
+        if self.existeFunc(nombre):
             self.directorio_funciones[nombre]['cantParametros'] = cantParametros
         else:
-            print("Error: NO existe la funcion: ", nombre)
+            print("Error: la funcion: ", nombre, " no existe")
 
-    '''
-
-    '''
-
+    #Regresa una lista de tipos de variables
     def listaTipos(self, funcion):
-        return [self.directorio_funciones[funcion]['variables'].tabla_variables[x]['tipo'] for x in
-                self.directorio_funciones[funcion]['variables'].tabla_variables]
+        return [self.directorio_funciones[funcion]['variables'].tabla_variables[x]['tipo'] for x in self.directorio_funciones[funcion]['variables'].tabla_variables]
 
-    '''
-    Funcion que regresa la posicion de memoria virtual de la variable dada
-    '''
-
-    def func_memoria(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].var_exist(nombreVar):
-            return self.directorio_funciones[nombre]['variables'].var_searchMemPos(nombreVar)
+    #Obtiene la posición de memoria virtual de una variable
+    def funcMemory(self, nombre, nombreVar):
+        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+            return  self.directorio_funciones[nombre]['variables'].var_searchMemPos(nombreVar)
         else:
-            print("Error: Variable: ", nombreVar, "no existe en este contexto: ", nombre)
+            print("Error: La variable: ", nombreVar, "no existe en este contexto: ", nombre)
 
-    '''
-    Funcion que imprime el directorio de funciones actual
-    '''
-
-    def func_print(self, nombre):
-        print(self.directorio_funciones[nombre]['variables'].tabla_variables)
+    #Imprime el directorio de la función actual
+    def funcPrint(self, nombre):
+        print (self.directorio_funciones[nombre]['variables'].tabla_variables)
         print("\n")
 
-    '''
-    Funcion que borra el directorio de funciones
-    '''
-
-    def func_deleteDic(self):
+    #Borra el directorio de funciones
+    def deleteFuncDic(self):
         self.directorio_funciones.clear()
