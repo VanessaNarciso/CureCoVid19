@@ -86,8 +86,8 @@ Rule 75    funciones_especiales_void -> VARIABLES funEsp1 LPAREN ID COMMA ID COM
 Rule 76    funciones_especiales_void -> fev LPAREN ID COMMA v_exp RPAREN SEMICOLON
 Rule 77    fev -> HISTOGRAMA funEsp1
 Rule 78    fev -> LINEAL funEsp1
-Rule 79    funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-Rule 80    funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+Rule 79    funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+Rule 80    funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 Rule 81    fe -> MEDIA funEsp1
 Rule 82    fe -> MODA funEsp1
 Rule 83    fe -> VARIANZA funEsp1
@@ -148,48 +148,49 @@ Rule 137   funCall3 -> <empty>
 Rule 138   funCall5 -> <empty>
 Rule 139   funEsp1 -> <empty>
 Rule 140   funEsp2 -> <empty>
-Rule 141   neg -> <empty>
-Rule 142   cteInt -> <empty>
-Rule 143   cteFloat -> <empty>
-Rule 144   cteChar -> <empty>
-Rule 145   cteStr -> <empty>
-Rule 146   pExp1 -> <empty>
-Rule 147   exp2 -> <empty>
-Rule 148   exp3 -> <empty>
-Rule 149   exp4 -> <empty>
-Rule 150   exp5 -> <empty>
-Rule 151   exp6 -> <empty>
-Rule 152   exp7 -> <empty>
-Rule 153   exp8 -> <empty>
-Rule 154   exp9 -> <empty>
-Rule 155   exp10 -> <empty>
-Rule 156   exp11 -> <empty>
-Rule 157   sec1 -> <empty>
-Rule 158   sec2 -> <empty>
-Rule 159   sec3 -> <empty>
-Rule 160   sec4 -> <empty>
-Rule 161   sec5 -> <empty>
-Rule 162   cond1 -> <empty>
-Rule 163   cond2 -> <empty>
-Rule 164   cond3 -> <empty>
-Rule 165   ciclos1 -> <empty>
-Rule 166   ciclos2 -> <empty>
-Rule 167   ciclos3 -> <empty>
-Rule 168   ciclos4 -> <empty>
-Rule 169   ciclos5 -> <empty>
-Rule 170   ciclos6 -> <empty>
-Rule 171   ciclos7 -> <empty>
-Rule 172   ciclos8 -> <empty>
-Rule 173   pRetorno -> <empty>
-Rule 174   dimDec2 -> <empty>
-Rule 175   dimDec5 -> <empty>
-Rule 176   dimDec6 -> <empty>
-Rule 177   dimDec8 -> <empty>
-Rule 178   dimAccess2 -> <empty>
-Rule 179   arregloAcc -> <empty>
-Rule 180   matrizAcc -> <empty>
-Rule 181   activaArray -> <empty>
-Rule 182   carga -> <empty>
+Rule 141   funEsp3 -> <empty>
+Rule 142   neg -> <empty>
+Rule 143   cteInt -> <empty>
+Rule 144   cteFloat -> <empty>
+Rule 145   cteChar -> <empty>
+Rule 146   cteStr -> <empty>
+Rule 147   pExp1 -> <empty>
+Rule 148   exp2 -> <empty>
+Rule 149   exp3 -> <empty>
+Rule 150   exp4 -> <empty>
+Rule 151   exp5 -> <empty>
+Rule 152   exp6 -> <empty>
+Rule 153   exp7 -> <empty>
+Rule 154   exp8 -> <empty>
+Rule 155   exp9 -> <empty>
+Rule 156   exp10 -> <empty>
+Rule 157   exp11 -> <empty>
+Rule 158   sec1 -> <empty>
+Rule 159   sec2 -> <empty>
+Rule 160   sec3 -> <empty>
+Rule 161   sec4 -> <empty>
+Rule 162   sec5 -> <empty>
+Rule 163   cond1 -> <empty>
+Rule 164   cond2 -> <empty>
+Rule 165   cond3 -> <empty>
+Rule 166   ciclos1 -> <empty>
+Rule 167   ciclos2 -> <empty>
+Rule 168   ciclos3 -> <empty>
+Rule 169   ciclos4 -> <empty>
+Rule 170   ciclos5 -> <empty>
+Rule 171   ciclos6 -> <empty>
+Rule 172   ciclos7 -> <empty>
+Rule 173   ciclos8 -> <empty>
+Rule 174   pRetorno -> <empty>
+Rule 175   dimDec2 -> <empty>
+Rule 176   dimDec5 -> <empty>
+Rule 177   dimDec6 -> <empty>
+Rule 178   dimDec8 -> <empty>
+Rule 179   dimAccess2 -> <empty>
+Rule 180   arregloAcc -> <empty>
+Rule 181   matrizAcc -> <empty>
+Rule 182   activaArray -> <empty>
+Rule 183   carga -> <empty>
 
 Terminals, with rules where they appear
 
@@ -197,12 +198,12 @@ AND                  : 97
 CARGAARCHIVO         : 67
 CHAR                 : 23
 COLON                : 8
-COMMA                : 19 30 58 65 67 67 67 75 75 76 79 80 80
+COMMA                : 19 30 58 65 67 67 67 75 75 76 79 79 80 80 80
 COMMENT              : 
 CORRELACIONA         : 80
 CTECHAR              : 85
 CTEFLOAT             : 90
-CTEINT               : 32 33 69 89
+CTEINT               : 32 33 69 79 79 80 80 89
 CTESTRING            : 67 86
 DATAFRAME            : 24
 DESDE                : 74
@@ -218,7 +219,7 @@ HACER                : 74
 HASTA                : 74
 HAZ                  : 73
 HISTOGRAMA           : 77
-ID                   : 1 13 18 27 52 55 67 68 75 75 75 76 79 80
+ID                   : 1 13 18 27 52 55 67 68 75 75 75 76 79 80 80
 INICIA               : 
 INT                  : 21
 ISEQUAL              : 107
@@ -278,7 +279,7 @@ cond3                : 71
 condicional          : 48
 cteChar              : 85
 cteFloat             : 90
-cteInt               : 69 89
+cteInt               : 69 79 79 80 80 89
 cteStr               : 67 86
 dd                   : 27
 decColumnas          : 33
@@ -331,6 +332,7 @@ funDec4              : 13
 funDec7              : 13
 funEsp1              : 75 77 78 80 81 82 83
 funEsp2              : 79
+funEsp3              : 80
 fun_type             : 13
 funcion              : 4
 funciones_especiales : 122
@@ -351,7 +353,7 @@ op_a                 : 109
 op_a1                : 114
 op_l                 : 95
 op_r                 : 100
-pExp1                : 52 67 79
+pExp1                : 52 67 79 80 80
 pRetorno             : 60
 param                : 16 19
 param1               : 18
@@ -374,7 +376,7 @@ termino              : 108 114
 type                 : 8
 type1                : 11 15 18
 type2                : 12
-v_exp                : 76 79 80 80
+v_exp                : 76
 var                  : 2
 var2                 : 7 9
 var3                 : 8
@@ -900,10 +902,10 @@ state 50
 state 51
 
     (28) dd -> dim_dec . dimDec8
-    (177) dimDec8 -> .
+    (178) dimDec8 -> .
 
-    COMMA           reduce using rule 177 (dimDec8 -> .)
-    SEMICOLON       reduce using rule 177 (dimDec8 -> .)
+    COMMA           reduce using rule 178 (dimDec8 -> .)
+    SEMICOLON       reduce using rule 178 (dimDec8 -> .)
 
     dimDec8                        shift and go to state 59
 
@@ -918,9 +920,9 @@ state 52
 state 53
 
     (32) dim_dec -> LBRACKET . dimDec2 CTEINT dimDec5 RBRACKET decRenglones dim_dec1
-    (174) dimDec2 -> .
+    (175) dimDec2 -> .
 
-    CTEINT          reduce using rule 174 (dimDec2 -> .)
+    CTEINT          reduce using rule 175 (dimDec2 -> .)
 
     dimDec2                        shift and go to state 60
 
@@ -1097,9 +1099,9 @@ state 67
 state 68
 
     (32) dim_dec -> LBRACKET dimDec2 CTEINT . dimDec5 RBRACKET decRenglones dim_dec1
-    (175) dimDec5 -> .
+    (176) dimDec5 -> .
 
-    RBRACKET        reduce using rule 175 (dimDec5 -> .)
+    RBRACKET        reduce using rule 176 (dimDec5 -> .)
 
     dimDec5                        shift and go to state 97
 
@@ -1369,11 +1371,11 @@ state 83
     (55) llamada -> ID . funCall1 LPAREN llamada1 RPAREN funCall5
     (52) variable -> ID . pExp1 di
     (136) funCall1 -> .
-    (146) pExp1 -> .
+    (147) pExp1 -> .
 
     LPAREN          reduce using rule 136 (funCall1 -> .)
-    LBRACKET        reduce using rule 146 (pExp1 -> .)
-    EQUALS          reduce using rule 146 (pExp1 -> .)
+    LBRACKET        reduce using rule 147 (pExp1 -> .)
+    EQUALS          reduce using rule 147 (pExp1 -> .)
 
     funCall1                       shift and go to state 101
     pExp1                          shift and go to state 102
@@ -1381,27 +1383,27 @@ state 83
 state 84
 
     (60) retorno -> REGRESA . sec3 LPAREN exp RPAREN pRetorno SEMICOLON
-    (159) sec3 -> .
+    (160) sec3 -> .
 
-    LPAREN          reduce using rule 159 (sec3 -> .)
+    LPAREN          reduce using rule 160 (sec3 -> .)
 
     sec3                           shift and go to state 103
 
 state 85
 
     (61) lectura -> LEE . sec3 LPAREN variable RPAREN SEMICOLON sec4 sec5
-    (159) sec3 -> .
+    (160) sec3 -> .
 
-    LPAREN          reduce using rule 159 (sec3 -> .)
+    LPAREN          reduce using rule 160 (sec3 -> .)
 
     sec3                           shift and go to state 104
 
 state 86
 
     (62) escritura -> ESCRIBE . sec3 LPAREN esc RPAREN SEMICOLON sec5
-    (159) sec3 -> .
+    (160) sec3 -> .
 
-    LPAREN          reduce using rule 159 (sec3 -> .)
+    LPAREN          reduce using rule 160 (sec3 -> .)
 
     sec3                           shift and go to state 105
 
@@ -1422,18 +1424,18 @@ state 88
 state 89
 
     (73) condicional -> MIENTRAS . ciclos1 LPAREN expresion RPAREN ciclos2 HAZ bloque ciclos3
-    (165) ciclos1 -> .
+    (166) ciclos1 -> .
 
-    LPAREN          reduce using rule 165 (ciclos1 -> .)
+    LPAREN          reduce using rule 166 (ciclos1 -> .)
 
     ciclos1                        shift and go to state 108
 
 state 90
 
     (74) ciclo -> DESDE . ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque ciclos8
-    (168) ciclos4 -> .
+    (169) ciclos4 -> .
 
-    ID              reduce using rule 168 (ciclos4 -> .)
+    ID              reduce using rule 169 (ciclos4 -> .)
 
     ciclos4                        shift and go to state 109
 
@@ -1530,19 +1532,19 @@ state 99
 state 100
 
     (51) asignacion -> variable EQUALS . sec1 exp SEMICOLON sec2
-    (157) sec1 -> .
+    (158) sec1 -> .
 
-    LPAREN          reduce using rule 157 (sec1 -> .)
-    CTECHAR         reduce using rule 157 (sec1 -> .)
-    CTESTRING       reduce using rule 157 (sec1 -> .)
-    MINUS           reduce using rule 157 (sec1 -> .)
-    ID              reduce using rule 157 (sec1 -> .)
-    CORRELACIONA    reduce using rule 157 (sec1 -> .)
-    CTEINT          reduce using rule 157 (sec1 -> .)
-    CTEFLOAT        reduce using rule 157 (sec1 -> .)
-    MEDIA           reduce using rule 157 (sec1 -> .)
-    MODA            reduce using rule 157 (sec1 -> .)
-    VARIANZA        reduce using rule 157 (sec1 -> .)
+    LPAREN          reduce using rule 158 (sec1 -> .)
+    CTECHAR         reduce using rule 158 (sec1 -> .)
+    CTESTRING       reduce using rule 158 (sec1 -> .)
+    MINUS           reduce using rule 158 (sec1 -> .)
+    ID              reduce using rule 158 (sec1 -> .)
+    CORRELACIONA    reduce using rule 158 (sec1 -> .)
+    CTEINT          reduce using rule 158 (sec1 -> .)
+    CTEFLOAT        reduce using rule 158 (sec1 -> .)
+    MEDIA           reduce using rule 158 (sec1 -> .)
+    MODA            reduce using rule 158 (sec1 -> .)
+    VARIANZA        reduce using rule 158 (sec1 -> .)
 
     sec1                           shift and go to state 117
 
@@ -1633,8 +1635,8 @@ state 107
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -1646,8 +1648,8 @@ state 107
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -1765,8 +1767,8 @@ state 117
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -1778,8 +1780,8 @@ state 117
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -1814,8 +1816,8 @@ state 118
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -1828,8 +1830,8 @@ state 118
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -1925,19 +1927,19 @@ state 121
 state 122
 
     (35) dim_index -> LBRACKET . dimAccess2 exp6 exp activaArray arregloAcc RBRACKET exp7 dim_index1
-    (178) dimAccess2 -> .
+    (179) dimAccess2 -> .
 
-    LPAREN          reduce using rule 178 (dimAccess2 -> .)
-    CTECHAR         reduce using rule 178 (dimAccess2 -> .)
-    CTESTRING       reduce using rule 178 (dimAccess2 -> .)
-    MINUS           reduce using rule 178 (dimAccess2 -> .)
-    ID              reduce using rule 178 (dimAccess2 -> .)
-    CORRELACIONA    reduce using rule 178 (dimAccess2 -> .)
-    CTEINT          reduce using rule 178 (dimAccess2 -> .)
-    CTEFLOAT        reduce using rule 178 (dimAccess2 -> .)
-    MEDIA           reduce using rule 178 (dimAccess2 -> .)
-    MODA            reduce using rule 178 (dimAccess2 -> .)
-    VARIANZA        reduce using rule 178 (dimAccess2 -> .)
+    LPAREN          reduce using rule 179 (dimAccess2 -> .)
+    CTECHAR         reduce using rule 179 (dimAccess2 -> .)
+    CTESTRING       reduce using rule 179 (dimAccess2 -> .)
+    MINUS           reduce using rule 179 (dimAccess2 -> .)
+    ID              reduce using rule 179 (dimAccess2 -> .)
+    CORRELACIONA    reduce using rule 179 (dimAccess2 -> .)
+    CTEINT          reduce using rule 179 (dimAccess2 -> .)
+    CTEFLOAT        reduce using rule 179 (dimAccess2 -> .)
+    MEDIA           reduce using rule 179 (dimAccess2 -> .)
+    MODA            reduce using rule 179 (dimAccess2 -> .)
+    VARIANZA        reduce using rule 179 (dimAccess2 -> .)
 
     dimAccess2                     shift and go to state 164
 
@@ -1957,8 +1959,8 @@ state 123
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -1970,8 +1972,8 @@ state 123
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -2014,8 +2016,8 @@ state 125
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -2027,8 +2029,8 @@ state 125
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -2049,28 +2051,28 @@ state 125
 state 126
 
     (67) carga_datos -> CARGAARCHIVO LPAREN ID . pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON carga
-    (146) pExp1 -> .
+    (147) pExp1 -> .
 
-    COMMA           reduce using rule 146 (pExp1 -> .)
+    COMMA           reduce using rule 147 (pExp1 -> .)
 
     pExp1                          shift and go to state 170
 
 state 127
 
     (119) factor -> LPAREN . exp6 exp RPAREN exp7
-    (151) exp6 -> .
+    (152) exp6 -> .
 
-    LPAREN          reduce using rule 151 (exp6 -> .)
-    CTECHAR         reduce using rule 151 (exp6 -> .)
-    CTESTRING       reduce using rule 151 (exp6 -> .)
-    MINUS           reduce using rule 151 (exp6 -> .)
-    ID              reduce using rule 151 (exp6 -> .)
-    CORRELACIONA    reduce using rule 151 (exp6 -> .)
-    CTEINT          reduce using rule 151 (exp6 -> .)
-    CTEFLOAT        reduce using rule 151 (exp6 -> .)
-    MEDIA           reduce using rule 151 (exp6 -> .)
-    MODA            reduce using rule 151 (exp6 -> .)
-    VARIANZA        reduce using rule 151 (exp6 -> .)
+    LPAREN          reduce using rule 152 (exp6 -> .)
+    CTECHAR         reduce using rule 152 (exp6 -> .)
+    CTESTRING       reduce using rule 152 (exp6 -> .)
+    MINUS           reduce using rule 152 (exp6 -> .)
+    ID              reduce using rule 152 (exp6 -> .)
+    CORRELACIONA    reduce using rule 152 (exp6 -> .)
+    CTEINT          reduce using rule 152 (exp6 -> .)
+    CTEFLOAT        reduce using rule 152 (exp6 -> .)
+    MEDIA           reduce using rule 152 (exp6 -> .)
+    MODA            reduce using rule 152 (exp6 -> .)
+    VARIANZA        reduce using rule 152 (exp6 -> .)
 
     exp6                           shift and go to state 171
 
@@ -2143,52 +2145,52 @@ state 131
 state 132
 
     (108) exp -> termino . exp4 exp1
-    (149) exp4 -> .
+    (150) exp4 -> .
 
-    PLUS            reduce using rule 149 (exp4 -> .)
-    MINUS           reduce using rule 149 (exp4 -> .)
-    LESSTHAN        reduce using rule 149 (exp4 -> .)
-    GREATERTHAN     reduce using rule 149 (exp4 -> .)
-    LESSEQ          reduce using rule 149 (exp4 -> .)
-    GREATEREQ       reduce using rule 149 (exp4 -> .)
-    NOTEQUAL        reduce using rule 149 (exp4 -> .)
-    ISEQUAL         reduce using rule 149 (exp4 -> .)
-    AND             reduce using rule 149 (exp4 -> .)
-    OR              reduce using rule 149 (exp4 -> .)
-    EQUALS          reduce using rule 149 (exp4 -> .)
-    RPAREN          reduce using rule 149 (exp4 -> .)
-    SEMICOLON       reduce using rule 149 (exp4 -> .)
-    COMMA           reduce using rule 149 (exp4 -> .)
-    RBRACKET        reduce using rule 149 (exp4 -> .)
-    HASTA           reduce using rule 149 (exp4 -> .)
-    HACER           reduce using rule 149 (exp4 -> .)
+    PLUS            reduce using rule 150 (exp4 -> .)
+    MINUS           reduce using rule 150 (exp4 -> .)
+    LESSTHAN        reduce using rule 150 (exp4 -> .)
+    GREATERTHAN     reduce using rule 150 (exp4 -> .)
+    LESSEQ          reduce using rule 150 (exp4 -> .)
+    GREATEREQ       reduce using rule 150 (exp4 -> .)
+    NOTEQUAL        reduce using rule 150 (exp4 -> .)
+    ISEQUAL         reduce using rule 150 (exp4 -> .)
+    AND             reduce using rule 150 (exp4 -> .)
+    OR              reduce using rule 150 (exp4 -> .)
+    EQUALS          reduce using rule 150 (exp4 -> .)
+    RPAREN          reduce using rule 150 (exp4 -> .)
+    SEMICOLON       reduce using rule 150 (exp4 -> .)
+    COMMA           reduce using rule 150 (exp4 -> .)
+    RBRACKET        reduce using rule 150 (exp4 -> .)
+    HASTA           reduce using rule 150 (exp4 -> .)
+    HACER           reduce using rule 150 (exp4 -> .)
 
     exp4                           shift and go to state 190
 
 state 133
 
     (113) termino -> factor . exp5 term
-    (150) exp5 -> .
+    (151) exp5 -> .
 
-    TIMES           reduce using rule 150 (exp5 -> .)
-    DIVIDE          reduce using rule 150 (exp5 -> .)
-    PLUS            reduce using rule 150 (exp5 -> .)
-    MINUS           reduce using rule 150 (exp5 -> .)
-    LESSTHAN        reduce using rule 150 (exp5 -> .)
-    GREATERTHAN     reduce using rule 150 (exp5 -> .)
-    LESSEQ          reduce using rule 150 (exp5 -> .)
-    GREATEREQ       reduce using rule 150 (exp5 -> .)
-    NOTEQUAL        reduce using rule 150 (exp5 -> .)
-    ISEQUAL         reduce using rule 150 (exp5 -> .)
-    AND             reduce using rule 150 (exp5 -> .)
-    OR              reduce using rule 150 (exp5 -> .)
-    EQUALS          reduce using rule 150 (exp5 -> .)
-    RPAREN          reduce using rule 150 (exp5 -> .)
-    SEMICOLON       reduce using rule 150 (exp5 -> .)
-    COMMA           reduce using rule 150 (exp5 -> .)
-    RBRACKET        reduce using rule 150 (exp5 -> .)
-    HASTA           reduce using rule 150 (exp5 -> .)
-    HACER           reduce using rule 150 (exp5 -> .)
+    TIMES           reduce using rule 151 (exp5 -> .)
+    DIVIDE          reduce using rule 151 (exp5 -> .)
+    PLUS            reduce using rule 151 (exp5 -> .)
+    MINUS           reduce using rule 151 (exp5 -> .)
+    LESSTHAN        reduce using rule 151 (exp5 -> .)
+    GREATERTHAN     reduce using rule 151 (exp5 -> .)
+    LESSEQ          reduce using rule 151 (exp5 -> .)
+    GREATEREQ       reduce using rule 151 (exp5 -> .)
+    NOTEQUAL        reduce using rule 151 (exp5 -> .)
+    ISEQUAL         reduce using rule 151 (exp5 -> .)
+    AND             reduce using rule 151 (exp5 -> .)
+    OR              reduce using rule 151 (exp5 -> .)
+    EQUALS          reduce using rule 151 (exp5 -> .)
+    RPAREN          reduce using rule 151 (exp5 -> .)
+    SEMICOLON       reduce using rule 151 (exp5 -> .)
+    COMMA           reduce using rule 151 (exp5 -> .)
+    RBRACKET        reduce using rule 151 (exp5 -> .)
+    HASTA           reduce using rule 151 (exp5 -> .)
+    HACER           reduce using rule 151 (exp5 -> .)
 
     exp5                           shift and go to state 191
 
@@ -2295,64 +2297,64 @@ state 137
 state 138
 
     (85) var_cte -> CTECHAR . cteChar
-    (144) cteChar -> .
+    (145) cteChar -> .
 
-    TIMES           reduce using rule 144 (cteChar -> .)
-    DIVIDE          reduce using rule 144 (cteChar -> .)
-    PLUS            reduce using rule 144 (cteChar -> .)
-    MINUS           reduce using rule 144 (cteChar -> .)
-    LESSTHAN        reduce using rule 144 (cteChar -> .)
-    GREATERTHAN     reduce using rule 144 (cteChar -> .)
-    LESSEQ          reduce using rule 144 (cteChar -> .)
-    GREATEREQ       reduce using rule 144 (cteChar -> .)
-    NOTEQUAL        reduce using rule 144 (cteChar -> .)
-    ISEQUAL         reduce using rule 144 (cteChar -> .)
-    AND             reduce using rule 144 (cteChar -> .)
-    OR              reduce using rule 144 (cteChar -> .)
-    EQUALS          reduce using rule 144 (cteChar -> .)
-    RPAREN          reduce using rule 144 (cteChar -> .)
-    SEMICOLON       reduce using rule 144 (cteChar -> .)
-    COMMA           reduce using rule 144 (cteChar -> .)
-    RBRACKET        reduce using rule 144 (cteChar -> .)
-    HASTA           reduce using rule 144 (cteChar -> .)
-    HACER           reduce using rule 144 (cteChar -> .)
+    TIMES           reduce using rule 145 (cteChar -> .)
+    DIVIDE          reduce using rule 145 (cteChar -> .)
+    PLUS            reduce using rule 145 (cteChar -> .)
+    MINUS           reduce using rule 145 (cteChar -> .)
+    LESSTHAN        reduce using rule 145 (cteChar -> .)
+    GREATERTHAN     reduce using rule 145 (cteChar -> .)
+    LESSEQ          reduce using rule 145 (cteChar -> .)
+    GREATEREQ       reduce using rule 145 (cteChar -> .)
+    NOTEQUAL        reduce using rule 145 (cteChar -> .)
+    ISEQUAL         reduce using rule 145 (cteChar -> .)
+    AND             reduce using rule 145 (cteChar -> .)
+    OR              reduce using rule 145 (cteChar -> .)
+    EQUALS          reduce using rule 145 (cteChar -> .)
+    RPAREN          reduce using rule 145 (cteChar -> .)
+    SEMICOLON       reduce using rule 145 (cteChar -> .)
+    COMMA           reduce using rule 145 (cteChar -> .)
+    RBRACKET        reduce using rule 145 (cteChar -> .)
+    HASTA           reduce using rule 145 (cteChar -> .)
+    HACER           reduce using rule 145 (cteChar -> .)
 
     cteChar                        shift and go to state 192
 
 state 139
 
     (86) var_cte -> CTESTRING . cteStr
-    (145) cteStr -> .
+    (146) cteStr -> .
 
-    TIMES           reduce using rule 145 (cteStr -> .)
-    DIVIDE          reduce using rule 145 (cteStr -> .)
-    PLUS            reduce using rule 145 (cteStr -> .)
-    MINUS           reduce using rule 145 (cteStr -> .)
-    LESSTHAN        reduce using rule 145 (cteStr -> .)
-    GREATERTHAN     reduce using rule 145 (cteStr -> .)
-    LESSEQ          reduce using rule 145 (cteStr -> .)
-    GREATEREQ       reduce using rule 145 (cteStr -> .)
-    NOTEQUAL        reduce using rule 145 (cteStr -> .)
-    ISEQUAL         reduce using rule 145 (cteStr -> .)
-    AND             reduce using rule 145 (cteStr -> .)
-    OR              reduce using rule 145 (cteStr -> .)
-    EQUALS          reduce using rule 145 (cteStr -> .)
-    RPAREN          reduce using rule 145 (cteStr -> .)
-    SEMICOLON       reduce using rule 145 (cteStr -> .)
-    COMMA           reduce using rule 145 (cteStr -> .)
-    RBRACKET        reduce using rule 145 (cteStr -> .)
-    HASTA           reduce using rule 145 (cteStr -> .)
-    HACER           reduce using rule 145 (cteStr -> .)
+    TIMES           reduce using rule 146 (cteStr -> .)
+    DIVIDE          reduce using rule 146 (cteStr -> .)
+    PLUS            reduce using rule 146 (cteStr -> .)
+    MINUS           reduce using rule 146 (cteStr -> .)
+    LESSTHAN        reduce using rule 146 (cteStr -> .)
+    GREATERTHAN     reduce using rule 146 (cteStr -> .)
+    LESSEQ          reduce using rule 146 (cteStr -> .)
+    GREATEREQ       reduce using rule 146 (cteStr -> .)
+    NOTEQUAL        reduce using rule 146 (cteStr -> .)
+    ISEQUAL         reduce using rule 146 (cteStr -> .)
+    AND             reduce using rule 146 (cteStr -> .)
+    OR              reduce using rule 146 (cteStr -> .)
+    EQUALS          reduce using rule 146 (cteStr -> .)
+    RPAREN          reduce using rule 146 (cteStr -> .)
+    SEMICOLON       reduce using rule 146 (cteStr -> .)
+    COMMA           reduce using rule 146 (cteStr -> .)
+    RBRACKET        reduce using rule 146 (cteStr -> .)
+    HASTA           reduce using rule 146 (cteStr -> .)
+    HACER           reduce using rule 146 (cteStr -> .)
 
     cteStr                         shift and go to state 193
 
 state 140
 
     (87) var_cte -> MINUS . neg var_num
-    (141) neg -> .
+    (142) neg -> .
 
-    CTEINT          reduce using rule 141 (neg -> .)
-    CTEFLOAT        reduce using rule 141 (neg -> .)
+    CTEINT          reduce using rule 142 (neg -> .)
+    CTEFLOAT        reduce using rule 142 (neg -> .)
 
     neg                            shift and go to state 194
 
@@ -2385,29 +2387,29 @@ state 142
 
     (52) variable -> ID . pExp1 di
     (55) llamada -> ID . funCall1 LPAREN llamada1 RPAREN funCall5
-    (146) pExp1 -> .
+    (147) pExp1 -> .
     (136) funCall1 -> .
 
-    LBRACKET        reduce using rule 146 (pExp1 -> .)
-    TIMES           reduce using rule 146 (pExp1 -> .)
-    DIVIDE          reduce using rule 146 (pExp1 -> .)
-    PLUS            reduce using rule 146 (pExp1 -> .)
-    MINUS           reduce using rule 146 (pExp1 -> .)
-    LESSTHAN        reduce using rule 146 (pExp1 -> .)
-    GREATERTHAN     reduce using rule 146 (pExp1 -> .)
-    LESSEQ          reduce using rule 146 (pExp1 -> .)
-    GREATEREQ       reduce using rule 146 (pExp1 -> .)
-    NOTEQUAL        reduce using rule 146 (pExp1 -> .)
-    ISEQUAL         reduce using rule 146 (pExp1 -> .)
-    AND             reduce using rule 146 (pExp1 -> .)
-    OR              reduce using rule 146 (pExp1 -> .)
-    EQUALS          reduce using rule 146 (pExp1 -> .)
-    RPAREN          reduce using rule 146 (pExp1 -> .)
-    SEMICOLON       reduce using rule 146 (pExp1 -> .)
-    COMMA           reduce using rule 146 (pExp1 -> .)
-    RBRACKET        reduce using rule 146 (pExp1 -> .)
-    HASTA           reduce using rule 146 (pExp1 -> .)
-    HACER           reduce using rule 146 (pExp1 -> .)
+    LBRACKET        reduce using rule 147 (pExp1 -> .)
+    TIMES           reduce using rule 147 (pExp1 -> .)
+    DIVIDE          reduce using rule 147 (pExp1 -> .)
+    PLUS            reduce using rule 147 (pExp1 -> .)
+    MINUS           reduce using rule 147 (pExp1 -> .)
+    LESSTHAN        reduce using rule 147 (pExp1 -> .)
+    GREATERTHAN     reduce using rule 147 (pExp1 -> .)
+    LESSEQ          reduce using rule 147 (pExp1 -> .)
+    GREATEREQ       reduce using rule 147 (pExp1 -> .)
+    NOTEQUAL        reduce using rule 147 (pExp1 -> .)
+    ISEQUAL         reduce using rule 147 (pExp1 -> .)
+    AND             reduce using rule 147 (pExp1 -> .)
+    OR              reduce using rule 147 (pExp1 -> .)
+    EQUALS          reduce using rule 147 (pExp1 -> .)
+    RPAREN          reduce using rule 147 (pExp1 -> .)
+    SEMICOLON       reduce using rule 147 (pExp1 -> .)
+    COMMA           reduce using rule 147 (pExp1 -> .)
+    RBRACKET        reduce using rule 147 (pExp1 -> .)
+    HASTA           reduce using rule 147 (pExp1 -> .)
+    HACER           reduce using rule 147 (pExp1 -> .)
     LPAREN          reduce using rule 136 (funCall1 -> .)
 
     pExp1                          shift and go to state 102
@@ -2415,71 +2417,71 @@ state 142
 
 state 143
 
-    (79) funciones_especiales -> fe . LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
+    (79) funciones_especiales -> fe . LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
 
     LPAREN          shift and go to state 195
 
 
 state 144
 
-    (80) funciones_especiales -> CORRELACIONA . funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (89) var_num -> CTEINT . cteInt
+    (143) cteInt -> .
+
+    TIMES           reduce using rule 143 (cteInt -> .)
+    DIVIDE          reduce using rule 143 (cteInt -> .)
+    PLUS            reduce using rule 143 (cteInt -> .)
+    MINUS           reduce using rule 143 (cteInt -> .)
+    LESSTHAN        reduce using rule 143 (cteInt -> .)
+    GREATERTHAN     reduce using rule 143 (cteInt -> .)
+    LESSEQ          reduce using rule 143 (cteInt -> .)
+    GREATEREQ       reduce using rule 143 (cteInt -> .)
+    NOTEQUAL        reduce using rule 143 (cteInt -> .)
+    ISEQUAL         reduce using rule 143 (cteInt -> .)
+    AND             reduce using rule 143 (cteInt -> .)
+    OR              reduce using rule 143 (cteInt -> .)
+    EQUALS          reduce using rule 143 (cteInt -> .)
+    RPAREN          reduce using rule 143 (cteInt -> .)
+    SEMICOLON       reduce using rule 143 (cteInt -> .)
+    COMMA           reduce using rule 143 (cteInt -> .)
+    RBRACKET        reduce using rule 143 (cteInt -> .)
+    HASTA           reduce using rule 143 (cteInt -> .)
+    HACER           reduce using rule 143 (cteInt -> .)
+
+    cteInt                         shift and go to state 196
+
+state 145
+
+    (80) funciones_especiales -> CORRELACIONA . funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (139) funEsp1 -> .
 
     LPAREN          reduce using rule 139 (funEsp1 -> .)
 
-    funEsp1                        shift and go to state 196
-
-state 145
-
-    (89) var_num -> CTEINT . cteInt
-    (142) cteInt -> .
-
-    TIMES           reduce using rule 142 (cteInt -> .)
-    DIVIDE          reduce using rule 142 (cteInt -> .)
-    PLUS            reduce using rule 142 (cteInt -> .)
-    MINUS           reduce using rule 142 (cteInt -> .)
-    LESSTHAN        reduce using rule 142 (cteInt -> .)
-    GREATERTHAN     reduce using rule 142 (cteInt -> .)
-    LESSEQ          reduce using rule 142 (cteInt -> .)
-    GREATEREQ       reduce using rule 142 (cteInt -> .)
-    NOTEQUAL        reduce using rule 142 (cteInt -> .)
-    ISEQUAL         reduce using rule 142 (cteInt -> .)
-    AND             reduce using rule 142 (cteInt -> .)
-    OR              reduce using rule 142 (cteInt -> .)
-    EQUALS          reduce using rule 142 (cteInt -> .)
-    RPAREN          reduce using rule 142 (cteInt -> .)
-    SEMICOLON       reduce using rule 142 (cteInt -> .)
-    COMMA           reduce using rule 142 (cteInt -> .)
-    RBRACKET        reduce using rule 142 (cteInt -> .)
-    HASTA           reduce using rule 142 (cteInt -> .)
-    HACER           reduce using rule 142 (cteInt -> .)
-
-    cteInt                         shift and go to state 197
+    funEsp1                        shift and go to state 197
 
 state 146
 
     (90) var_num -> CTEFLOAT . cteFloat
-    (143) cteFloat -> .
+    (144) cteFloat -> .
 
-    TIMES           reduce using rule 143 (cteFloat -> .)
-    DIVIDE          reduce using rule 143 (cteFloat -> .)
-    PLUS            reduce using rule 143 (cteFloat -> .)
-    MINUS           reduce using rule 143 (cteFloat -> .)
-    LESSTHAN        reduce using rule 143 (cteFloat -> .)
-    GREATERTHAN     reduce using rule 143 (cteFloat -> .)
-    LESSEQ          reduce using rule 143 (cteFloat -> .)
-    GREATEREQ       reduce using rule 143 (cteFloat -> .)
-    NOTEQUAL        reduce using rule 143 (cteFloat -> .)
-    ISEQUAL         reduce using rule 143 (cteFloat -> .)
-    AND             reduce using rule 143 (cteFloat -> .)
-    OR              reduce using rule 143 (cteFloat -> .)
-    EQUALS          reduce using rule 143 (cteFloat -> .)
-    RPAREN          reduce using rule 143 (cteFloat -> .)
-    SEMICOLON       reduce using rule 143 (cteFloat -> .)
-    COMMA           reduce using rule 143 (cteFloat -> .)
-    RBRACKET        reduce using rule 143 (cteFloat -> .)
-    HASTA           reduce using rule 143 (cteFloat -> .)
-    HACER           reduce using rule 143 (cteFloat -> .)
+    TIMES           reduce using rule 144 (cteFloat -> .)
+    DIVIDE          reduce using rule 144 (cteFloat -> .)
+    PLUS            reduce using rule 144 (cteFloat -> .)
+    MINUS           reduce using rule 144 (cteFloat -> .)
+    LESSTHAN        reduce using rule 144 (cteFloat -> .)
+    GREATERTHAN     reduce using rule 144 (cteFloat -> .)
+    LESSEQ          reduce using rule 144 (cteFloat -> .)
+    GREATEREQ       reduce using rule 144 (cteFloat -> .)
+    NOTEQUAL        reduce using rule 144 (cteFloat -> .)
+    ISEQUAL         reduce using rule 144 (cteFloat -> .)
+    AND             reduce using rule 144 (cteFloat -> .)
+    OR              reduce using rule 144 (cteFloat -> .)
+    EQUALS          reduce using rule 144 (cteFloat -> .)
+    RPAREN          reduce using rule 144 (cteFloat -> .)
+    SEMICOLON       reduce using rule 144 (cteFloat -> .)
+    COMMA           reduce using rule 144 (cteFloat -> .)
+    RBRACKET        reduce using rule 144 (cteFloat -> .)
+    HASTA           reduce using rule 144 (cteFloat -> .)
+    HACER           reduce using rule 144 (cteFloat -> .)
 
     cteFloat                       shift and go to state 198
 
@@ -2529,8 +2531,8 @@ state 150
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -2542,8 +2544,8 @@ state 150
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -2572,11 +2574,11 @@ state 151
 state 152
 
     (52) variable -> ID . pExp1 di
-    (146) pExp1 -> .
+    (147) pExp1 -> .
 
-    LBRACKET        reduce using rule 146 (pExp1 -> .)
-    EQUALS          reduce using rule 146 (pExp1 -> .)
-    RPAREN          reduce using rule 146 (pExp1 -> .)
+    LBRACKET        reduce using rule 147 (pExp1 -> .)
+    EQUALS          reduce using rule 147 (pExp1 -> .)
+    RPAREN          reduce using rule 147 (pExp1 -> .)
 
     pExp1                          shift and go to state 102
 
@@ -2680,19 +2682,19 @@ state 163
 state 164
 
     (35) dim_index -> LBRACKET dimAccess2 . exp6 exp activaArray arregloAcc RBRACKET exp7 dim_index1
-    (151) exp6 -> .
+    (152) exp6 -> .
 
-    LPAREN          reduce using rule 151 (exp6 -> .)
-    CTECHAR         reduce using rule 151 (exp6 -> .)
-    CTESTRING       reduce using rule 151 (exp6 -> .)
-    MINUS           reduce using rule 151 (exp6 -> .)
-    ID              reduce using rule 151 (exp6 -> .)
-    CORRELACIONA    reduce using rule 151 (exp6 -> .)
-    CTEINT          reduce using rule 151 (exp6 -> .)
-    CTEFLOAT        reduce using rule 151 (exp6 -> .)
-    MEDIA           reduce using rule 151 (exp6 -> .)
-    MODA            reduce using rule 151 (exp6 -> .)
-    VARIANZA        reduce using rule 151 (exp6 -> .)
+    LPAREN          reduce using rule 152 (exp6 -> .)
+    CTECHAR         reduce using rule 152 (exp6 -> .)
+    CTESTRING       reduce using rule 152 (exp6 -> .)
+    MINUS           reduce using rule 152 (exp6 -> .)
+    ID              reduce using rule 152 (exp6 -> .)
+    CORRELACIONA    reduce using rule 152 (exp6 -> .)
+    CTEINT          reduce using rule 152 (exp6 -> .)
+    CTEFLOAT        reduce using rule 152 (exp6 -> .)
+    MEDIA           reduce using rule 152 (exp6 -> .)
+    MODA            reduce using rule 152 (exp6 -> .)
+    VARIANZA        reduce using rule 152 (exp6 -> .)
 
     exp6                           shift and go to state 214
 
@@ -2733,10 +2735,10 @@ state 168
 state 169
 
     (64) esc1 -> exp . sec4
-    (160) sec4 -> .
+    (161) sec4 -> .
 
-    COMMA           reduce using rule 160 (sec4 -> .)
-    RPAREN          reduce using rule 160 (sec4 -> .)
+    COMMA           reduce using rule 161 (sec4 -> .)
+    RPAREN          reduce using rule 161 (sec4 -> .)
 
     sec4                           shift and go to state 221
 
@@ -2763,8 +2765,8 @@ state 171
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -2776,8 +2778,8 @@ state 171
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -2796,9 +2798,9 @@ state 171
 state 172
 
     (70) decision -> SI LPAREN expresion RPAREN . cond1 ENTONCES bloque sino cond2
-    (162) cond1 -> .
+    (163) cond1 -> .
 
-    ENTONCES        reduce using rule 162 (cond1 -> .)
+    ENTONCES        reduce using rule 163 (cond1 -> .)
 
     cond1                          shift and go to state 224
 
@@ -2828,8 +2830,8 @@ state 174
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -2841,8 +2843,8 @@ state 174
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -2879,19 +2881,19 @@ state 176
 state 177
 
     (95) meg -> op_l . exp10 mega_exp exp11
-    (155) exp10 -> .
+    (156) exp10 -> .
 
-    LPAREN          reduce using rule 155 (exp10 -> .)
-    CTECHAR         reduce using rule 155 (exp10 -> .)
-    CTESTRING       reduce using rule 155 (exp10 -> .)
-    MINUS           reduce using rule 155 (exp10 -> .)
-    ID              reduce using rule 155 (exp10 -> .)
-    CORRELACIONA    reduce using rule 155 (exp10 -> .)
-    CTEINT          reduce using rule 155 (exp10 -> .)
-    CTEFLOAT        reduce using rule 155 (exp10 -> .)
-    MEDIA           reduce using rule 155 (exp10 -> .)
-    MODA            reduce using rule 155 (exp10 -> .)
-    VARIANZA        reduce using rule 155 (exp10 -> .)
+    LPAREN          reduce using rule 156 (exp10 -> .)
+    CTECHAR         reduce using rule 156 (exp10 -> .)
+    CTESTRING       reduce using rule 156 (exp10 -> .)
+    MINUS           reduce using rule 156 (exp10 -> .)
+    ID              reduce using rule 156 (exp10 -> .)
+    CORRELACIONA    reduce using rule 156 (exp10 -> .)
+    CTEINT          reduce using rule 156 (exp10 -> .)
+    CTEFLOAT        reduce using rule 156 (exp10 -> .)
+    MEDIA           reduce using rule 156 (exp10 -> .)
+    MODA            reduce using rule 156 (exp10 -> .)
+    VARIANZA        reduce using rule 156 (exp10 -> .)
 
     exp10                          shift and go to state 226
 
@@ -2963,8 +2965,8 @@ state 182
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -2976,8 +2978,8 @@ state 182
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -3006,114 +3008,114 @@ state 183
 state 184
 
     (102) op_r -> LESSTHAN . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 228
 
 state 185
 
     (103) op_r -> GREATERTHAN . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 229
 
 state 186
 
     (104) op_r -> LESSEQ . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 230
 
 state 187
 
     (105) op_r -> GREATEREQ . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 231
 
 state 188
 
     (106) op_r -> NOTEQUAL . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 232
 
 state 189
 
     (107) op_r -> ISEQUAL . exp8
-    (153) exp8 -> .
+    (154) exp8 -> .
 
-    LPAREN          reduce using rule 153 (exp8 -> .)
-    CTECHAR         reduce using rule 153 (exp8 -> .)
-    CTESTRING       reduce using rule 153 (exp8 -> .)
-    MINUS           reduce using rule 153 (exp8 -> .)
-    ID              reduce using rule 153 (exp8 -> .)
-    CORRELACIONA    reduce using rule 153 (exp8 -> .)
-    CTEINT          reduce using rule 153 (exp8 -> .)
-    CTEFLOAT        reduce using rule 153 (exp8 -> .)
-    MEDIA           reduce using rule 153 (exp8 -> .)
-    MODA            reduce using rule 153 (exp8 -> .)
-    VARIANZA        reduce using rule 153 (exp8 -> .)
+    LPAREN          reduce using rule 154 (exp8 -> .)
+    CTECHAR         reduce using rule 154 (exp8 -> .)
+    CTESTRING       reduce using rule 154 (exp8 -> .)
+    MINUS           reduce using rule 154 (exp8 -> .)
+    ID              reduce using rule 154 (exp8 -> .)
+    CORRELACIONA    reduce using rule 154 (exp8 -> .)
+    CTEINT          reduce using rule 154 (exp8 -> .)
+    CTEFLOAT        reduce using rule 154 (exp8 -> .)
+    MEDIA           reduce using rule 154 (exp8 -> .)
+    MODA            reduce using rule 154 (exp8 -> .)
+    VARIANZA        reduce using rule 154 (exp8 -> .)
 
     exp8                           shift and go to state 233
 
@@ -3237,26 +3239,19 @@ state 194
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
 
-    CTEINT          shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
 
     var_num                        shift and go to state 244
 
 state 195
 
-    (79) funciones_especiales -> fe LPAREN . ID pExp1 COMMA v_exp RPAREN funEsp2
+    (79) funciones_especiales -> fe LPAREN . ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
 
     ID              shift and go to state 245
 
 
 state 196
-
-    (80) funciones_especiales -> CORRELACIONA funEsp1 . LPAREN ID COMMA v_exp COMMA v_exp RPAREN
-
-    LPAREN          shift and go to state 246
-
-
-state 197
 
     (89) var_num -> CTEINT cteInt .
 
@@ -3279,6 +3274,13 @@ state 197
     RBRACKET        reduce using rule 89 (var_num -> CTEINT cteInt .)
     HASTA           reduce using rule 89 (var_num -> CTEINT cteInt .)
     HACER           reduce using rule 89 (var_num -> CTEINT cteInt .)
+
+
+state 197
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 . LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
+
+    LPAREN          shift and go to state 246
 
 
 state 198
@@ -3337,19 +3339,19 @@ state 202
 state 203
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS . sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque ciclos8
-    (157) sec1 -> .
+    (158) sec1 -> .
 
-    LPAREN          reduce using rule 157 (sec1 -> .)
-    CTECHAR         reduce using rule 157 (sec1 -> .)
-    CTESTRING       reduce using rule 157 (sec1 -> .)
-    MINUS           reduce using rule 157 (sec1 -> .)
-    ID              reduce using rule 157 (sec1 -> .)
-    CORRELACIONA    reduce using rule 157 (sec1 -> .)
-    CTEINT          reduce using rule 157 (sec1 -> .)
-    CTEFLOAT        reduce using rule 157 (sec1 -> .)
-    MEDIA           reduce using rule 157 (sec1 -> .)
-    MODA            reduce using rule 157 (sec1 -> .)
-    VARIANZA        reduce using rule 157 (sec1 -> .)
+    LPAREN          reduce using rule 158 (sec1 -> .)
+    CTECHAR         reduce using rule 158 (sec1 -> .)
+    CTESTRING       reduce using rule 158 (sec1 -> .)
+    MINUS           reduce using rule 158 (sec1 -> .)
+    ID              reduce using rule 158 (sec1 -> .)
+    CORRELACIONA    reduce using rule 158 (sec1 -> .)
+    CTEINT          reduce using rule 158 (sec1 -> .)
+    CTEFLOAT        reduce using rule 158 (sec1 -> .)
+    MEDIA           reduce using rule 158 (sec1 -> .)
+    MODA            reduce using rule 158 (sec1 -> .)
+    VARIANZA        reduce using rule 158 (sec1 -> .)
 
     sec1                           shift and go to state 248
 
@@ -3412,20 +3414,20 @@ state 210
 state 211
 
     (51) asignacion -> variable EQUALS sec1 exp SEMICOLON . sec2
-    (158) sec2 -> .
+    (159) sec2 -> .
 
-    ID              reduce using rule 158 (sec2 -> .)
-    REGRESA         reduce using rule 158 (sec2 -> .)
-    LEE             reduce using rule 158 (sec2 -> .)
-    ESCRIBE         reduce using rule 158 (sec2 -> .)
-    CARGAARCHIVO    reduce using rule 158 (sec2 -> .)
-    SI              reduce using rule 158 (sec2 -> .)
-    MIENTRAS        reduce using rule 158 (sec2 -> .)
-    DESDE           reduce using rule 158 (sec2 -> .)
-    VARIABLES       reduce using rule 158 (sec2 -> .)
-    HISTOGRAMA      reduce using rule 158 (sec2 -> .)
-    LINEAL          reduce using rule 158 (sec2 -> .)
-    RCURBRACKET     reduce using rule 158 (sec2 -> .)
+    ID              reduce using rule 159 (sec2 -> .)
+    REGRESA         reduce using rule 159 (sec2 -> .)
+    LEE             reduce using rule 159 (sec2 -> .)
+    ESCRIBE         reduce using rule 159 (sec2 -> .)
+    CARGAARCHIVO    reduce using rule 159 (sec2 -> .)
+    SI              reduce using rule 159 (sec2 -> .)
+    MIENTRAS        reduce using rule 159 (sec2 -> .)
+    DESDE           reduce using rule 159 (sec2 -> .)
+    VARIABLES       reduce using rule 159 (sec2 -> .)
+    HISTOGRAMA      reduce using rule 159 (sec2 -> .)
+    LINEAL          reduce using rule 159 (sec2 -> .)
+    RCURBRACKET     reduce using rule 159 (sec2 -> .)
 
     sec2                           shift and go to state 254
 
@@ -3497,8 +3499,8 @@ state 214
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -3510,8 +3512,8 @@ state 214
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -3530,9 +3532,9 @@ state 214
 state 215
 
     (60) retorno -> REGRESA sec3 LPAREN exp RPAREN . pRetorno SEMICOLON
-    (173) pRetorno -> .
+    (174) pRetorno -> .
 
-    SEMICOLON       reduce using rule 173 (pRetorno -> .)
+    SEMICOLON       reduce using rule 174 (pRetorno -> .)
 
     pRetorno                       shift and go to state 260
 
@@ -3575,8 +3577,8 @@ state 219
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -3588,8 +3590,8 @@ state 219
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -3668,8 +3670,8 @@ state 226
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -3681,8 +3683,8 @@ state 226
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -3703,12 +3705,12 @@ state 226
 state 227
 
     (100) sp -> op_r exp . exp9
-    (154) exp9 -> .
+    (155) exp9 -> .
 
-    AND             reduce using rule 154 (exp9 -> .)
-    OR              reduce using rule 154 (exp9 -> .)
-    EQUALS          reduce using rule 154 (exp9 -> .)
-    RPAREN          reduce using rule 154 (exp9 -> .)
+    AND             reduce using rule 155 (exp9 -> .)
+    OR              reduce using rule 155 (exp9 -> .)
+    EQUALS          reduce using rule 155 (exp9 -> .)
+    RPAREN          reduce using rule 155 (exp9 -> .)
 
     exp9                           shift and go to state 268
 
@@ -3851,8 +3853,8 @@ state 235
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -3864,8 +3866,8 @@ state 235
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -3905,38 +3907,38 @@ state 236
 state 237
 
     (111) op_a -> PLUS . exp2
-    (147) exp2 -> .
+    (148) exp2 -> .
 
-    LPAREN          reduce using rule 147 (exp2 -> .)
-    CTECHAR         reduce using rule 147 (exp2 -> .)
-    CTESTRING       reduce using rule 147 (exp2 -> .)
-    MINUS           reduce using rule 147 (exp2 -> .)
-    ID              reduce using rule 147 (exp2 -> .)
-    CORRELACIONA    reduce using rule 147 (exp2 -> .)
-    CTEINT          reduce using rule 147 (exp2 -> .)
-    CTEFLOAT        reduce using rule 147 (exp2 -> .)
-    MEDIA           reduce using rule 147 (exp2 -> .)
-    MODA            reduce using rule 147 (exp2 -> .)
-    VARIANZA        reduce using rule 147 (exp2 -> .)
+    LPAREN          reduce using rule 148 (exp2 -> .)
+    CTECHAR         reduce using rule 148 (exp2 -> .)
+    CTESTRING       reduce using rule 148 (exp2 -> .)
+    MINUS           reduce using rule 148 (exp2 -> .)
+    ID              reduce using rule 148 (exp2 -> .)
+    CORRELACIONA    reduce using rule 148 (exp2 -> .)
+    CTEINT          reduce using rule 148 (exp2 -> .)
+    CTEFLOAT        reduce using rule 148 (exp2 -> .)
+    MEDIA           reduce using rule 148 (exp2 -> .)
+    MODA            reduce using rule 148 (exp2 -> .)
+    VARIANZA        reduce using rule 148 (exp2 -> .)
 
     exp2                           shift and go to state 270
 
 state 238
 
     (112) op_a -> MINUS . exp2
-    (147) exp2 -> .
+    (148) exp2 -> .
 
-    LPAREN          reduce using rule 147 (exp2 -> .)
-    CTECHAR         reduce using rule 147 (exp2 -> .)
-    CTESTRING       reduce using rule 147 (exp2 -> .)
-    MINUS           reduce using rule 147 (exp2 -> .)
-    ID              reduce using rule 147 (exp2 -> .)
-    CORRELACIONA    reduce using rule 147 (exp2 -> .)
-    CTEINT          reduce using rule 147 (exp2 -> .)
-    CTEFLOAT        reduce using rule 147 (exp2 -> .)
-    MEDIA           reduce using rule 147 (exp2 -> .)
-    MODA            reduce using rule 147 (exp2 -> .)
-    VARIANZA        reduce using rule 147 (exp2 -> .)
+    LPAREN          reduce using rule 148 (exp2 -> .)
+    CTECHAR         reduce using rule 148 (exp2 -> .)
+    CTESTRING       reduce using rule 148 (exp2 -> .)
+    MINUS           reduce using rule 148 (exp2 -> .)
+    ID              reduce using rule 148 (exp2 -> .)
+    CORRELACIONA    reduce using rule 148 (exp2 -> .)
+    CTEINT          reduce using rule 148 (exp2 -> .)
+    CTEFLOAT        reduce using rule 148 (exp2 -> .)
+    MEDIA           reduce using rule 148 (exp2 -> .)
+    MODA            reduce using rule 148 (exp2 -> .)
+    VARIANZA        reduce using rule 148 (exp2 -> .)
 
     exp2                           shift and go to state 271
 
@@ -3978,8 +3980,8 @@ state 240
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -3991,8 +3993,8 @@ state 240
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -4033,38 +4035,38 @@ state 241
 state 242
 
     (116) op_a1 -> TIMES . exp3
-    (148) exp3 -> .
+    (149) exp3 -> .
 
-    LPAREN          reduce using rule 148 (exp3 -> .)
-    CTECHAR         reduce using rule 148 (exp3 -> .)
-    CTESTRING       reduce using rule 148 (exp3 -> .)
-    MINUS           reduce using rule 148 (exp3 -> .)
-    ID              reduce using rule 148 (exp3 -> .)
-    CORRELACIONA    reduce using rule 148 (exp3 -> .)
-    CTEINT          reduce using rule 148 (exp3 -> .)
-    CTEFLOAT        reduce using rule 148 (exp3 -> .)
-    MEDIA           reduce using rule 148 (exp3 -> .)
-    MODA            reduce using rule 148 (exp3 -> .)
-    VARIANZA        reduce using rule 148 (exp3 -> .)
+    LPAREN          reduce using rule 149 (exp3 -> .)
+    CTECHAR         reduce using rule 149 (exp3 -> .)
+    CTESTRING       reduce using rule 149 (exp3 -> .)
+    MINUS           reduce using rule 149 (exp3 -> .)
+    ID              reduce using rule 149 (exp3 -> .)
+    CORRELACIONA    reduce using rule 149 (exp3 -> .)
+    CTEINT          reduce using rule 149 (exp3 -> .)
+    CTEFLOAT        reduce using rule 149 (exp3 -> .)
+    MEDIA           reduce using rule 149 (exp3 -> .)
+    MODA            reduce using rule 149 (exp3 -> .)
+    VARIANZA        reduce using rule 149 (exp3 -> .)
 
     exp3                           shift and go to state 273
 
 state 243
 
     (117) op_a1 -> DIVIDE . exp3
-    (148) exp3 -> .
+    (149) exp3 -> .
 
-    LPAREN          reduce using rule 148 (exp3 -> .)
-    CTECHAR         reduce using rule 148 (exp3 -> .)
-    CTESTRING       reduce using rule 148 (exp3 -> .)
-    MINUS           reduce using rule 148 (exp3 -> .)
-    ID              reduce using rule 148 (exp3 -> .)
-    CORRELACIONA    reduce using rule 148 (exp3 -> .)
-    CTEINT          reduce using rule 148 (exp3 -> .)
-    CTEFLOAT        reduce using rule 148 (exp3 -> .)
-    MEDIA           reduce using rule 148 (exp3 -> .)
-    MODA            reduce using rule 148 (exp3 -> .)
-    VARIANZA        reduce using rule 148 (exp3 -> .)
+    LPAREN          reduce using rule 149 (exp3 -> .)
+    CTECHAR         reduce using rule 149 (exp3 -> .)
+    CTESTRING       reduce using rule 149 (exp3 -> .)
+    MINUS           reduce using rule 149 (exp3 -> .)
+    ID              reduce using rule 149 (exp3 -> .)
+    CORRELACIONA    reduce using rule 149 (exp3 -> .)
+    CTEINT          reduce using rule 149 (exp3 -> .)
+    CTEFLOAT        reduce using rule 149 (exp3 -> .)
+    MEDIA           reduce using rule 149 (exp3 -> .)
+    MODA            reduce using rule 149 (exp3 -> .)
+    VARIANZA        reduce using rule 149 (exp3 -> .)
 
     exp3                           shift and go to state 274
 
@@ -4095,16 +4097,16 @@ state 244
 
 state 245
 
-    (79) funciones_especiales -> fe LPAREN ID . pExp1 COMMA v_exp RPAREN funEsp2
-    (146) pExp1 -> .
+    (79) funciones_especiales -> fe LPAREN ID . pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (147) pExp1 -> .
 
-    COMMA           reduce using rule 146 (pExp1 -> .)
+    COMMA           reduce using rule 147 (pExp1 -> .)
 
     pExp1                          shift and go to state 275
 
 state 246
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN . ID COMMA v_exp COMMA v_exp RPAREN
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN . ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 
     ID              shift and go to state 276
 
@@ -4112,9 +4114,9 @@ state 246
 state 247
 
     (73) condicional -> MIENTRAS ciclos1 LPAREN expresion RPAREN . ciclos2 HAZ bloque ciclos3
-    (166) ciclos2 -> .
+    (167) ciclos2 -> .
 
-    HAZ             reduce using rule 166 (ciclos2 -> .)
+    HAZ             reduce using rule 167 (ciclos2 -> .)
 
     ciclos2                        shift and go to state 277
 
@@ -4134,8 +4136,8 @@ state 248
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -4147,8 +4149,8 @@ state 248
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -4196,9 +4198,9 @@ state 252
 state 253
 
     (33) dim_dec1 -> LBRACKET CTEINT . dimDec6 RBRACKET decColumnas
-    (176) dimDec6 -> .
+    (177) dimDec6 -> .
 
-    RBRACKET        reduce using rule 176 (dimDec6 -> .)
+    RBRACKET        reduce using rule 177 (dimDec6 -> .)
 
     dimDec6                        shift and go to state 282
 
@@ -4283,8 +4285,8 @@ state 257
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -4297,8 +4299,8 @@ state 257
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -4326,9 +4328,9 @@ state 258
 state 259
 
     (35) dim_index -> LBRACKET dimAccess2 exp6 exp . activaArray arregloAcc RBRACKET exp7 dim_index1
-    (181) activaArray -> .
+    (182) activaArray -> .
 
-    RBRACKET        reduce using rule 181 (activaArray -> .)
+    RBRACKET        reduce using rule 182 (activaArray -> .)
 
     activaArray                    shift and go to state 284
 
@@ -4342,40 +4344,40 @@ state 260
 state 261
 
     (61) lectura -> LEE sec3 LPAREN variable RPAREN SEMICOLON . sec4 sec5
-    (160) sec4 -> .
+    (161) sec4 -> .
 
-    ID              reduce using rule 160 (sec4 -> .)
-    REGRESA         reduce using rule 160 (sec4 -> .)
-    LEE             reduce using rule 160 (sec4 -> .)
-    ESCRIBE         reduce using rule 160 (sec4 -> .)
-    CARGAARCHIVO    reduce using rule 160 (sec4 -> .)
-    SI              reduce using rule 160 (sec4 -> .)
-    MIENTRAS        reduce using rule 160 (sec4 -> .)
-    DESDE           reduce using rule 160 (sec4 -> .)
-    VARIABLES       reduce using rule 160 (sec4 -> .)
-    HISTOGRAMA      reduce using rule 160 (sec4 -> .)
-    LINEAL          reduce using rule 160 (sec4 -> .)
-    RCURBRACKET     reduce using rule 160 (sec4 -> .)
+    ID              reduce using rule 161 (sec4 -> .)
+    REGRESA         reduce using rule 161 (sec4 -> .)
+    LEE             reduce using rule 161 (sec4 -> .)
+    ESCRIBE         reduce using rule 161 (sec4 -> .)
+    CARGAARCHIVO    reduce using rule 161 (sec4 -> .)
+    SI              reduce using rule 161 (sec4 -> .)
+    MIENTRAS        reduce using rule 161 (sec4 -> .)
+    DESDE           reduce using rule 161 (sec4 -> .)
+    VARIABLES       reduce using rule 161 (sec4 -> .)
+    HISTOGRAMA      reduce using rule 161 (sec4 -> .)
+    LINEAL          reduce using rule 161 (sec4 -> .)
+    RCURBRACKET     reduce using rule 161 (sec4 -> .)
 
     sec4                           shift and go to state 286
 
 state 262
 
     (62) escritura -> ESCRIBE sec3 LPAREN esc RPAREN SEMICOLON . sec5
-    (161) sec5 -> .
+    (162) sec5 -> .
 
-    ID              reduce using rule 161 (sec5 -> .)
-    REGRESA         reduce using rule 161 (sec5 -> .)
-    LEE             reduce using rule 161 (sec5 -> .)
-    ESCRIBE         reduce using rule 161 (sec5 -> .)
-    CARGAARCHIVO    reduce using rule 161 (sec5 -> .)
-    SI              reduce using rule 161 (sec5 -> .)
-    MIENTRAS        reduce using rule 161 (sec5 -> .)
-    DESDE           reduce using rule 161 (sec5 -> .)
-    VARIABLES       reduce using rule 161 (sec5 -> .)
-    HISTOGRAMA      reduce using rule 161 (sec5 -> .)
-    LINEAL          reduce using rule 161 (sec5 -> .)
-    RCURBRACKET     reduce using rule 161 (sec5 -> .)
+    ID              reduce using rule 162 (sec5 -> .)
+    REGRESA         reduce using rule 162 (sec5 -> .)
+    LEE             reduce using rule 162 (sec5 -> .)
+    ESCRIBE         reduce using rule 162 (sec5 -> .)
+    CARGAARCHIVO    reduce using rule 162 (sec5 -> .)
+    SI              reduce using rule 162 (sec5 -> .)
+    MIENTRAS        reduce using rule 162 (sec5 -> .)
+    DESDE           reduce using rule 162 (sec5 -> .)
+    VARIABLES       reduce using rule 162 (sec5 -> .)
+    HISTOGRAMA      reduce using rule 162 (sec5 -> .)
+    LINEAL          reduce using rule 162 (sec5 -> .)
+    RCURBRACKET     reduce using rule 162 (sec5 -> .)
 
     sec5                           shift and go to state 287
 
@@ -4389,36 +4391,36 @@ state 263
 state 264
 
     (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING . cteStr COMMA ca COMMA ca RPAREN SEMICOLON carga
-    (145) cteStr -> .
+    (146) cteStr -> .
 
-    COMMA           reduce using rule 145 (cteStr -> .)
+    COMMA           reduce using rule 146 (cteStr -> .)
 
     cteStr                         shift and go to state 288
 
 state 265
 
     (119) factor -> LPAREN exp6 exp RPAREN . exp7
-    (152) exp7 -> .
+    (153) exp7 -> .
 
-    TIMES           reduce using rule 152 (exp7 -> .)
-    DIVIDE          reduce using rule 152 (exp7 -> .)
-    PLUS            reduce using rule 152 (exp7 -> .)
-    MINUS           reduce using rule 152 (exp7 -> .)
-    LESSTHAN        reduce using rule 152 (exp7 -> .)
-    GREATERTHAN     reduce using rule 152 (exp7 -> .)
-    LESSEQ          reduce using rule 152 (exp7 -> .)
-    GREATEREQ       reduce using rule 152 (exp7 -> .)
-    NOTEQUAL        reduce using rule 152 (exp7 -> .)
-    ISEQUAL         reduce using rule 152 (exp7 -> .)
-    AND             reduce using rule 152 (exp7 -> .)
-    OR              reduce using rule 152 (exp7 -> .)
-    EQUALS          reduce using rule 152 (exp7 -> .)
-    RPAREN          reduce using rule 152 (exp7 -> .)
-    SEMICOLON       reduce using rule 152 (exp7 -> .)
-    COMMA           reduce using rule 152 (exp7 -> .)
-    RBRACKET        reduce using rule 152 (exp7 -> .)
-    HASTA           reduce using rule 152 (exp7 -> .)
-    HACER           reduce using rule 152 (exp7 -> .)
+    TIMES           reduce using rule 153 (exp7 -> .)
+    DIVIDE          reduce using rule 153 (exp7 -> .)
+    PLUS            reduce using rule 153 (exp7 -> .)
+    MINUS           reduce using rule 153 (exp7 -> .)
+    LESSTHAN        reduce using rule 153 (exp7 -> .)
+    GREATERTHAN     reduce using rule 153 (exp7 -> .)
+    LESSEQ          reduce using rule 153 (exp7 -> .)
+    GREATEREQ       reduce using rule 153 (exp7 -> .)
+    NOTEQUAL        reduce using rule 153 (exp7 -> .)
+    ISEQUAL         reduce using rule 153 (exp7 -> .)
+    AND             reduce using rule 153 (exp7 -> .)
+    OR              reduce using rule 153 (exp7 -> .)
+    EQUALS          reduce using rule 153 (exp7 -> .)
+    RPAREN          reduce using rule 153 (exp7 -> .)
+    SEMICOLON       reduce using rule 153 (exp7 -> .)
+    COMMA           reduce using rule 153 (exp7 -> .)
+    RBRACKET        reduce using rule 153 (exp7 -> .)
+    HASTA           reduce using rule 153 (exp7 -> .)
+    HACER           reduce using rule 153 (exp7 -> .)
 
     exp7                           shift and go to state 289
 
@@ -4434,10 +4436,10 @@ state 266
 state 267
 
     (95) meg -> op_l exp10 mega_exp . exp11
-    (156) exp11 -> .
+    (157) exp11 -> .
 
-    EQUALS          reduce using rule 156 (exp11 -> .)
-    RPAREN          reduce using rule 156 (exp11 -> .)
+    EQUALS          reduce using rule 157 (exp11 -> .)
+    RPAREN          reduce using rule 157 (exp11 -> .)
 
     exp11                          shift and go to state 291
 
@@ -4565,17 +4567,19 @@ state 274
 
 state 275
 
-    (79) funciones_especiales -> fe LPAREN ID pExp1 . COMMA v_exp RPAREN funEsp2
+    (79) funciones_especiales -> fe LPAREN ID pExp1 . COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
 
     COMMA           shift and go to state 292
 
 
 state 276
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID . COMMA v_exp COMMA v_exp RPAREN
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID . pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
+    (147) pExp1 -> .
 
-    COMMA           shift and go to state 293
+    COMMA           reduce using rule 147 (pExp1 -> .)
 
+    pExp1                          shift and go to state 293
 
 state 277
 
@@ -4587,9 +4591,9 @@ state 277
 state 278
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp . ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque ciclos8
-    (169) ciclos5 -> .
+    (170) ciclos5 -> .
 
-    HASTA           reduce using rule 169 (ciclos5 -> .)
+    HASTA           reduce using rule 170 (ciclos5 -> .)
 
     ciclos5                        shift and go to state 295
 
@@ -4623,8 +4627,8 @@ state 281
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -4636,8 +4640,8 @@ state 281
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -4670,9 +4674,9 @@ state 283
 state 284
 
     (35) dim_index -> LBRACKET dimAccess2 exp6 exp activaArray . arregloAcc RBRACKET exp7 dim_index1
-    (179) arregloAcc -> .
+    (180) arregloAcc -> .
 
-    RBRACKET        reduce using rule 179 (arregloAcc -> .)
+    RBRACKET        reduce using rule 180 (arregloAcc -> .)
 
     arregloAcc                     shift and go to state 300
 
@@ -4697,20 +4701,20 @@ state 285
 state 286
 
     (61) lectura -> LEE sec3 LPAREN variable RPAREN SEMICOLON sec4 . sec5
-    (161) sec5 -> .
+    (162) sec5 -> .
 
-    ID              reduce using rule 161 (sec5 -> .)
-    REGRESA         reduce using rule 161 (sec5 -> .)
-    LEE             reduce using rule 161 (sec5 -> .)
-    ESCRIBE         reduce using rule 161 (sec5 -> .)
-    CARGAARCHIVO    reduce using rule 161 (sec5 -> .)
-    SI              reduce using rule 161 (sec5 -> .)
-    MIENTRAS        reduce using rule 161 (sec5 -> .)
-    DESDE           reduce using rule 161 (sec5 -> .)
-    VARIABLES       reduce using rule 161 (sec5 -> .)
-    HISTOGRAMA      reduce using rule 161 (sec5 -> .)
-    LINEAL          reduce using rule 161 (sec5 -> .)
-    RCURBRACKET     reduce using rule 161 (sec5 -> .)
+    ID              reduce using rule 162 (sec5 -> .)
+    REGRESA         reduce using rule 162 (sec5 -> .)
+    LEE             reduce using rule 162 (sec5 -> .)
+    ESCRIBE         reduce using rule 162 (sec5 -> .)
+    CARGAARCHIVO    reduce using rule 162 (sec5 -> .)
+    SI              reduce using rule 162 (sec5 -> .)
+    MIENTRAS        reduce using rule 162 (sec5 -> .)
+    DESDE           reduce using rule 162 (sec5 -> .)
+    VARIABLES       reduce using rule 162 (sec5 -> .)
+    HISTOGRAMA      reduce using rule 162 (sec5 -> .)
+    LINEAL          reduce using rule 162 (sec5 -> .)
+    RCURBRACKET     reduce using rule 162 (sec5 -> .)
 
     sec5                           shift and go to state 301
 
@@ -4798,21 +4802,17 @@ state 291
 
 state 292
 
-    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA . v_exp RPAREN funEsp2
-    (84) v_exp -> . VARIABLES LBRACKET exp RBRACKET
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA . CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
 
-    VARIABLES       shift and go to state 251
+    CTEINT          shift and go to state 306
 
-    v_exp                          shift and go to state 306
 
 state 293
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA . v_exp COMMA v_exp RPAREN
-    (84) v_exp -> . VARIABLES LBRACKET exp RBRACKET
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 . COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 
-    VARIABLES       shift and go to state 251
+    COMMA           shift and go to state 307
 
-    v_exp                          shift and go to state 307
 
 state 294
 
@@ -4911,29 +4911,29 @@ state 302
 state 303
 
     (70) decision -> SI LPAREN expresion RPAREN cond1 ENTONCES bloque sino . cond2
-    (163) cond2 -> .
+    (164) cond2 -> .
 
-    ID              reduce using rule 163 (cond2 -> .)
-    REGRESA         reduce using rule 163 (cond2 -> .)
-    LEE             reduce using rule 163 (cond2 -> .)
-    ESCRIBE         reduce using rule 163 (cond2 -> .)
-    CARGAARCHIVO    reduce using rule 163 (cond2 -> .)
-    SI              reduce using rule 163 (cond2 -> .)
-    MIENTRAS        reduce using rule 163 (cond2 -> .)
-    DESDE           reduce using rule 163 (cond2 -> .)
-    VARIABLES       reduce using rule 163 (cond2 -> .)
-    HISTOGRAMA      reduce using rule 163 (cond2 -> .)
-    LINEAL          reduce using rule 163 (cond2 -> .)
-    RCURBRACKET     reduce using rule 163 (cond2 -> .)
+    ID              reduce using rule 164 (cond2 -> .)
+    REGRESA         reduce using rule 164 (cond2 -> .)
+    LEE             reduce using rule 164 (cond2 -> .)
+    ESCRIBE         reduce using rule 164 (cond2 -> .)
+    CARGAARCHIVO    reduce using rule 164 (cond2 -> .)
+    SI              reduce using rule 164 (cond2 -> .)
+    MIENTRAS        reduce using rule 164 (cond2 -> .)
+    DESDE           reduce using rule 164 (cond2 -> .)
+    VARIABLES       reduce using rule 164 (cond2 -> .)
+    HISTOGRAMA      reduce using rule 164 (cond2 -> .)
+    LINEAL          reduce using rule 164 (cond2 -> .)
+    RCURBRACKET     reduce using rule 164 (cond2 -> .)
 
     cond2                          shift and go to state 317
 
 state 304
 
     (71) sino -> SINO . cond3 bloque
-    (164) cond3 -> .
+    (165) cond3 -> .
 
-    LCURBRACKET     reduce using rule 164 (cond3 -> .)
+    LCURBRACKET     reduce using rule 165 (cond3 -> .)
 
     cond3                          shift and go to state 318
 
@@ -4957,54 +4957,56 @@ state 305
 
 state 306
 
-    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp . RPAREN funEsp2
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT . cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (143) cteInt -> .
 
-    RPAREN          shift and go to state 319
+    COMMA           reduce using rule 143 (cteInt -> .)
 
+    cteInt                         shift and go to state 319
 
 state 307
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp . COMMA v_exp RPAREN
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA . ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 
-    COMMA           shift and go to state 320
+    ID              shift and go to state 320
 
 
 state 308
 
     (73) condicional -> MIENTRAS ciclos1 LPAREN expresion RPAREN ciclos2 HAZ bloque . ciclos3
-    (167) ciclos3 -> .
+    (168) ciclos3 -> .
 
-    ID              reduce using rule 167 (ciclos3 -> .)
-    REGRESA         reduce using rule 167 (ciclos3 -> .)
-    LEE             reduce using rule 167 (ciclos3 -> .)
-    ESCRIBE         reduce using rule 167 (ciclos3 -> .)
-    CARGAARCHIVO    reduce using rule 167 (ciclos3 -> .)
-    SI              reduce using rule 167 (ciclos3 -> .)
-    MIENTRAS        reduce using rule 167 (ciclos3 -> .)
-    DESDE           reduce using rule 167 (ciclos3 -> .)
-    VARIABLES       reduce using rule 167 (ciclos3 -> .)
-    HISTOGRAMA      reduce using rule 167 (ciclos3 -> .)
-    LINEAL          reduce using rule 167 (ciclos3 -> .)
-    RCURBRACKET     reduce using rule 167 (ciclos3 -> .)
+    ID              reduce using rule 168 (ciclos3 -> .)
+    REGRESA         reduce using rule 168 (ciclos3 -> .)
+    LEE             reduce using rule 168 (ciclos3 -> .)
+    ESCRIBE         reduce using rule 168 (ciclos3 -> .)
+    CARGAARCHIVO    reduce using rule 168 (ciclos3 -> .)
+    SI              reduce using rule 168 (ciclos3 -> .)
+    MIENTRAS        reduce using rule 168 (ciclos3 -> .)
+    DESDE           reduce using rule 168 (ciclos3 -> .)
+    VARIABLES       reduce using rule 168 (ciclos3 -> .)
+    HISTOGRAMA      reduce using rule 168 (ciclos3 -> .)
+    LINEAL          reduce using rule 168 (ciclos3 -> .)
+    RCURBRACKET     reduce using rule 168 (ciclos3 -> .)
 
     ciclos3                        shift and go to state 321
 
 state 309
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA . ciclos6 exp ciclos7 HACER bloque ciclos8
-    (170) ciclos6 -> .
+    (171) ciclos6 -> .
 
-    LPAREN          reduce using rule 170 (ciclos6 -> .)
-    CTECHAR         reduce using rule 170 (ciclos6 -> .)
-    CTESTRING       reduce using rule 170 (ciclos6 -> .)
-    MINUS           reduce using rule 170 (ciclos6 -> .)
-    ID              reduce using rule 170 (ciclos6 -> .)
-    CORRELACIONA    reduce using rule 170 (ciclos6 -> .)
-    CTEINT          reduce using rule 170 (ciclos6 -> .)
-    CTEFLOAT        reduce using rule 170 (ciclos6 -> .)
-    MEDIA           reduce using rule 170 (ciclos6 -> .)
-    MODA            reduce using rule 170 (ciclos6 -> .)
-    VARIANZA        reduce using rule 170 (ciclos6 -> .)
+    LPAREN          reduce using rule 171 (ciclos6 -> .)
+    CTECHAR         reduce using rule 171 (ciclos6 -> .)
+    CTESTRING       reduce using rule 171 (ciclos6 -> .)
+    MINUS           reduce using rule 171 (ciclos6 -> .)
+    ID              reduce using rule 171 (ciclos6 -> .)
+    CORRELACIONA    reduce using rule 171 (ciclos6 -> .)
+    CTEINT          reduce using rule 171 (ciclos6 -> .)
+    CTEFLOAT        reduce using rule 171 (ciclos6 -> .)
+    MEDIA           reduce using rule 171 (ciclos6 -> .)
+    MODA            reduce using rule 171 (ciclos6 -> .)
+    VARIANZA        reduce using rule 171 (ciclos6 -> .)
 
     ciclos6                        shift and go to state 322
 
@@ -5020,7 +5022,6 @@ state 311
     (84) v_exp -> VARIABLES LBRACKET exp RBRACKET .
 
     RPAREN          reduce using rule 84 (v_exp -> VARIABLES LBRACKET exp RBRACKET .)
-    COMMA           reduce using rule 84 (v_exp -> VARIABLES LBRACKET exp RBRACKET .)
 
 
 state 312
@@ -5034,28 +5035,28 @@ state 312
 state 313
 
     (35) dim_index -> LBRACKET dimAccess2 exp6 exp activaArray arregloAcc RBRACKET . exp7 dim_index1
-    (152) exp7 -> .
+    (153) exp7 -> .
 
-    LBRACKET        reduce using rule 152 (exp7 -> .)
-    EQUALS          reduce using rule 152 (exp7 -> .)
-    TIMES           reduce using rule 152 (exp7 -> .)
-    DIVIDE          reduce using rule 152 (exp7 -> .)
-    PLUS            reduce using rule 152 (exp7 -> .)
-    MINUS           reduce using rule 152 (exp7 -> .)
-    LESSTHAN        reduce using rule 152 (exp7 -> .)
-    GREATERTHAN     reduce using rule 152 (exp7 -> .)
-    LESSEQ          reduce using rule 152 (exp7 -> .)
-    GREATEREQ       reduce using rule 152 (exp7 -> .)
-    NOTEQUAL        reduce using rule 152 (exp7 -> .)
-    ISEQUAL         reduce using rule 152 (exp7 -> .)
-    AND             reduce using rule 152 (exp7 -> .)
-    OR              reduce using rule 152 (exp7 -> .)
-    RPAREN          reduce using rule 152 (exp7 -> .)
-    SEMICOLON       reduce using rule 152 (exp7 -> .)
-    COMMA           reduce using rule 152 (exp7 -> .)
-    RBRACKET        reduce using rule 152 (exp7 -> .)
-    HASTA           reduce using rule 152 (exp7 -> .)
-    HACER           reduce using rule 152 (exp7 -> .)
+    LBRACKET        reduce using rule 153 (exp7 -> .)
+    EQUALS          reduce using rule 153 (exp7 -> .)
+    TIMES           reduce using rule 153 (exp7 -> .)
+    DIVIDE          reduce using rule 153 (exp7 -> .)
+    PLUS            reduce using rule 153 (exp7 -> .)
+    MINUS           reduce using rule 153 (exp7 -> .)
+    LESSTHAN        reduce using rule 153 (exp7 -> .)
+    GREATERTHAN     reduce using rule 153 (exp7 -> .)
+    LESSEQ          reduce using rule 153 (exp7 -> .)
+    GREATEREQ       reduce using rule 153 (exp7 -> .)
+    NOTEQUAL        reduce using rule 153 (exp7 -> .)
+    ISEQUAL         reduce using rule 153 (exp7 -> .)
+    AND             reduce using rule 153 (exp7 -> .)
+    OR              reduce using rule 153 (exp7 -> .)
+    RPAREN          reduce using rule 153 (exp7 -> .)
+    SEMICOLON       reduce using rule 153 (exp7 -> .)
+    COMMA           reduce using rule 153 (exp7 -> .)
+    RBRACKET        reduce using rule 153 (exp7 -> .)
+    HASTA           reduce using rule 153 (exp7 -> .)
+    HACER           reduce using rule 153 (exp7 -> .)
 
     exp7                           shift and go to state 324
 
@@ -5077,10 +5078,10 @@ state 315
 state 316
 
     (69) ca -> CTEINT . cteInt
-    (142) cteInt -> .
+    (143) cteInt -> .
 
-    COMMA           reduce using rule 142 (cteInt -> .)
-    RPAREN          reduce using rule 142 (cteInt -> .)
+    COMMA           reduce using rule 143 (cteInt -> .)
+    RPAREN          reduce using rule 143 (cteInt -> .)
 
     cteInt                         shift and go to state 326
 
@@ -5113,39 +5114,19 @@ state 318
 
 state 319
 
-    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN . funEsp2
-    (140) funEsp2 -> .
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt . COMMA CTEINT cteInt RPAREN funEsp2
 
-    TIMES           reduce using rule 140 (funEsp2 -> .)
-    DIVIDE          reduce using rule 140 (funEsp2 -> .)
-    PLUS            reduce using rule 140 (funEsp2 -> .)
-    MINUS           reduce using rule 140 (funEsp2 -> .)
-    LESSTHAN        reduce using rule 140 (funEsp2 -> .)
-    GREATERTHAN     reduce using rule 140 (funEsp2 -> .)
-    LESSEQ          reduce using rule 140 (funEsp2 -> .)
-    GREATEREQ       reduce using rule 140 (funEsp2 -> .)
-    NOTEQUAL        reduce using rule 140 (funEsp2 -> .)
-    ISEQUAL         reduce using rule 140 (funEsp2 -> .)
-    AND             reduce using rule 140 (funEsp2 -> .)
-    OR              reduce using rule 140 (funEsp2 -> .)
-    EQUALS          reduce using rule 140 (funEsp2 -> .)
-    RPAREN          reduce using rule 140 (funEsp2 -> .)
-    SEMICOLON       reduce using rule 140 (funEsp2 -> .)
-    COMMA           reduce using rule 140 (funEsp2 -> .)
-    RBRACKET        reduce using rule 140 (funEsp2 -> .)
-    HASTA           reduce using rule 140 (funEsp2 -> .)
-    HACER           reduce using rule 140 (funEsp2 -> .)
+    COMMA           shift and go to state 328
 
-    funEsp2                        shift and go to state 328
 
 state 320
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA . v_exp RPAREN
-    (84) v_exp -> . VARIABLES LBRACKET exp RBRACKET
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID . pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
+    (147) pExp1 -> .
 
-    VARIABLES       shift and go to state 251
+    COMMA           reduce using rule 147 (pExp1 -> .)
 
-    v_exp                          shift and go to state 329
+    pExp1                          shift and go to state 329
 
 state 321
 
@@ -5181,8 +5162,8 @@ state 322
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -5194,8 +5175,8 @@ state 322
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
@@ -5288,44 +5269,26 @@ state 327
 
 state 328
 
-    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA . CTEINT cteInt RPAREN funEsp2
 
-    TIMES           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    DIVIDE          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    PLUS            reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    MINUS           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    LESSTHAN        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    GREATERTHAN     reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    LESSEQ          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    GREATEREQ       reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    NOTEQUAL        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    ISEQUAL         reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    AND             reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    OR              reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    EQUALS          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    RPAREN          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    SEMICOLON       reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    COMMA           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    RBRACKET        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    HASTA           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
-    HACER           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2 .)
+    CTEINT          shift and go to state 336
 
 
 state 329
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp . RPAREN
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 . COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 
-    RPAREN          shift and go to state 336
+    COMMA           shift and go to state 337
 
 
 state 330
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp . ciclos7 HACER bloque ciclos8
-    (171) ciclos7 -> .
+    (172) ciclos7 -> .
 
-    HACER           reduce using rule 171 (ciclos7 -> .)
+    HACER           reduce using rule 172 (ciclos7 -> .)
 
-    ciclos7                        shift and go to state 337
+    ciclos7                        shift and go to state 338
 
 state 331
 
@@ -5348,21 +5311,21 @@ state 331
 state 332
 
     (36) dim_index1 -> LBRACKET . exp6 exp activaArray RBRACKET exp7 matrizAcc
-    (151) exp6 -> .
+    (152) exp6 -> .
 
-    LPAREN          reduce using rule 151 (exp6 -> .)
-    CTECHAR         reduce using rule 151 (exp6 -> .)
-    CTESTRING       reduce using rule 151 (exp6 -> .)
-    MINUS           reduce using rule 151 (exp6 -> .)
-    ID              reduce using rule 151 (exp6 -> .)
-    CORRELACIONA    reduce using rule 151 (exp6 -> .)
-    CTEINT          reduce using rule 151 (exp6 -> .)
-    CTEFLOAT        reduce using rule 151 (exp6 -> .)
-    MEDIA           reduce using rule 151 (exp6 -> .)
-    MODA            reduce using rule 151 (exp6 -> .)
-    VARIANZA        reduce using rule 151 (exp6 -> .)
+    LPAREN          reduce using rule 152 (exp6 -> .)
+    CTECHAR         reduce using rule 152 (exp6 -> .)
+    CTESTRING       reduce using rule 152 (exp6 -> .)
+    MINUS           reduce using rule 152 (exp6 -> .)
+    ID              reduce using rule 152 (exp6 -> .)
+    CORRELACIONA    reduce using rule 152 (exp6 -> .)
+    CTEINT          reduce using rule 152 (exp6 -> .)
+    CTEFLOAT        reduce using rule 152 (exp6 -> .)
+    MEDIA           reduce using rule 152 (exp6 -> .)
+    MODA            reduce using rule 152 (exp6 -> .)
+    VARIANZA        reduce using rule 152 (exp6 -> .)
 
-    exp6                           shift and go to state 338
+    exp6                           shift and go to state 339
 
 state 333
 
@@ -5418,42 +5381,33 @@ state 335
 
     (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca . RPAREN SEMICOLON carga
 
-    RPAREN          shift and go to state 339
+    RPAREN          shift and go to state 340
 
 
 state 336
 
-    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT . cteInt RPAREN funEsp2
+    (143) cteInt -> .
 
-    TIMES           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    DIVIDE          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    PLUS            reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    MINUS           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    LESSTHAN        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    GREATERTHAN     reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    LESSEQ          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    GREATEREQ       reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    NOTEQUAL        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    ISEQUAL         reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    AND             reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    OR              reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    EQUALS          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    RPAREN          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    SEMICOLON       reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    COMMA           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    RBRACKET        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    HASTA           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
-    HACER           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN .)
+    RPAREN          reduce using rule 143 (cteInt -> .)
 
+    cteInt                         shift and go to state 341
 
 state 337
 
-    (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 . HACER bloque ciclos8
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA . CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
 
-    HACER           shift and go to state 340
+    CTEINT          shift and go to state 342
 
 
 state 338
+
+    (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 . HACER bloque ciclos8
+
+    HACER           shift and go to state 343
+
+
+state 339
 
     (36) dim_index1 -> LBRACKET exp6 . exp activaArray RBRACKET exp7 matrizAcc
     (108) exp -> . termino exp4 exp1
@@ -5469,8 +5423,8 @@ state 338
     (88) var_cte -> . var_num
     (52) variable -> . ID pExp1 di
     (55) llamada -> . ID funCall1 LPAREN llamada1 RPAREN funCall5
-    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA v_exp RPAREN funEsp2
-    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID COMMA v_exp COMMA v_exp RPAREN
+    (79) funciones_especiales -> . fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
+    (80) funciones_especiales -> . CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     (89) var_num -> . CTEINT cteInt
     (90) var_num -> . CTEFLOAT cteFloat
     (81) fe -> . MEDIA funEsp1
@@ -5482,14 +5436,14 @@ state 338
     CTESTRING       shift and go to state 139
     MINUS           shift and go to state 140
     ID              shift and go to state 142
-    CORRELACIONA    shift and go to state 144
-    CTEINT          shift and go to state 145
+    CORRELACIONA    shift and go to state 145
+    CTEINT          shift and go to state 144
     CTEFLOAT        shift and go to state 146
     MEDIA           shift and go to state 147
     MODA            shift and go to state 148
     VARIANZA        shift and go to state 149
 
-    exp                            shift and go to state 341
+    exp                            shift and go to state 344
     termino                        shift and go to state 132
     factor                         shift and go to state 133
     var_cte                        shift and go to state 134
@@ -5499,79 +5453,129 @@ state 338
     var_num                        shift and go to state 141
     fe                             shift and go to state 143
 
-state 339
+state 340
 
     (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN . SEMICOLON carga
 
-    SEMICOLON       shift and go to state 342
+    SEMICOLON       shift and go to state 345
 
 
-state 340
+state 341
+
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt . RPAREN funEsp2
+
+    RPAREN          shift and go to state 346
+
+
+state 342
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT . cteInt COMMA CTEINT cteInt RPAREN funEsp3
+    (143) cteInt -> .
+
+    COMMA           reduce using rule 143 (cteInt -> .)
+
+    cteInt                         shift and go to state 347
+
+state 343
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER . bloque ciclos8
     (38) bloque -> . LCURBRACKET est RCURBRACKET
 
     LCURBRACKET     shift and go to state 62
 
-    bloque                         shift and go to state 343
-
-state 341
-
-    (36) dim_index1 -> LBRACKET exp6 exp . activaArray RBRACKET exp7 matrizAcc
-    (181) activaArray -> .
-
-    RBRACKET        reduce using rule 181 (activaArray -> .)
-
-    activaArray                    shift and go to state 344
-
-state 342
-
-    (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON . carga
-    (182) carga -> .
-
-    ID              reduce using rule 182 (carga -> .)
-    REGRESA         reduce using rule 182 (carga -> .)
-    LEE             reduce using rule 182 (carga -> .)
-    ESCRIBE         reduce using rule 182 (carga -> .)
-    CARGAARCHIVO    reduce using rule 182 (carga -> .)
-    SI              reduce using rule 182 (carga -> .)
-    MIENTRAS        reduce using rule 182 (carga -> .)
-    DESDE           reduce using rule 182 (carga -> .)
-    VARIABLES       reduce using rule 182 (carga -> .)
-    HISTOGRAMA      reduce using rule 182 (carga -> .)
-    LINEAL          reduce using rule 182 (carga -> .)
-    RCURBRACKET     reduce using rule 182 (carga -> .)
-
-    carga                          shift and go to state 345
-
-state 343
-
-    (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque . ciclos8
-    (172) ciclos8 -> .
-
-    ID              reduce using rule 172 (ciclos8 -> .)
-    REGRESA         reduce using rule 172 (ciclos8 -> .)
-    LEE             reduce using rule 172 (ciclos8 -> .)
-    ESCRIBE         reduce using rule 172 (ciclos8 -> .)
-    CARGAARCHIVO    reduce using rule 172 (ciclos8 -> .)
-    SI              reduce using rule 172 (ciclos8 -> .)
-    MIENTRAS        reduce using rule 172 (ciclos8 -> .)
-    DESDE           reduce using rule 172 (ciclos8 -> .)
-    VARIABLES       reduce using rule 172 (ciclos8 -> .)
-    HISTOGRAMA      reduce using rule 172 (ciclos8 -> .)
-    LINEAL          reduce using rule 172 (ciclos8 -> .)
-    RCURBRACKET     reduce using rule 172 (ciclos8 -> .)
-
-    ciclos8                        shift and go to state 346
+    bloque                         shift and go to state 348
 
 state 344
 
-    (36) dim_index1 -> LBRACKET exp6 exp activaArray . RBRACKET exp7 matrizAcc
+    (36) dim_index1 -> LBRACKET exp6 exp . activaArray RBRACKET exp7 matrizAcc
+    (182) activaArray -> .
 
-    RBRACKET        shift and go to state 347
+    RBRACKET        reduce using rule 182 (activaArray -> .)
 
+    activaArray                    shift and go to state 349
 
 state 345
+
+    (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON . carga
+    (183) carga -> .
+
+    ID              reduce using rule 183 (carga -> .)
+    REGRESA         reduce using rule 183 (carga -> .)
+    LEE             reduce using rule 183 (carga -> .)
+    ESCRIBE         reduce using rule 183 (carga -> .)
+    CARGAARCHIVO    reduce using rule 183 (carga -> .)
+    SI              reduce using rule 183 (carga -> .)
+    MIENTRAS        reduce using rule 183 (carga -> .)
+    DESDE           reduce using rule 183 (carga -> .)
+    VARIABLES       reduce using rule 183 (carga -> .)
+    HISTOGRAMA      reduce using rule 183 (carga -> .)
+    LINEAL          reduce using rule 183 (carga -> .)
+    RCURBRACKET     reduce using rule 183 (carga -> .)
+
+    carga                          shift and go to state 350
+
+state 346
+
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN . funEsp2
+    (140) funEsp2 -> .
+
+    TIMES           reduce using rule 140 (funEsp2 -> .)
+    DIVIDE          reduce using rule 140 (funEsp2 -> .)
+    PLUS            reduce using rule 140 (funEsp2 -> .)
+    MINUS           reduce using rule 140 (funEsp2 -> .)
+    LESSTHAN        reduce using rule 140 (funEsp2 -> .)
+    GREATERTHAN     reduce using rule 140 (funEsp2 -> .)
+    LESSEQ          reduce using rule 140 (funEsp2 -> .)
+    GREATEREQ       reduce using rule 140 (funEsp2 -> .)
+    NOTEQUAL        reduce using rule 140 (funEsp2 -> .)
+    ISEQUAL         reduce using rule 140 (funEsp2 -> .)
+    AND             reduce using rule 140 (funEsp2 -> .)
+    OR              reduce using rule 140 (funEsp2 -> .)
+    EQUALS          reduce using rule 140 (funEsp2 -> .)
+    RPAREN          reduce using rule 140 (funEsp2 -> .)
+    SEMICOLON       reduce using rule 140 (funEsp2 -> .)
+    COMMA           reduce using rule 140 (funEsp2 -> .)
+    RBRACKET        reduce using rule 140 (funEsp2 -> .)
+    HASTA           reduce using rule 140 (funEsp2 -> .)
+    HACER           reduce using rule 140 (funEsp2 -> .)
+
+    funEsp2                        shift and go to state 351
+
+state 347
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt . COMMA CTEINT cteInt RPAREN funEsp3
+
+    COMMA           shift and go to state 352
+
+
+state 348
+
+    (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque . ciclos8
+    (173) ciclos8 -> .
+
+    ID              reduce using rule 173 (ciclos8 -> .)
+    REGRESA         reduce using rule 173 (ciclos8 -> .)
+    LEE             reduce using rule 173 (ciclos8 -> .)
+    ESCRIBE         reduce using rule 173 (ciclos8 -> .)
+    CARGAARCHIVO    reduce using rule 173 (ciclos8 -> .)
+    SI              reduce using rule 173 (ciclos8 -> .)
+    MIENTRAS        reduce using rule 173 (ciclos8 -> .)
+    DESDE           reduce using rule 173 (ciclos8 -> .)
+    VARIABLES       reduce using rule 173 (ciclos8 -> .)
+    HISTOGRAMA      reduce using rule 173 (ciclos8 -> .)
+    LINEAL          reduce using rule 173 (ciclos8 -> .)
+    RCURBRACKET     reduce using rule 173 (ciclos8 -> .)
+
+    ciclos8                        shift and go to state 353
+
+state 349
+
+    (36) dim_index1 -> LBRACKET exp6 exp activaArray . RBRACKET exp7 matrizAcc
+
+    RBRACKET        shift and go to state 354
+
+
+state 350
 
     (67) carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON carga .
 
@@ -5589,7 +5593,39 @@ state 345
     RCURBRACKET     reduce using rule 67 (carga_datos -> CARGAARCHIVO LPAREN ID pExp1 COMMA CTESTRING cteStr COMMA ca COMMA ca RPAREN SEMICOLON carga .)
 
 
-state 346
+state 351
+
+    (79) funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .
+
+    TIMES           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    DIVIDE          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    PLUS            reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    MINUS           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    LESSTHAN        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    GREATERTHAN     reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    LESSEQ          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    GREATEREQ       reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    NOTEQUAL        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    ISEQUAL         reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    AND             reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    OR              reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    EQUALS          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    RPAREN          reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    SEMICOLON       reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    COMMA           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    RBRACKET        reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    HASTA           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+    HACER           reduce using rule 79 (funciones_especiales -> fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2 .)
+
+
+state 352
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA . CTEINT cteInt RPAREN funEsp3
+
+    CTEINT          shift and go to state 355
+
+
+state 353
 
     (74) ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque ciclos8 .
 
@@ -5607,61 +5643,77 @@ state 346
     RCURBRACKET     reduce using rule 74 (ciclo -> DESDE ciclos4 variable EQUALS sec1 exp ciclos5 HASTA ciclos6 exp ciclos7 HACER bloque ciclos8 .)
 
 
-state 347
+state 354
 
     (36) dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET . exp7 matrizAcc
-    (152) exp7 -> .
+    (153) exp7 -> .
 
-    EQUALS          reduce using rule 152 (exp7 -> .)
-    TIMES           reduce using rule 152 (exp7 -> .)
-    DIVIDE          reduce using rule 152 (exp7 -> .)
-    PLUS            reduce using rule 152 (exp7 -> .)
-    MINUS           reduce using rule 152 (exp7 -> .)
-    LESSTHAN        reduce using rule 152 (exp7 -> .)
-    GREATERTHAN     reduce using rule 152 (exp7 -> .)
-    LESSEQ          reduce using rule 152 (exp7 -> .)
-    GREATEREQ       reduce using rule 152 (exp7 -> .)
-    NOTEQUAL        reduce using rule 152 (exp7 -> .)
-    ISEQUAL         reduce using rule 152 (exp7 -> .)
-    AND             reduce using rule 152 (exp7 -> .)
-    OR              reduce using rule 152 (exp7 -> .)
-    RPAREN          reduce using rule 152 (exp7 -> .)
-    SEMICOLON       reduce using rule 152 (exp7 -> .)
-    COMMA           reduce using rule 152 (exp7 -> .)
-    RBRACKET        reduce using rule 152 (exp7 -> .)
-    HASTA           reduce using rule 152 (exp7 -> .)
-    HACER           reduce using rule 152 (exp7 -> .)
+    EQUALS          reduce using rule 153 (exp7 -> .)
+    TIMES           reduce using rule 153 (exp7 -> .)
+    DIVIDE          reduce using rule 153 (exp7 -> .)
+    PLUS            reduce using rule 153 (exp7 -> .)
+    MINUS           reduce using rule 153 (exp7 -> .)
+    LESSTHAN        reduce using rule 153 (exp7 -> .)
+    GREATERTHAN     reduce using rule 153 (exp7 -> .)
+    LESSEQ          reduce using rule 153 (exp7 -> .)
+    GREATEREQ       reduce using rule 153 (exp7 -> .)
+    NOTEQUAL        reduce using rule 153 (exp7 -> .)
+    ISEQUAL         reduce using rule 153 (exp7 -> .)
+    AND             reduce using rule 153 (exp7 -> .)
+    OR              reduce using rule 153 (exp7 -> .)
+    RPAREN          reduce using rule 153 (exp7 -> .)
+    SEMICOLON       reduce using rule 153 (exp7 -> .)
+    COMMA           reduce using rule 153 (exp7 -> .)
+    RBRACKET        reduce using rule 153 (exp7 -> .)
+    HASTA           reduce using rule 153 (exp7 -> .)
+    HACER           reduce using rule 153 (exp7 -> .)
 
-    exp7                           shift and go to state 348
+    exp7                           shift and go to state 356
 
-state 348
+state 355
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT . cteInt RPAREN funEsp3
+    (143) cteInt -> .
+
+    RPAREN          reduce using rule 143 (cteInt -> .)
+
+    cteInt                         shift and go to state 357
+
+state 356
 
     (36) dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET exp7 . matrizAcc
-    (180) matrizAcc -> .
+    (181) matrizAcc -> .
 
-    EQUALS          reduce using rule 180 (matrizAcc -> .)
-    TIMES           reduce using rule 180 (matrizAcc -> .)
-    DIVIDE          reduce using rule 180 (matrizAcc -> .)
-    PLUS            reduce using rule 180 (matrizAcc -> .)
-    MINUS           reduce using rule 180 (matrizAcc -> .)
-    LESSTHAN        reduce using rule 180 (matrizAcc -> .)
-    GREATERTHAN     reduce using rule 180 (matrizAcc -> .)
-    LESSEQ          reduce using rule 180 (matrizAcc -> .)
-    GREATEREQ       reduce using rule 180 (matrizAcc -> .)
-    NOTEQUAL        reduce using rule 180 (matrizAcc -> .)
-    ISEQUAL         reduce using rule 180 (matrizAcc -> .)
-    AND             reduce using rule 180 (matrizAcc -> .)
-    OR              reduce using rule 180 (matrizAcc -> .)
-    RPAREN          reduce using rule 180 (matrizAcc -> .)
-    SEMICOLON       reduce using rule 180 (matrizAcc -> .)
-    COMMA           reduce using rule 180 (matrizAcc -> .)
-    RBRACKET        reduce using rule 180 (matrizAcc -> .)
-    HASTA           reduce using rule 180 (matrizAcc -> .)
-    HACER           reduce using rule 180 (matrizAcc -> .)
+    EQUALS          reduce using rule 181 (matrizAcc -> .)
+    TIMES           reduce using rule 181 (matrizAcc -> .)
+    DIVIDE          reduce using rule 181 (matrizAcc -> .)
+    PLUS            reduce using rule 181 (matrizAcc -> .)
+    MINUS           reduce using rule 181 (matrizAcc -> .)
+    LESSTHAN        reduce using rule 181 (matrizAcc -> .)
+    GREATERTHAN     reduce using rule 181 (matrizAcc -> .)
+    LESSEQ          reduce using rule 181 (matrizAcc -> .)
+    GREATEREQ       reduce using rule 181 (matrizAcc -> .)
+    NOTEQUAL        reduce using rule 181 (matrizAcc -> .)
+    ISEQUAL         reduce using rule 181 (matrizAcc -> .)
+    AND             reduce using rule 181 (matrizAcc -> .)
+    OR              reduce using rule 181 (matrizAcc -> .)
+    RPAREN          reduce using rule 181 (matrizAcc -> .)
+    SEMICOLON       reduce using rule 181 (matrizAcc -> .)
+    COMMA           reduce using rule 181 (matrizAcc -> .)
+    RBRACKET        reduce using rule 181 (matrizAcc -> .)
+    HASTA           reduce using rule 181 (matrizAcc -> .)
+    HACER           reduce using rule 181 (matrizAcc -> .)
 
-    matrizAcc                      shift and go to state 349
+    matrizAcc                      shift and go to state 358
 
-state 349
+state 357
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt . RPAREN funEsp3
+
+    RPAREN          shift and go to state 359
+
+
+state 358
 
     (36) dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET exp7 matrizAcc .
 
@@ -5684,4 +5736,56 @@ state 349
     RBRACKET        reduce using rule 36 (dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET exp7 matrizAcc .)
     HASTA           reduce using rule 36 (dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET exp7 matrizAcc .)
     HACER           reduce using rule 36 (dim_index1 -> LBRACKET exp6 exp activaArray RBRACKET exp7 matrizAcc .)
+
+
+state 359
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN . funEsp3
+    (141) funEsp3 -> .
+
+    TIMES           reduce using rule 141 (funEsp3 -> .)
+    DIVIDE          reduce using rule 141 (funEsp3 -> .)
+    PLUS            reduce using rule 141 (funEsp3 -> .)
+    MINUS           reduce using rule 141 (funEsp3 -> .)
+    LESSTHAN        reduce using rule 141 (funEsp3 -> .)
+    GREATERTHAN     reduce using rule 141 (funEsp3 -> .)
+    LESSEQ          reduce using rule 141 (funEsp3 -> .)
+    GREATEREQ       reduce using rule 141 (funEsp3 -> .)
+    NOTEQUAL        reduce using rule 141 (funEsp3 -> .)
+    ISEQUAL         reduce using rule 141 (funEsp3 -> .)
+    AND             reduce using rule 141 (funEsp3 -> .)
+    OR              reduce using rule 141 (funEsp3 -> .)
+    EQUALS          reduce using rule 141 (funEsp3 -> .)
+    RPAREN          reduce using rule 141 (funEsp3 -> .)
+    SEMICOLON       reduce using rule 141 (funEsp3 -> .)
+    COMMA           reduce using rule 141 (funEsp3 -> .)
+    RBRACKET        reduce using rule 141 (funEsp3 -> .)
+    HASTA           reduce using rule 141 (funEsp3 -> .)
+    HACER           reduce using rule 141 (funEsp3 -> .)
+
+    funEsp3                        shift and go to state 360
+
+state 360
+
+    (80) funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .
+
+    TIMES           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    DIVIDE          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    PLUS            reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    MINUS           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    LESSTHAN        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    GREATERTHAN     reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    LESSEQ          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    GREATEREQ       reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    NOTEQUAL        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    ISEQUAL         reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    AND             reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    OR              reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    EQUALS          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    RPAREN          reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    SEMICOLON       reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    COMMA           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    RBRACKET        reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    HASTA           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
+    HACER           reduce using rule 80 (funciones_especiales -> CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3 .)
 
