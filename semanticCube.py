@@ -1,3 +1,7 @@
+
+#Emilo López Hernández A01651283
+
+
 # Código para el cubo semántico que recibe (op1,op2,operator)
 # Estructura de datos utilizada: diccionario
 
