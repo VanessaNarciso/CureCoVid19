@@ -21,7 +21,7 @@ class funcDir:
                 'tipo': tipo,
                 'numParams': numParams,
                 'variables': varsTable(),
-                'cantQuads': numQuads
+                'numQuads': numQuads
             }
             print ("Funcion: ", nombre, " de tipo: ", tipo, " agregada al directorio", "\n")
 
@@ -88,9 +88,9 @@ class funcDir:
             return False
 
     #Actualiza el número de parámetros de una función determinada
-    def updateFuncParams(self, nombre, cantParametros):
+    def updateFuncParams(self, nombre, numParams):
         if self.existeFunc(nombre):
-            self.directorio_funciones[nombre]['cantParametros'] = cantParametros
+            self.directorio_funciones[nombre]['numParams'] = numParams
         else:
             print("Error: la funcion: ", nombre, " no existe")
 
