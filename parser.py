@@ -631,6 +631,8 @@ def pushQuad(quad):
 
 
 
+
+
 ##### FUNCIONES PARA IMPRESIÓN Y ERRORES
 
 # Imprime un nuevo cuadruplo
@@ -644,7 +646,7 @@ def QuadGenerate(operator, leftOperand, rightOperand, result):
 
 
 # Imprime arreglo/lista de cuadruplos
-def QuadGenerateList():
+def GenerateQuads():
     print(functionDirectory.func_print(GLOB))
     print("-------Lista de Cuadruplos: ")
 
