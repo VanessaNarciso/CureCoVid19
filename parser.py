@@ -1416,146 +1416,528 @@ def p_sec3(p):
     '''
     sec3 :
     '''
-    print("SEC3")
+    global pOper
+    if p[-1] not in OP_SECUENCIALES:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
+    #print("SEC3")
 
 def p_sec4(p):
     '''
     sec4 :
     '''
-    print("SEC4")
+    global semCube
+    if topOperador() in OP_SECUENCIALES:
+        print("Voy a ejecutar pnSEc4")
+        quad_Operando = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_operator = popOperadores()
+
+        quad_resultType = semCube.getType(quad_operator, quad_rightType, '')
+
+        if quad_resultType == 'error':
+            print("Error: Operacion invalida")
+        else:
+            QuadGenerate(quad_operator, quad_rightMem, '', quad_operator)
+            pushOperador(quad_operator)
+    #print("SEC4")
 
 def p_sec5(p):
     '''
     sec5 :
     '''
-    print("SEC5")
+    popOperadores()
+    #print("SEC5")
 
+
+# Generación de código para estatutos no lineales, condicionales
 def p_cond1(p): #IF
     '''
     cond1 :
     '''
-    print("COND1")
+    global cuads
+    memPos = popMemoria()
+    exp_type = popTipos()
+
+    if (exp_type != 'error'):
+        result = popOperandos()
+        QuadGenerate('GOTOF', result, '', '')
+        pushSaltos(nextQuad() - 1)
+
+    else:
+        errorTypeMismatch()
+    #print("COND1")
 
 def p_cond2(p): #IF
     '''
     cond2 :
     '''
-    print("COND2")
+    global cuads
+
+    end = popSaltos()
+
+    QuadTemporal = (cuads[end][0], cuads[end][1], cuads[end][2], nextQuad())
+    cuads[end] = QuadTemporal
+    #print("COND2")
 
 def p_cond3(p): #IF
     '''
     cond3 :
     '''
-    print("COND3")
+    global cuads
+    QuadGenerate('GOTO', '', '', '')
+    falso = popSaltos()
+    pushSaltos(nextQuad() - 1)
+    QuadTemporal = (cuads[falso][0], cuads[falso][1], cuads[falso][2], nextQuad())
+    cuads[falso] = QuadTemporal
+    #print("COND3")
 
 def p_ciclos1(p):
     '''
     ciclos1 :
     '''
-    print("CICLOS1")
+    pushSaltos(nextQuad())
+
+    #print("CICLOS1")
 
 def p_ciclos2(p):
     '''
     ciclos2 :
     '''
-    print("CICLOS2")
+    exp_type = popTipos()
+    memPos = popMemoria()
+    if exp_type != 'error':
+        result = popOperandos()
+        QuadGenerate('GOTOF', result, '', '')
+        pushSaltos(nextQuad() - 1)
+    else:
+        errorTypeMismatch()
+    #print("CICLOS2")
 
 def p_ciclos3(p):
     '''
     ciclos3 :
     '''
-    print("CICLOS3")
+    end = popSaltos()
+    retorno = popSaltos()
+    QuadGenerate('GOTO', '', '', retorno) #Genetare quad: GOTO
+
+    QuadTemporal = (cuads[end][0], cuads[end][1], cuads[end][2], nextQuad())
+    cuads[end] = QuadTemporal #FILL (end, cont)
+    #print("CICLOS3")
 
 def p_ciclos4(p):
     '''
     ciclos4 :
     '''
-    print("CICLOS4")
+    global forBool
+    forBool = True
+    #print("CICLOS4")
 
 def p_ciclos5(p):
     '''
     ciclos5 :
     '''
-    print("CICLOS5")
+    if topOperador() in OP_ASIG:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_leftOperand = popOperandos()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        global functionDirectory
+
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.var_exist(GLOB, quad_leftOperand):
+            if quad_resultType == 'error':
+                print("Error: Operacion invalida")
+            else:
+                QuadGenerate(quad_operator, quad_rightOperand, '', quad_leftOperand)
+        else:
+            print("Error")
+    #print("CICLOS5")
 
 def p_ciclos6(p):
     '''
     ciclos6 :
     '''
-    print("CICLOS6")
+    pushOperando(varFor)
+
+    idType = functionDirectory.searchVarType(currentFunc, varFor)
+    if not idType:  # Si no la encuentra en el contexto actual, cambia de contexto a Tipos
+        idType = functionDirectory.func_searchVarType(GLOB, varFor)
+
+    if not idType:
+        print("Error: Variable ", idName, " no declarada")
+        return
+
+    pushTipo(idType)
+    pushOperador('<=')
+    pushSaltos(nextQuad())
+    #print("CICLOS6")
 
 def p_ciclos7(p):
     '''
     ciclos7 :
     '''
-    print("CICLOS7")
+    if topOperador() in OP_REL:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_leftOperand = popOperandos()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if quad_resultType == 'error':
+            print('Error: Type Mismatch')
+        else:
+            quad_resultIndex = nextAvailTemp(quad_resultType)
+            QuadGenerate(quad_operator, quad_leftOperand, quad_rightOperand, quad_resultIndex)
+            pushOperando(quad_resultIndex)
+            pushTipo(quad_resultType)
+
+        exp_type = popTipos()
+        if (exp_type != 'bool' or exp_type == 'error'):
+            errorTypeMismatch()
+        else:
+            result = popOperandos()
+            QuadGenerate('GOTOF', result, '', '')
+            pushSaltos(nextQuad() - 1)
+    #print("CICLOS7")
 
 def p_ciclos8(p):
     '''
     ciclos8 :
     '''
-    print("CICLOS8")
+    end = popSaltos()
+    retorno = popSaltos()
+    QuadGenerate('GOTO', '', '', retorno) #Genetare quad: GOTO
 
+    QuadTemporal = (cuads[end][0], cuads[end][1], cuads[end][2], nextQuad())
+    cuads[end] = QuadTemporal #FILL (end, cont)
+    #print("CICLOS8")
+
+
+### Producciones para puntos neurálgicos de ESTATUTOS
+# Punto neurálgico en retorno
 def p_pRetorno(p):
     '''
     pRetorno :
     '''
-    print("PRETORNO")
+    global currentFunc
+    global isVoid
+    print("return Bool: ", isVoid)
+    if isVoid:
+        print(pOperandos)
+        print(pTipos)
+        operador = popOperadores()
+        operandoRetorno = popOperandos()
+        tipoRetorno = popTipos()
+        memRetorno = popMemoria()
 
+        if functionDirectory.directorio_funciones[currentFunc]['tipo'] == tipoRetorno:
+            QuadGenerate(operador, '', '', memRetorno)
+        else:
+            errorReturnTipo()
+    else:
+        print ("Error: Esta funcion no debe regresar nada")
+    #print("PRETORNO")
+
+
+### Producciones para los puntos neurálgicos de ARREGLOS
 def p_dimDec2(p):
     '''
     dimDec2 :
     '''
-    print("DIMDEC2")
+    global isArray
+    isArray = True
+    #print("DIMDEC2")
 
 def p_dimDec5(p):
     '''
     dimDec5 :
     '''
-    print("DIMDEC5")
+    global R
+    global numColumnas
+    global functionDirectory
+    global currentFunc
+    global currentVarName
+
+    columnas = p[-1]
+    if columnas > 0:
+        R = R * columnas # R = (LimSup - LimInf + 1) * R
+        print("PN5Arreglos.  R = ", R)
+        numColumnas = columnas
+
+        functionDirectory.updateDimFunc(currentFunc, currentVarName, 0, columnas)
+    else:
+        sys.exit("Error: Index de arreglo invalido: ", columnas)
+    #print("DIMDEC5")
 
 def p_dimDec6(p):
     '''
     dimDec6 :
     '''
-    print("DIMDEC6")
+    global R
+    global numRenglones
+    global functionDirectory
+    global currentFunc
+    global currentVarName
+
+    isMatrix = True
+    renglones = p[-1]
+    if renglones > 0:
+        R = R * renglones
+        print("PN6Matriz.  R = ", R)
+        numRenglones = renglones
+
+        functionDirectory.updateDimFunc(currentFunc, currentVarName, renglones, -1)
+    else:
+        sys.exit("Error. Index menor o igual a cero no es valido")
+        return
+
+    #print("DIMDEC6")
 
 def p_dimDec8(p):
     '''
     dimDec8 :
     '''
-    print("DIMDEC8")
+    global R
+    global functionDirectory
+    global currentFunc
+    global currentVarName
+    global isArray
+    global currentConstArrays
+    NumEspacios = R - 1
+
+    currentType = functionDirectory.searchVarType(currentFunc, currentVarName)
+
+    update_pointer(currentFunc, currentType, NumEspacios)  # Separa los espacios que va a usar para el arreglo o matriz
+
+    # Reseteo
+    R = 1
+    isArray = False
+    currentConstArrays = []
+    #print("DIMDEC8")
 
 def p_dimAccess2(p):
     '''
     dimAccess2 :
     '''
-    print("DIMACCESS2")
+    global isArray
+    global pDims
+    isArray = True
+
+    varid = popOperandos()
+    varmem = popMemoria()
+    vartipo = popTipos()
+    pDims.append(varid)
+    #print("DIMACCESS2")
 
 def p_arregloAcc(p):
     '''
     arregloAcc :
     '''
-    print("ARREGLOACC")
+    global isArray
+    global currentFunc
+    global currentVarName
+
+    auxID = popOperandos()
+    auxMem = popMemoria()
+    auxTipo = popTipos()
+
+    auxDIM = pDims.pop()
+    if isArray:
+        if auxTipo != 'int':
+            sys.exit("Error. Es necesario que el tipo sea un entero para acceder al arreglo")
+            return
+
+        varDimensiones = functionDirectory.getDimsVar(currentFunc, auxDIM)
+
+        if varDimensiones == -1:
+            varDimensiones = functionDirectory.getDimsVar(GLOB, auxDIM)
+
+            if varDimensiones == -1:
+                sys.exit("Error. No existe variable dimensionada")
+                return
+
+        # Cuadruplo verifica
+        QuadGenerate('VER', auxMem, 0, varDimensiones[0] - 1)
+
+        # Si no es Matriz...
+        if varDimensiones[1] == 0:
+            # Memoria Base
+            PosicionMemoria = functionDirectory.funcMemory(currentFunc, auxDIM)
+            if not PosicionMemoria:
+                PosicionMemoria = functionDirectory.funcMemory(GLOB, auxDIM)
+
+            if PosicionMemoria < 0:
+                sys.exit("Error. Variable no declarada: ", auxDIM)
+                return
+
+            TipoActual = functionDirectory.searchVarType(currentFunc, auxDIM)
+            if not TipoActual:
+                TipoActual = functionDirectory.searchVarType(GLOB, auxDIM)
+
+            if not TipoActual:
+                sys.exit("Error. Variable no declarada: ", auxDIM)
+                return
+
+            tMem = nextAvailTemp('int')
+            QuadGenerate('+', '{' + str(PosicionMemoria) + '}', auxMem, tMem)
+
+            valorTMem = str(tMem) + '!'
+
+            pushOperando(auxDIM)
+            pushMemoria(valorTMem)
+            pushTipo(TipoActual)
+            isArray = False
+            currentVarName = ''
+        else:  # Si es matriz, hay que generar el cuadruplo de *
+            print("\n")
+            print("Si es matriz...")
+            print("\n")
+            print("\n")
+            print("\n")
+            print("\n")
+            print("pOperandos: ", pOperandos)
+
+            tMem = nextAvailTemp('int')
+            QuadGenerate('*', auxMem, getAddConst(varDimensiones[1] - 1), tMem)
+            pushOperando(tMem)
+            pushMemoria(tMem)
+            pushTipo('int')
+            pDims.append(auxDIM)
+    else:
+        sys.exit("Error. No se puede acceder al index porque la variable no es dimensionada")
+        return
+    #print("ARREGLOACC")
 
 def p_matrizAcc(p):
     '''
     matrizAcc :
     '''
-    print("MATRIZACC")
+    print("AQUI HAY UNA MATRIZ")
+    global isArray
+    global currentVarName
+    global currentFunc
+    global pDims
+    print("pOperandos: ", pOperandos)
+
+    auxID = popOperandos()
+    auxMem = popMemoria()
+    auxTipo = popTipos()
+
+    auxDIM = pDims.pop()
+
+    if isArray:
+        if auxTipo != 'int':
+            sys.exit("Error. Es necesario que el tipo sea un entero para acceder al arreglo")
+            return
+
+        # Checa las dimensiones
+        varDimensiones = functionDirectory.getDimsVar(currentFunc, auxDIM)
+        print("MAT: ", auxDIM)
+        if varDimensiones == -1:
+            varDimensiones = functionDirectory.getDimsVar(GLOB, auxDIM)  # Busca en global
+            if varDimensiones == -1:  # si no hay en global...
+                sys.exit("Error. La variable no es matriz...")
+                return
+
+        # Si obtiene las dimensiones correctamente.....
+        # Genera los cuadruplos
+        QuadGenerate('VER', auxMem, 0, varDimensiones[1] - 1)
+
+        # Memoria Base
+        PosicionMemoria = functionDirectory.funcMemory(currentFunc, auxDIM)
+        if not PosicionMemoria:
+            PosicionMemoria = functionDirectory.funcMemory(GLOB, auxDIM)
+        if PosicionMemoria < 0:
+            sys.exit("Error. La variable no ha sido declarada: ", auxDIM)
+            return
+
+        # AHORA checamos los tipos
+        TipoActual = functionDirectory.searchVarType(currentFunc, auxDIM)
+        if not TipoActual:
+            TipoActual = functionDirectory.searchVarType(GLOB, auxDIM)
+
+        if not TipoActual:  # Si no está en globales
+            sys.exit("Error. La variable no ha sido declarada: ", auxDIM)
+            return
+
+        auxID2 = popOperandos()
+        auxMem2 = popMemoria()
+        auxTipo2 = popTipos()
+
+        tMem2 = nextAvailTemp('int')
+        QuadGenerate('+', auxMem2, auxMem, tMem2)
+        pushOperando(tMem2)
+        pushMemoria(tMem2)
+        pushTipo('int')
+
+        tMem3 = nextAvailTemp('int')
+        base = str(PosicionMemoria)  # ESta es la base
+        QuadGenerate('+', '{' + str(base) + '}', tMem2, tMem3)
+
+        valorTMem = str(tMem3) + '!'
+
+        pushOperando(auxDIM)
+        pushMemoria(valorTMem)
+        pushTipo(TipoActual)
+
+        isArray = False
+        currentVarName = ''
+
+    else:
+        sys.exit("Error. La variable no es dimensionada y no se puede acceder al indice")
+        return
+    #print("MATRIZACC")
 
 def p_activaArray(p):
     '''
     activaArray :
     '''
-    print("ACTIVAARRAY")
+    global isArray
+    isArray = True
+    #print("ACTIVAARRAY")
 
 
+### Producciones para puntos neurálgicos de CARGA DE ARCHIVOS
 def p_carga(p):
     '''
     carga :
     '''
-    print("CARGA")
+    maxRenglones = popOperandos()
+    maxRenglonesTipo = popTipos()
+    maxRenglonesMem = popMemoria()
+
+    maxVariables = popOperandos()
+    maxVariablesTipo = popTipos()
+    maxVariablesMem = popMemoria()
+
+    path = popOperandos()
+    pathTipo = popTipos()
+    pathMem = popMemoria()
+
+    dfName = popOperandos()
+    dfTipo = popTipos()
+    dfMem = popMemoria()
+
+    if (pathTipo != 'string'):
+        sys.exit("Error al cargar archivo. El tipo del segundo parametro no es string.")
+
+    if (dfTipo != 'dataframe'):
+        sys.exit("Error al cargar archivo. El tipo del primer parametro no es dataframe.")
+
+    QuadGenerate("carga", dfMem, path, '')
+
+    #print("CARGA")
 
 parser = yacc.yacc()
 
