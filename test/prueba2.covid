@@ -1,27 +1,20 @@
-%%CON FUNCIONES
-programa op_arreglos;
-var int:
-a[2],b[2],sum, res, div;
+programa prueba2;
 
-funcion int suma(int a, int b){
-    regresa(a+b);
-}
+var
+int: i, j;
+float: p, k;
 
-funcion int resta(int a, int b){
-    regresa(a-b);
-}
+principal()
+{
+i = 10;
+j = 2;
+p = 12.5;
+lee(k);
+escribe(k);
+escribe(p*3);
+escribe(i+j);
+escribe(i-j);
+escribe(i*j);
+escribe(i/j);
 
-funcion int mult(int a, int b){
-    regresa(a*b);
-}
-
-funcion float div(int a, int b){
-    regresa(a/b);
-}
-
-principal(){
-    suma(a[0],b[0])
-    resta(a[0],b[0])
-    mult(a[0],b[0])
-    div(a[0],b[0])
 }
