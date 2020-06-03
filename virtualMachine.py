@@ -277,3 +277,399 @@ def verificar(arr, de, a):
         sys.exit()
         return False
     return True
+
+
+###### FUNCION PRINCIPAL
+## De acuerdo con los cuadruplos la función decide qué ejecutar
+def correr():
+    # Se declaran las variables globales
+    global constLista
+    global cuaLista
+    global cuaIndice
+    global cuadruplo
+    global mem_GLOBAL
+    global pilaRetorno
+    global sigCuaIndice
+    global pilaCorriendo
+
+    # Guardar todos los constantes antes de correr los demas cuadruplo
+    for cons in constLista:
+        llenarValor(mem_GLOBAL, cons[3], cons[1], cons[2])
+
+    terminado = False  # nos avisas cuando salir del programa
+    while not terminado:
+        sigCuaIndice = -1  # nos permite llevar control, de que cuadro ejecutar
+        pilaCorriendo = top(CONST_EJECUCION)  # Saca la instancia de memoria que se este ejecutando
+        cuadruplo = cuaLista[cuaIndice]  # Saca el cuadruplo a ejecutar
+
+        # ASIGNACION
+        if cuadruplo[0] == '=':
+            try:  # Sino encuentra el valor, checa que este en la pila de valores de retorno
+                valor = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            except:
+                valor = pop(CONST_RETORNO_VALOR)
+
+            llenarValor(pilaCorriendo, cuadruplo[3], getTipo(cuadruplo[3]), valor)
+        # COMANDOS
+        # CONS
+        # Se saltará porque ya se agregarón con antelación
+        # GOTO
+        elif cuadruplo[0] == 'GOTO':
+            sigCuaIndice = int(cuadruplo[3])
+        # GOTOF
+        elif cuadruplo[0] == 'GOTOF':
+            auxValor = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            if not auxValor:  # Confirma si es falso el valor
+                sigCuaIndice = int(cuadruplo[3])
+        # GOSUB
+        elif cuadruplo[0] == 'GOSUB':
+            pilaCorriendo = pop(CONST_TEMPORAL)  # Sacamos la instancia de memoria temporal
+            push(CONST_EJECUCION, pilaCorriendo)  # Metemos la instancia a ejecucion
+            push(CONST_FUNCION_RETORNO, cuadruplo[2])  # Guardamos el retorno
+            sigCuaIndice = int(cuadruplo[3])
+        # ERA
+        elif cuadruplo[0] == 'ERA':
+            # Declara nueva funcion de memoria virtual
+            memNueva = virtualMem(str(cuadruplo[1]))
+            push(CONST_TEMPORAL, memNueva)
+        # PARAMETER
+        elif cuadruplo[0] == 'PARAMETER':
+            tipo = getTipo(cuadruplo[1])
+            valor = getValor(pilaCorriendo, cuadruplo[1], tipo)
+            auxMem = top(CONST_TEMPORAL)
+            # Nos permite saber que direccion sigue
+            # Donde empiezan las variables globales
+            direccion = auxMem.sigDireccionDisponible(tipo, 5000, ESPACIO_MEMORIA)
+            llenarValor(auxMem, direccion, getTipo(direccion), valor)
+        # ENDFUNC
+        elif cuadruplo[0] == 'ENDFUNC':
+            pop(CONST_EJECUCION)
+            sigCuaIndice = int(pop(CONST_FUNCION_RETORNO))
+        # regresa
+        elif cuadruplo[0] == 'regresa':
+            valor = getValor(pilaCorriendo, cuadruplo[3], getTipo(cuadruplo[3]))
+            push(CONST_RETORNO_VALOR, str(valor))  # Guarda el valor para despues
+            pop(CONST_EJECUCION)  # Sacar funcion de la pila, porque se termino de ejecutar
+            sigCuaIndice = int(pop(CONST_FUNCION_RETORNO));
+        # lee
+        elif cuadruplo[0] == 'lee':
+            texto = input("<- ")
+            # Verifica que tipo de valor es el que recibe, para guardarlo donde corresponde
+            try:
+                int(texto)
+                tipo = 'int'
+            except:
+                try:
+                    float(texto)
+                    tipo = 'float'
+                except:
+                    try:
+                        str(texto)
+                        tipo = 'char' if len(texto) == 1 else 'string'
+                    except:
+                        print("Error Maquina Virtual: {}".format(sys.exc_info()[0], cuaIndice))
+            auxTipo = getTipo(cuadruplo[1])
+            if tipo == auxTipo:
+                llenarValor(pilaCorriendo, cuadruplo[1], auxTipo, texto)
+            else:
+                print("Error Maquina Virtual: {} es diferente a {}".format(tipo, auxTipo))
+                sys.exit()
+                return
+        # escribe
+        elif cuadruplo[0] == 'escribe':
+            # Trae el valor y lo imprime
+            texto = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            print("->", str(texto))
+        # ARREGLO
+        # VER
+        elif cuadruplo[0] == 'VER':
+            valor = int(getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1])))
+            if valor != 0:
+                valor = valor - 1  # Para que se vuelva índice y se prueba.
+            if valor > int(cuadruplo[3]) or valor < int(cuadruplo[2]):
+                print("Error Maquina Virtual: El valor {} no pertence a los indices.".format(valor + 1))
+                sys.exit()
+                return
+
+        # FUNCIONES ESPECIALES
+        # Media
+        elif cuadruplo[0] == 'media':
+            subArreglo = []
+            tipo = getTipo(cuadruplo[3])
+            arreglo = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            aux = cuadruplo[2].split('#')
+            if (aux[0] != '0' and aux[1] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                de = int(aux[0][1:])
+                a = int(aux[1][:])
+                # Si es -1, significa que es 0
+                if (aux[0] == -1):
+                    de = 0
+                if (aux[1] == -1):
+                    a = 0
+                if verificar(arreglo, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                    for r in range(de, a + 1): subArreglo.append(
+                        arreglo[r])  # Crea arreglo a partir de los datos sacados
+                    try:
+                        llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.mean(subArreglo))
+                    except:
+                        print(
+                            "Error Maquina Virtual: El arreglo no tiene mediana, en el rango de {} a {}".format(de, a))
+                        sys.exit()
+                        return
+            else:
+                try:
+                    llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.mean(arreglo))
+                except:
+                    print("Error Maquina Virtual: El arreglo no tiene mediana en todo el archivo")
+                    sys.exit()
+                    return
+        # moda
+        elif cuadruplo[0] == 'moda':
+            subArreglo = []
+            tipo = getTipo(cuadruplo[3])
+            arreglo = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            aux = cuadruplo[2].split('#')
+            if (aux[0] != '0' and aux[1] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                de = int(aux[0][1:])
+                a = int(aux[1][:])
+                # Si es -1, significa que es 0
+                if (aux[0] == -1):
+                    de = 0
+                if (aux[1] == -1):
+                    a = 0
+                if verificar(arreglo, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                    for r in range(de, a + 1): subArreglo.append(
+                        arreglo[r])  # Crea arreglo a partir de los datos sacados
+                    try:
+                        llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.mode(subArreglo))
+                    except:
+                        print(
+                            "Error Maquina Virtual: El arreglo no tiene moda o tiene mas de una, en el rango de {} a {}".format(
+                                de, a))
+                        sys.exit()
+                        return
+            else:
+                try:
+                    llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.mode(arreglo))
+                except:
+                    print("Error Maquina Virtual: El arreglo no tiene moda o tiene mas de una, en todo el archivo")
+                    sys.exit()
+                    return
+        # varianza
+        elif cuadruplo[0] == 'varianza':
+            subArreglo = []
+            tipo = getTipo(cuadruplo[3])
+            arreglo = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            aux = cuadruplo[2].split('#')
+            if (aux[0] != '0' and aux[1] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                de = int(aux[0][1:])
+                a = int(aux[1][:])
+                # Si es -1, significa que es 0
+                if (aux[0] == -1):
+                    de = 0
+                if (aux[1] == -1):
+                    a = 0
+                if verificar(arreglo, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                    for r in range(de, a + 1): subArreglo.append(
+                        arreglo[r])  # Crea arreglo a partir de los datos sacados
+                    try:
+                        llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.variance(subArreglo))
+                    except:
+                        print(
+                            "Error Maquina Virtual: Error al calcular la varianza, del rango de {} a {}".format(de, a))
+                        sys.exit()
+                        return
+            else:
+                try:
+                    llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.variance(arreglo))
+                except:
+                    print("Error Maquina Virtual: Error al calcular la varianza, en todo el archivo")
+                    sys.exit()
+                    return
+        # correlation
+        elif cuadruplo[0] == 'correlacion':
+            subArreglo1 = []
+            subArreglo2 = []
+            cuadAUX = cuadruplo[1].split('#')
+            tipo1 = getTipo(cuadAUX[0][1:])
+            tipo2 = getTipo(cuadAUX[1][:])
+            arr1 = getValor(pilaCorriendo, cuadAUX[0][1:], tipo1)
+            arr2 = getValor(pilaCorriendo, cuadAUX[1][:], tipo2)
+            if (len(arr1) == len(arr2)):
+                aux = cuadruplo[2].split("#")
+                if (aux[0] != '0' and aux[1] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                    de = int(aux[0][1:])
+                    a = int(aux[1][:])
+                    # Si es -1, significa que es 0
+                    if (aux[0] == -1):
+                        de = 0
+                    if (aux[1] == -1):
+                        a = 0
+                    if verificar(arr1, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                        for r in range(de, a + 1):  # Crea arreglos a partir de los datos sacados
+                            subArreglo1.append(arr1[r])
+                            subArreglo2.append(arr2[r])
+                        try:
+                            i = np.corrcoef(subArreglo1, subArreglo2)
+                        except:
+                            print(
+                                "Error Maquina Virtual: Error al calcular la varianza, del rango de {} a {}".format(de,
+                                                                                                                    a))
+                            sys.exit()
+                            return
+                else:
+                    try:
+                        i = np.corrcoef(arr1, arr2)
+                    except:
+                        print("Error Maquina Virtual: Error al calcular la correlacion")
+                        sys.exit()
+                        return
+                llenarValor(pilaCorriendo, cuadruplo[3], getTipo(cuadruplo[3]), i[0][1])
+
+            else:
+                print(
+                    "Error Maquina Virtual: Los dataframes para el coeficiente de correlacion no son del mismo tamaño")
+        # plothist
+        elif cuadruplo[0] == 'histograma':
+            subArreglo = []
+            arr = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            if (cuadruplo[2] != '0' and cuadruplo[3] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                de = int(cuadruplo[2])
+                a = int(cuadruplo[3])
+                # Si es -1, significa que es 0
+                if (cuadruplo[2] == -1):
+                    de = 0
+                if (cuadruplo[3] == -1):
+                    a = 0
+                if verificar(arr, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                    for r in range(de, a + 1):
+                        subArreglo.append(arr[r])  # Crea arreglo a partir de los datos sacados
+                    try:
+                        a = np.histogram(subArreglo)
+                        plt.hist(a)
+                        plt.savefig("histograma.png")
+                        plt.show()
+                        print(
+                            "WARNING Maquina Virtual: En caso de que no se vea la imagen, se guardo como histograma.png")
+                        plt.close()
+                    except:
+                        print("Error no se logro graficar el histograma")
+                        sys.exit()
+            else:
+                try:
+                    a = np.histogram(arr)
+                    plt.hist(a)
+                    plt.savefig("histograma.png")
+                    plt.show()
+                    print("WARNING Maquina Virtual: En caso de que no se vea la imagen, se guardo como histograma.png")
+                    plt.close()
+                except:
+                    print("Error no se logro graficar el histograma")
+                    sys.exit()
+        # lineal plot
+        elif cuadruplo[0] == 'lineal':
+            subArreglo1 = []
+            subArreglo2 = []
+            arr1 = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            arr2 = getValor(pilaCorriendo, cuadruplo[2], getTipo(cuadruplo[2]))
+            axisX = []  # Para tener donde comporar los arreglos
+            if (len(arr1) == len(arr2)):  # Dataframes deben ser del mismo tamaño
+                if (cuadruplo[2] != '0' and cuadruplo[3] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                    de = 0  # Siempre sera de 0 en adelante
+                    a = int(getValor(pilaCorriendo, cuadruplo[3], getTipo(cuadruplo[3])))
+                    if (a == -1):
+                        a = 0
+                    if verificar(arr1, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                        for r in range(de, a + 1):  # Crea arreglos a partir de los datos sacados
+                            subArreglo1.append(arr1[r])
+                            subArreglo2.append(arr2[r])
+                            axisX.append(r)
+                        try:
+                            plt.plot(axisX, subArreglo1, label='Dataframe 1')
+                            plt.plot(axisX, subArreglo2, label='Dataframe 2')
+                            plt.legend()
+                            plt.savefig("lineal.png")
+                            plt.show()
+                            print(
+                                "WARNING Maquina Virtual: La imagen se guardo como lineal.png")
+                            plt.close()
+                        except:
+                            print("Error no se logro graficar")
+                            sys.exit()
+                else:
+                    # Create x Axis
+                    for r in range(0, len(arr1) - 1): axisX.append(r)
+                    try:
+                        plt.plot(axisX, arr1, label='Dataframe 1')
+                        plt.plot(axisX, arr2, label='Dataframe 2')
+                        plt.legend()
+                        plt.savefig("lineal.png")
+                        plt.show()
+                        print(
+                            "WARNING Maquina Virtual: La imagen se guardo como lineal.png")
+                        plt.close()
+                    except:
+                        print("Error no se logro graficar")
+                        sys.exit()
+            else:
+                print("Error Maquina Virtual: Los dataframes en plotline no son del mismo tamaño")
+        # Carga de Archivos
+        elif cuadruplo[0] == 'carga':
+            nombreArchivo = cuadruplo[2]
+            nombreArchivo = nombreArchivo.replace('"', '')
+            nombreArchivo = nombreArchivo.replace('"', '')
+            archivo = getArchivo(nombreArchivo)
+            arreglo = []
+            for val in archivo:
+                try:
+                    int(val)
+                    val = int(val)
+                except:
+                    try:
+                        float(val)
+                        val = float(val)
+                    except:
+                        pass
+                arreglo.append(val)
+            llenarValor(mem_GLOBAL, cuadruplo[1], getTipo(cuadruplo[1]), arreglo)
+            # FINPROGRAMA
+        elif cuadruplo[0] == 'FINPROGRAMA':
+            terminado = True
+        # OPERADORES
+        elif cuadruplo[0] != 'CONS':
+            operadores(cuadruplo[0])
+
+        # Controla el indice para saber que cuadroplo ejecutar
+        if sigCuaIndice != -1:
+            cuaIndice = sigCuaIndice
+        else:
+            cuaIndice = cuaIndice + 1
+
+
+# Funcion para abrir archivo
+def getArchivo(name):
+    try:
+        f = open(name, 'r', encoding='utf-8')
+        return f
+        f.close()
+    except EOFError:
+        print("Error Maquina Virtual:", EOFError, " no se encuentra el archivo {}".format(name))
+
+
+cuadruplos = getArchivo('obj.txt')  # saca el archivo de cuadruplos
+
+# GUarda los cuadruplos en una lista
+for linea in cuadruplos:
+    linea = linea.replace('(', '')
+    linea = linea.replace(')', '')
+    linea = linea.replace('\n', '')
+    linea = linea.replace('\'', '')
+    linea = linea.replace(' ', '')
+    cuadruplo = tuple(linea.split(','))
+    if (cuadruplo[0] == 'CONS'):  # Lista de constntes, para guardarlos desde un principio en memoria
+        cuadroCONST = (cuadruplo[0], cuadruplo[1], cuadruplo[2], cuadruplo[3])
+        constLista.append(cuadroCONST)
+    cuadruplo = (cuadruplo[0], cuadruplo[1], cuadruplo[2], cuadruplo[3])
+    cuaLista.append(cuadruplo)
+
+correr()

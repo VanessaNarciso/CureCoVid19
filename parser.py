@@ -2371,7 +2371,7 @@ parser = yacc.yacc()
 # CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
 def main():
     #name = input('File name: ')
-    name = "test/" + "prueba2" + ".covid" #Para probar, cambia el nombre del archivo
+    name = "test/" + "prueba1" + ".covid" #Para probar, cambia el nombre del archivo
     print(name)
     try:
         f = open(name,'r', encoding='utf-8')
