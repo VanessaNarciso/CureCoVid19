@@ -1,0 +1,23 @@
+programa fiboRecursivo;
+var
+int: j, w;
+
+funcion int fib(int n)
+{
+    si (n == 1) entonces {
+        regresa(1);
+    }
+    si (n == 0) entonces {
+        regresa(0);
+    }
+    si (n > 1) entonces {
+        regresa(fib(n-1) + fib(n-2));
+    }
+}
+
+principal()
+{
+    lee(j);
+    w = fib(j);
+    escribe(w);
+}
