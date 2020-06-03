@@ -38,6 +38,13 @@ OP_LOGICOS = ['&', '|']
 OP_ASIG = ['=']
 OP_SECUENCIALES = ['lee', 'escribe', 'regresa']
 
+# Diccionarios de constantes (guardan la direccion de memoria de constantes)
+intDic = {}
+floatDic = {}
+strDic = {}
+charDic = {}
+dfDic = {}
+
 # Declaración de variables globales
 currentFunc = GLOB
 currentType = "void"
@@ -52,6 +59,15 @@ varFor = ''
 negativo = False
 isVoid = False
 isDataf = False
+
+# Declaracion de variables para arrays y matrices
+isArray = False
+isMatrix = False
+numRenglones = 0
+numColumnas = 0
+R = 1 #m0
+dirBase = 0 #Direccion base
+currentConstArrays = []
 
 
 precedence = (
@@ -629,10 +645,6 @@ def pushQuad(quad):
     cuads.append(quad)
 
 
-
-
-
-
 ##### FUNCIONES PARA IMPRESIÓN Y ERRORES
 
 # Imprime un nuevo cuadruplo
@@ -685,76 +697,186 @@ def p_gotoPrincipal(p):
     '''
     gotoPrincipal :
     '''
-    print("GOTOPRINCIPAL")
+    QuadGenerate('GOTO', '', '', '')
+    pushSaltos(nextQuad() - 1)
+    #print("GOTOPRINCIPAL")
 
 def p_principal2(p):
     '''
     principal2 :
     '''
-    print("PRINCIPAL2")
+
+    global currentFunc
+    global cuadruplos
+
+    currentFunc = GLOB
+    cuadruplos[popSaltos()] = ('GOTO', '', '', nextQuad())
+
+    #print("PRINCIPAL2")
 
 def p_df(p):
     '''
     df :
     '''
-    print("DF")
+    global boolDataf
+    boolDataf = True
+    #print("DF")
 
 def p_df2(p):
     '''
     df2 :
     '''
-    print("DF2")
+    global boolDataf
+    boolDataf = False
+    #print("DF2")
 
-# PRODUCCIONES PARA DIRFUNC Y TABLA DE VARIABLES
+# PRODUCCIONES DE PUNTOS NEURÁLGICOS PARA DIRFUNC Y VARS TABLE
 def p_setCurrentType(p):
     '''
     setCurrentType :
     '''
-    print("SETCURRENTTYPE")
+    global currentType
+    currentType = p[-1]
+    #print("SETCURRENTTYPE")
 
 def p_addVariable(p):
     '''
     addVariable :
     '''
-    print("ADDVARIABLE")
+    global currentFunc
+    global varName
+    global currentType
+    global currentVarName
+    global currentCantVars
+    global boolDataf
+
+    varName = p[-1]
+    currentVarName = varName
+    PosMem = nextAvailMemory(currentFunc, currentType)
+
+    functionDirectory.func_addVar(currentFunc, varName, currentType, 0, 0, PosMem)
+
+    currentCantVars += 1
+
+    if boolDataf:
+        QuadGenerate('CONS', 'dataframe', varName, PosMem)
+    #print("ADDVARIABLE")
 
 def p_decRenglones(p):
     '''
     decRenglones :
     '''
-    print("DECRENGLONES")
+    global numRenglones
+    numRenglones = p[-2]
+
+    #print("DECRENGLONES")
 
 def p_decColumnas(p):
     '''
     decColumnas :
     '''
-    print("DECCOLUMNAS")
+    global numColumnas
+    numColumnas = p[-2]
+    #print("DECCOLUMNAS")
 
 # GENERACIÓN DE CUADRUPLOS
 def p_funDec1(p):
     '''
     funDec1 :
     '''
-    print("FUNDEC1")
+    global currentFunc
+    global currentType
+    global currentCantParams
+    global currentCantVars
+    global returnBool
+
+    currentCantVars = 0
+    currentCantParams = 0
+    currentFunc = p[-1]
+    print("CAMBIO de CONTEXTO currentFunc = ", currentFunc)
+    print("\n")
+    functionDirectory.func_add(currentFunc, currentType, currentCantParams, nextQuad())
+
+    if functionDirectory.directorio_funciones[currentFunc]['tipo'] == 'void':
+        returnBool = False
+    else:
+        returnBool = True
+
+    print("Return Bool : ", returnBool)
+    print("\n")
+
+    #print("FUNDEC1")
 
 def p_funDec2(p):
     '''
     funDec2 :
     '''
-    print("FUNDEC2")
+    global currentFunc
+    global currentType
+    global currentCantParams
+    global currentCantVars
+    global varName
+
+    varName = p[-1]
+    PosMem = nextAvailMemory(currentFunc, currentType)
+    functionDirectory.func_addVar(currentFunc, varName, currentType, 0, 0, PosMem)
+
+    currentCantParams += 1
+    currentCantVars += 1
+
+    #print("FUNDEC2")
 
 def p_funDec4(p):
     '''
     funDec4 :
     '''
-    print("FUNDEC4")
+    global currentFunc
+    global currentCantParams
+
+    functionDirectory.func_UpdateParametros(currentFunc, currentCantParams)
+
+    #print("FUNDEC4")
 
 def p_funDec7(p):
     '''
     funDec7 :
     '''
-    print("FUNDEC7")
+    global returnBool
+    # global returnDone
 
+    global cont_IntLocales
+    global cont_FloatLocales
+    global cont_StringLocales
+    global cont_CharLocales
+    global cont_dfLocales
+
+    global cont_IntTemporales
+    global cont_FloatTemporales
+    global cont_StringTemporales
+    global cont_CharTemporales
+    global cont_dfTemporales
+
+    # Reinicio de apuntadores de meomria Locales y Temporales
+
+    cont_IntLocales = limite_dfGlobales
+    cont_FloatLocales = limite_intLocales
+    cont_StringLocales = limite_floatLocales
+    cont_CharLocales = limite_stringsLocales
+    cont_dfLocales = limite_charLocales
+
+    cont_IntTemporales = limite_dfLocales
+    cont_FloatTemporales = limite_intTemporales
+    cont_StringTemporales = limite_floatTemporales
+    cont_CharTemporales = limite_stringsTemporales
+    cont_dfTemporales = limite_charTemporales
+    cont_BoolTemporales = limite_dfTemporales
+
+    QuadGenerate('ENDFUNC', '', '', '')
+    returnBool = False
+
+    #print("FUNDEC7")
+
+### Cuads para llamadas de funciones
 def p_funCall1(p):
     '''
     funCall1 :
