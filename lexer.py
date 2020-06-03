@@ -29,7 +29,7 @@ keywords = {
     'Media' : 'MEDIA',
     'Moda' : 'MODA',
     'Varianza' : 'VARIANZA',
-    'Correlaciona' : 'CORRELACIONA',
+    'Correlacion' : 'CORRELACION',
     'lineal' : 'LINEAL',
     'histograma' : 'HISTOGRAMA'
 }

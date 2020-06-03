@@ -10,6 +10,7 @@ from funcDir import *
 from semanticCube import *
 from extraSemanticCube import *
 
+
 # Instancia de los objetos de directorio de funciones, tabla de variables y cubos semánticos
 functionDirectory = funcDir()
 varTable = varsTable()
@@ -37,6 +38,7 @@ OP_REL = ['>', '<', '<=', '>=', '==', '!=']
 OP_LOGICOS = ['&', '|']
 OP_ASIG = ['=']
 OP_SECUENCIALES = ['lee', 'escribe', 'regresa']
+ESPACIO_MEMORIA = 1000
 
 # Diccionarios de constantes (guardan la direccion de memoria de constantes)
 intDic = {}
@@ -69,6 +71,61 @@ R = 1 #m0
 dirBase = 0 #Direccion base
 currentConstArrays = []
 
+
+# Se declara espacio de memoria por tipo de memoria
+limite_intGlobales = ESPACIO_MEMORIA
+limite_floatGlobales = limite_intGlobales + ESPACIO_MEMORIA
+limite_stringsGlobales = limite_floatGlobales + ESPACIO_MEMORIA
+limite_charGlobales = limite_stringsGlobales + ESPACIO_MEMORIA
+limite_dfGlobales = limite_charGlobales + ESPACIO_MEMORIA
+
+limite_intLocales = limite_dfGlobales + ESPACIO_MEMORIA
+limite_floatLocales = limite_intLocales + ESPACIO_MEMORIA
+limite_stringsLocales = limite_floatLocales + ESPACIO_MEMORIA
+limite_charLocales = limite_stringsLocales + ESPACIO_MEMORIA
+limite_dfLocales = limite_charLocales + ESPACIO_MEMORIA
+
+limite_intTemporales = limite_dfLocales + ESPACIO_MEMORIA
+limite_floatTemporales = limite_intTemporales + ESPACIO_MEMORIA
+limite_stringsTemporales = limite_floatTemporales + ESPACIO_MEMORIA
+limite_charTemporales = limite_stringsTemporales + ESPACIO_MEMORIA
+limite_dfTemporales = limite_charTemporales + ESPACIO_MEMORIA
+limite_boolTemporales = limite_dfTemporales + ESPACIO_MEMORIA
+
+limite_intConstantes = limite_boolTemporales + ESPACIO_MEMORIA
+limite_floatConstantes = limite_intConstantes + ESPACIO_MEMORIA
+limite_stringsConstantes = limite_floatConstantes + ESPACIO_MEMORIA
+limite_charConstantes = limite_stringsConstantes + ESPACIO_MEMORIA
+limite_dfConstantes = limite_charConstantes + ESPACIO_MEMORIA
+
+# Se inicializa  memoria para Globales
+cont_IntGlobales = 0
+cont_FloatGlobales = limite_intGlobales
+cont_StringGlobales = limite_floatGlobales
+cont_CharGlobales = limite_stringsGlobales
+cont_dfGlobales = limite_charGlobales
+
+# Se inicializa memoria para Locales
+cont_IntLocales = limite_dfGlobales
+cont_FloatLocales = limite_intLocales
+cont_StringLocales = limite_floatLocales
+cont_CharLocales = limite_stringsLocales
+cont_dfLocales = limite_charLocales
+
+# Se inicializa memoria para Temporales
+cont_IntTemporales = limite_dfLocales
+cont_FloatTemporales = limite_intTemporales
+cont_StringTemporales = limite_floatTemporales
+cont_CharTemporales = limite_stringsTemporales
+cont_dfTemporales = limite_charTemporales
+cont_BoolTemporales = limite_dfTemporales
+
+# Se inicializa memoria para Constatnes
+cont_IntConstantes = limite_boolTemporales
+cont_FloatConstantes = limite_intConstantes
+cont_StringConstantes = limite_floatConstantes
+cont_CharConstantes = limite_stringsConstantes
+cont_dfConstantes = limite_charConstantes
 
 precedence = (
     ('nonassoc','SEMICOLON'),
@@ -393,7 +450,7 @@ def p_funciones_especiales_void(p):
 def p_funciones_especiales(p):
     '''
     funciones_especiales : fe LPAREN ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp2
-                         | CORRELACIONA funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
+                         | CORRELACION funEsp1 LPAREN ID pExp1 COMMA ID pExp1 COMMA CTEINT cteInt COMMA CTEINT cteInt RPAREN funEsp3
     '''
     #print("FUNCIONES_ESPECIALES")
 
@@ -626,7 +683,6 @@ def popSaltos():
 # Agrega el nuevo salto a la pila de Saltos.
 def pushSaltos(salto):
     global pSaltos
-    #print("PUSH SALTO: ", salto)
     pSaltos.append(salto)
 
 # Obtiene el indice del siguiente cuadruplo del arreglo de cuadruplos
@@ -645,6 +701,149 @@ def pushQuad(quad):
     cuads.append(quad)
 
 
+# Agrega las constantes a la pila de Operandos y Tipos
+def pushConstante(constante):
+    global intDic
+    global floatDic
+    global strDic
+    global charDic
+    global dfDic
+
+    global cont_IntConstantes
+    global cont_FloatConstantes
+    global cont_StringConstantes
+    global cont_CharConstantes
+    global cont_dfConstantes
+
+    if type(constante) == int:
+        if constante not in intDic:
+            if cont_IntConstantes < limite_intConstantes:
+                intDic[constante] = cont_IntConstantes
+                cont_IntConstantes = cont_IntConstantes + 1
+                QuadGenerate('CONS', 'int', constante, intDic[constante])
+            else:
+                print(cont_IntConstantes, limite_intConstantes)
+                errorOutOfBounds('Constantes', 'Enteras')
+        pushOperando(constante)
+        pushMemoria(intDic[constante])
+        pushTipo('int')
+
+    elif type(constante) == float:
+        if constante not in floatDic:
+            if cont_FloatConstantes < limite_floatConstantes:
+                floatDic[constante] = cont_FloatConstantes
+                cont_FloatConstantes = cont_FloatConstantes + 1
+                QuadGenerate('CONS', 'float', constante, floatDic[constante])
+            else:
+                errorOutOfBounds('Constantes', 'Flotantes')
+        pushOperando(constante)
+        pushMemoria(floatDic[constante])
+        pushTipo('float')
+
+    elif type(constante) == str:
+        if len(constante) > 3:  # String
+            if constante not in strDic:
+                if cont_StringConstantes < limite_stringsConstantes:
+                    strDic[constante] = cont_StringConstantes
+                    cont_StringConstantes += 1
+                    print("LENG", len(constante), constante)
+                    QuadGenerate('CONS', 'string', constante, strDic[constante])
+                else:
+                    errorOutOfBounds('constantes', 'Strings')
+            pushOperando(constante)
+            pushMemoria(strDic[constante])
+            pushTipo('string')
+        else:  # Char
+            if constante not in charDic:
+                if cont_CharConstantes < limite_charConstantes:
+                    charDic[constante] = cont_CharConstantes
+                    cont_CharConstantes += 1
+                    QuadGenerate('CONS', 'char', constante, charDic[constante])
+                else:
+                    errorOutOfBounds('constantes', 'Chars')
+            pushOperando(constante)
+            pushMemoria(charDic[constante])
+            pushTipo('char')
+    else:
+        sys.exit("Error: Tipo de Variable desconocida")
+
+
+
+# Obtiene la direccion de memoria de una constante, si no la encuentra la agrega
+def getAddConst(constante):
+    global intDic
+    global floatDic
+    global strDic
+    global charDic
+    global dfDic
+
+    global cont_IntConstantes
+    global cont_FloatConstantes
+    global cont_StringConstantes
+    global cont_CharConstantes
+    global cont_dfConstantes
+
+    if isDataf:
+        if constante not in dfDic:
+            if cont_dfConstantes < limite_dfConstantes:
+                dfDic[constante] = cont_dfConstantes
+                cont_dfConstantes += 1
+                QuadGenerate('CONS', 'dataframe', constante, dfDic[constante])
+            else:
+                errorOutOfBounds('Constantes', 'dataframes')
+        return dfDic[constante]
+
+    if type(constante) == int:
+        if constante not in intDic:
+            if cont_IntConstantes < limite_intConstantes:
+                intDic[constante] = cont_IntConstantes
+                cont_IntConstantes += 1
+                QuadGenerate('CONS', 'int', constante, intDic[constante])
+
+            else:
+                errorOutOfBounds('constantes', 'Enteras')
+        return intDic[constante]
+
+    elif type(constante) == float:
+        if constante not in floatDic:
+            if cont_FloatConstantes < limite_floatConstantes:
+                floatDic[constante] = cont_FloatConstantes
+                cont_FloatConstantes += 1
+                QuadGenerate('CONS', 'float', constante, floatDic[constante])
+
+            else:
+                errorOutOfBounds('constantes', 'Flotantes')
+        return floatDic[constante]
+
+    elif type(constante) == str:
+        if len(constante) > 1:  # String
+            if constante not in strDic:
+                if cont_StringConstantes < limite_stringsConstantes:
+                    strDic[constante] = cont_StringConstantes
+                    cont_StringConstantes += 1
+                    QuadGenerate('CONS', 'string', constante, strDic[constante])
+                else:
+                    errorOutOfBounds('constantes', 'Strings')
+
+            return strDic[constante]
+
+        else:  # Char
+            if constante not in charDic:
+                if cont_CharConstantes < limite_charConstantes:
+                    charDic[constante] = cont_CharConstantes
+                    cont_CharConstantes += 1
+                    QuadGenerate('CONS', 'char', constante, charDic[constante])
+                else:
+                    errorOutOfBounds('constantes', 'Chars')
+
+            return charDic[constante]
+
+    else:
+        sys.exit("Error en getAddConst")
+
+
+
+
 ##### FUNCIONES PARA IMPRESIÓN Y ERRORES
 
 # Imprime un nuevo cuadruplo
@@ -659,7 +858,7 @@ def QuadGenerate(operator, leftOperand, rightOperand, result):
 
 # Imprime arreglo/lista de cuadruplos
 def GenerateQuads():
-    print(functionDirectory.func_print(GLOB))
+    print(functionDirectory.funcPrint(GLOB))
     print("-------Lista de Cuadruplos: ")
 
     contador = 0
@@ -690,6 +889,209 @@ def errorReturnTipo():
 
 ##### FUNCIONES PARA MANEJO DE MEMORIA
 
+# Obtiene el siguiente temporal disponible, dependiendo el tipo
+def nextAvailTemp(tipo):
+    global cont_IntTemporales
+    global cont_FloatTemporales
+    global cont_BoolTemporales
+    global avail
+
+    if tipo == 'int':
+        if cont_IntTemporales < limite_intTemporales:
+            avail = cont_IntTemporales
+            cont_IntTemporales += 1
+        else:
+            errorOutOfBounds('temporales', 'Enteras')
+    elif tipo == 'float':
+
+        if cont_FloatTemporales < limite_floatTemporales:
+            avail = cont_FloatTemporales
+            cont_FloatTemporales += 1
+        else:
+            errorOutOfBounds('temporales', 'Flotantes')
+
+    elif tipo == 'bool':
+        if cont_BoolTemporales < limite_boolTemporales:
+            avail = cont_BoolTemporales
+            cont_BoolTemporales = cont_BoolTemporales + 1
+        else:
+            errorOutOfBounds('temporales', 'Boleanas')
+    else:
+        avail = -1
+        print("Error: Tipo de variable no existente")
+    return avail
+
+
+
+# Obtiene el siguiente espacio de memoria disponible
+def nextAvailMemory(contexto, tipo):
+    global cont_IntGlobales
+    global cont_IntLocales
+    global cont_FloatGlobales
+    global cont_FloatLocales
+    global cont_StringGlobales
+    global cont_StringLocales
+    global cont_CharGlobales
+    global cont_CharLocales
+    global cont_dfConstantes
+    global cont_dfLocales
+
+    posMem = -1
+
+    # Global
+    if contexto == GLOB:
+
+        if tipo == 'int':
+            if cont_IntGlobales < limite_intGlobales:
+                posMem = cont_IntGlobales
+                cont_IntGlobales += 1
+            else:
+                errorOutOfBounds(GLOB, 'Enteras')
+
+
+        elif tipo == 'float':
+            if cont_FloatGlobales < limite_floatGlobales:
+                posMem = cont_FloatGlobales
+                cont_FloatGlobales += 1
+            else:
+                errorOutOfBounds(GLOB, 'Floats')
+
+        elif tipo == 'string':
+            if cont_StringGlobales < limite_stringsGlobales:
+                posMem = cont_StringGlobales
+                cont_StringGlobales += 1
+            else:
+                errorOutOfBounds(GLOB, 'Strings')
+
+        elif tipo == 'char':
+            if cont_CharGlobales < limite_charGlobales:
+                posMem = cont_CharGlobales
+                cont_CharGlobales += 1
+            else:
+                errorOutOfBounds(GLOB, 'Chars')
+
+        elif tipo == 'dataframe':
+            if cont_dfConstantes < limite_dfConstantes:
+                posMem = cont_dfConstantes
+                cont_dfConstantes += 1
+            else:
+                errorOutOfBounds(GLOB, 'Dataframes')
+    # Locales
+    else:
+        if tipo == 'int':
+            if cont_IntLocales < limite_intLocales:
+                posMem = cont_IntLocales
+                cont_IntLocales += 1
+            else:
+                errorOutOfBounds('Locales', 'Enteras')
+
+
+        elif tipo == 'float':
+            if cont_FloatLocales < limite_floatLocales:
+                posMem = cont_FloatLocales
+                cont_FloatLocales += 1
+            else:
+                errorOutOfBounds('Locales', 'Floats')
+
+        elif tipo == 'string':
+            if cont_StringLocales < limite_stringsLocales:
+                posMem = cont_StringLocales
+                cont_StringLocales += 1
+            else:
+                errorOutOfBounds('Locales', 'Strings')
+
+        elif tipo == 'char':
+            if cont_CharLocales < limite_charLocales:
+                posMem = cont_CharLocales
+                cont_CharLocales += 1
+            else:
+                errorOutOfBounds('Locales', 'Chars')
+
+        elif tipo == 'dataframe':
+            if cont_dfConstantes < limite_dfConstantes:
+                posMem = cont_dfConstantes
+                cont_dfConstantes += 1
+            else:
+                errorOutOfBounds('Locales', 'Dataframes')
+    return posMem
+
+
+# Sirve para modificar la memoria
+def update_pointer(contexto, tipo, cont):
+    global cont_IntGlobales
+    global cont_IntLocales
+    global cont_FloatGlobales
+    global cont_FloatLocales
+    global cont_StringGlobales
+    global cont_StringLocales
+    global cont_CharGlobales
+    global cont_CharLocales
+    global cont_dfConstantes
+
+    if contexto == GLOB:
+
+        if tipo == 'int':
+            cont_IntGlobales += cont
+            if cont_IntGlobales > limite_intGlobales:
+                sys.exit('Error: Overflow Enteras Globales')
+
+        if tipo == 'float':
+            cont_FloatGlobales += cont
+            if cont_FloatGlobales > limite_floatGlobales:
+                sys.exit('Error: Overflow Flotantes Globales')
+
+        if tipo == 'string':
+            cont_StringGlobales += cont
+            if cont_StringGlobales > limite_stringsGlobales:
+                sys.exit('Error: Overflow Strings Globales')
+
+        if tipo == 'char':
+            cont_CharGlobales += cont
+            if cont_CharGlobales > limite_charGlobales:
+                sys.exit('Error: Overflow Chars Globales')
+
+        if tipo == 'dataframe':
+            cont_dfConstantes += cont
+            if cont_dfConstantes > limite_dfConstantes:
+                sys.exit('Error: Overflow DF Globales')
+    else:
+        if tipo == 'int':
+            cont_IntLocales += cont
+            if cont_IntLocales > limite_intLocales:
+                sys.exit('Error: Overflow Enteras Locales')
+
+        if tipo == 'float':
+            cont_FloatLocales += cont
+            if cont_FloatLocales > limite_floatLocales:
+                sys.exit('Error: Overflow Flotantes Locales')
+
+        if tipo == 'string':
+            cont_StringLocales += cont
+            if cont_StringLocales > limite_stringsLocales:
+                sys.exit('Error: Overflow Strings Locales')
+
+        if tipo == 'char':
+            cont_CharLocales += cont
+            if cont_CharLocales > limite_charLocales:
+                sys.exit('Error: Overflow Chars Locales')
+
+        if tipo == 'dataframe':
+            cont_dfConstantes += cont
+            if cont_dfConstantes > limite_dfConstantes:
+                sys.exit('Error: Overflow DF Locales')
+
+def popMemoria():
+    global pDirecciones
+    pop = pDirecciones.pop()
+    print("--------------------> POP Memorias")
+    print("Pop Memoria = ", pop)
+    return pop
+
+def pushMemoria(memoria):
+    global pDirecciones
+    pDirecciones.append(memoria)
+    print("------>pushMemoria : ", memoria)
+    print("pMemoria : ", pDirecciones)
 
 ### Producciones y acciones semánticas en los puntos neurálgicos
 
@@ -718,17 +1120,19 @@ def p_df(p):
     '''
     df :
     '''
-    global boolDataf
-    boolDataf = True
+    global isDataf
+    isDataf = True
     #print("DF")
 
 def p_df2(p):
     '''
     df2 :
     '''
-    global boolDataf
-    boolDataf = False
+    global isDataf
+    isDataf = False
     #print("DF2")
+
+
 
 # PRODUCCIONES DE PUNTOS NEURÁLGICOS PARA DIRFUNC Y VARS TABLE
 def p_setCurrentType(p):
@@ -758,7 +1162,7 @@ def p_addVariable(p):
 
     currentCantVars += 1
 
-    if boolDataf:
+    if isDataf:
         QuadGenerate('CONS', 'dataframe', varName, PosMem)
     #print("ADDVARIABLE")
 
@@ -779,7 +1183,12 @@ def p_decColumnas(p):
     numColumnas = p[-2]
     #print("DECCOLUMNAS")
 
-# GENERACIÓN DE CUADRUPLOS
+
+
+
+###### GENERACIÓN DE CUADRUPLOS
+
+# Cuadruplos para funciones
 def p_funDec1(p):
     '''
     funDec1 :
@@ -872,11 +1281,11 @@ def p_funDec7(p):
     cont_BoolTemporales = limite_dfTemporales
 
     QuadGenerate('ENDFUNC', '', '', '')
-    returnBool = False
+    isVoid = False
 
     #print("FUNDEC7")
 
-### Cuads para llamadas de funciones
+### Cuadruplos para llamadas de funciones
 def p_funCall1(p):
     '''
     funCall1 :
@@ -896,6 +1305,7 @@ def p_funCall1(p):
         sys.exit()
         return
     #print("FUNCALL1")
+
 
 def p_funCall3(p):
     '''
@@ -929,6 +1339,8 @@ def p_funCall3(p):
 
     pFunciones.append(function)
     #print("FUNCALL3")
+
+
 
 def p_funCall5(p):
     '''
@@ -1059,7 +1471,7 @@ def p_funEsp3(p):
 
 def p_funEspVoid1(p):
     '''
-    pnFunEspVoid1 :
+    funEspVoid1 :
     '''
     #print("FUNESPVOID1")
 
@@ -1087,11 +1499,11 @@ def p_funEspVoid1(p):
         else:
             sys.exit(
                 "Error en Funciones Especiales Void (Histograma). El tipo del primer parametro debe ser dataframe, int o float.")
-    elif (funName == 'plotline'):
+    elif (funName == 'lineal'):
         if ((parTipo1 == 'dataframe' or parTipo1 == 'int' or parTipo1 == 'float') and (
                 parTipo2 == 'dataframe' or parTipo2 == 'int' or parTipo2 == 'float') and (parTipo1 == parTipo2)):
             if (parTipo3 == 'int'):
-                QuadGenerate("plotline", parMem1, parMem2, parMem3)
+                QuadGenerate("lineal", parMem1, parMem2, parMem3)
             else:
                 sys.exit("Error en Funciones Especiales Void (Plotline). El tipo del tercer parametro debe ser entera")
 
@@ -1100,7 +1512,9 @@ def p_funEspVoid1(p):
                 "Error en Funciones Especiales Void (Plotline). El tipo del primer y segundo parametro debe ser dataframe o constante entera o flotante")
 
 
-### Producciones para puntos neurálgicos de constantes
+
+
+### Producciones para puntos neurálgicos de CONSTANTES
 
 def p_neg(p):
     '''
@@ -1243,7 +1657,7 @@ def p_exp4(p):
         quad_operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if quad_resultType == 'error':
             errorTypeMismatch()
@@ -1270,7 +1684,7 @@ def p_exp5(p):
         quad_operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if quad_resultType == 'error':
             print('Error: Type Mismatch')
@@ -1324,7 +1738,7 @@ def p_exp9(p):
         quad_operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if quad_resultType == 'error':
             print('Error: Type Mismatch')
@@ -1362,7 +1776,7 @@ def p_exp11(p):
         quad_operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if quad_resultType == 'error':
             print('Error: Type Mismatch')
@@ -1374,6 +1788,8 @@ def p_exp11(p):
             pushTipo(quad_resultType)
     #print("EXP11")
 
+
+# Inserta "=" en la pila de operadores
 def p_sec1(p):
     '''
     sec1 :
@@ -1401,7 +1817,7 @@ def p_sec2(p):
         global semCube
         global functionDirectory
 
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.varExist(GLOB, quad_leftOperand):
             if quad_resultType == 'error':
@@ -1435,7 +1851,7 @@ def p_sec4(p):
         quad_rightMem = popMemoria()
         quad_operator = popOperadores()
 
-        quad_resultType = semCube.getType(quad_operator, quad_rightType, '')
+        quad_resultType = semCube.getResultType(quad_operator, quad_rightType, '')
 
         if quad_resultType == 'error':
             print("Error: Operacion invalida")
@@ -1453,6 +1869,8 @@ def p_sec5(p):
 
 
 # Generación de código para estatutos no lineales, condicionales
+
+# Genera el cuadruplo GOTOF en la condicion SI depues de recibir el booleano generado por la expresion
 def p_cond1(p): #IF
     '''
     cond1 :
@@ -1470,6 +1888,7 @@ def p_cond1(p): #IF
         errorTypeMismatch()
     #print("COND1")
 
+# Llena el cuadruplo para saber cuando terminar la condicion
 def p_cond2(p): #IF
     '''
     cond2 :
@@ -1482,6 +1901,7 @@ def p_cond2(p): #IF
     cuads[end] = QuadTemporal
     #print("COND2")
 
+# Genera el cuadruplo GOTO para SINO (else) y completa el cuadruplo
 def p_cond3(p): #IF
     '''
     cond3 :
@@ -1494,6 +1914,7 @@ def p_cond3(p): #IF
     cuads[falso] = QuadTemporal
     #print("COND3")
 
+#Mete el siguiente cuadruplo a pSaltos. Que representa la ubicacion a donde regresara al final del ciclo para volver a evaluar la condicion
 def p_ciclos1(p):
     '''
     ciclos1 :
@@ -1502,6 +1923,7 @@ def p_ciclos1(p):
 
     #print("CICLOS1")
 
+# Genera el cuadruplo de GOTOF
 def p_ciclos2(p):
     '''
     ciclos2 :
@@ -1516,6 +1938,8 @@ def p_ciclos2(p):
         errorTypeMismatch()
     #print("CICLOS2")
 
+
+# Genera el cuadruplo GOTO para regresar al inicio del ciclo y volver evaluar la nueva condicion. Aqui tambien se rellena el GOTOF anterior
 def p_ciclos3(p):
     '''
     ciclos3 :
@@ -1528,6 +1952,8 @@ def p_ciclos3(p):
     cuads[end] = QuadTemporal #FILL (end, cont)
     #print("CICLOS3")
 
+
+# Activa la variable bool de ForBool para indicar que esta entrando a un For
 def p_ciclos4(p):
     '''
     ciclos4 :
@@ -1550,9 +1976,9 @@ def p_ciclos5(p):
         global semCube
         global functionDirectory
 
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
-        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.var_exist(GLOB, quad_leftOperand):
+        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.varExist(GLOB, quad_leftOperand):
             if quad_resultType == 'error':
                 print("Error: Operacion invalida")
             else:
@@ -1569,7 +1995,7 @@ def p_ciclos6(p):
 
     idType = functionDirectory.searchVarType(currentFunc, varFor)
     if not idType:  # Si no la encuentra en el contexto actual, cambia de contexto a Tipos
-        idType = functionDirectory.func_searchVarType(GLOB, varFor)
+        idType = functionDirectory.searchVarType(GLOB, varFor)
 
     if not idType:
         print("Error: Variable ", idName, " no declarada")
@@ -1592,7 +2018,7 @@ def p_ciclos7(p):
         quad_operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
 
         if quad_resultType == 'error':
             print('Error: Type Mismatch')
@@ -1725,6 +2151,7 @@ def p_dimDec8(p):
     isArray = False
     currentConstArrays = []
     #print("DIMDEC8")
+
 
 def p_dimAccess2(p):
     '''
@@ -1944,7 +2371,7 @@ parser = yacc.yacc()
 # CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
 def main():
     #name = input('File name: ')
-    name = "test/" + "prueba3" + ".covid" #Para probar, cambia el nombre del archivo
+    name = "test/" + "prueba2" + ".covid" #Para probar, cambia el nombre del archivo
     print(name)
     try:
         f = open(name,'r', encoding='utf-8')
