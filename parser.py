@@ -1367,10 +1367,10 @@ def p_funCall5(p):
 
     tipo = functionDirectory.directorio_funciones[funcion]['tipo']
     if tipo != 'void':
-        quad_resultIndex = nextAvailTemp(tipo)
-        QuadGenerate('=', funcion, '', quad_resultIndex)
-        pushOperando(quad_resultIndex)
-        pushMemoria(quad_resultIndex)
+        temporal = nextAvailTemp(tipo)
+        QuadGenerate('=', funcion,'', temporal)
+        pushOperando(temporal)
+        pushMemoria(temporal)
         pushTipo(tipo)
     #print("FUNCALL5")
 
@@ -1648,25 +1648,25 @@ def p_exp4(p):
     exp4 :
     '''
     if topOperador() in OP_SUM_RES:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_leftOperand = popOperandos()
-        quad_leftMem = popMemoria()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        leftOperand = popOperandos()
+        leftMem = popMemoria()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if quad_resultType == 'error':
+        if resultType == 'error':
             errorTypeMismatch()
         else:
-            quad_resultIndex = nextAvailTemp(quad_resultType)
-            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
-            pushOperando(quad_resultIndex)
-            pushMemoria(quad_resultIndex)
-            pushTipo(quad_resultType)
+            temporal = nextAvailTemp(resultType)
+            QuadGenerate(operator, leftMem, rightMem, temporal)
+            pushOperando(temporal)
+            pushMemoria(temporal)
+            pushTipo(resultType)
     #print("EXP4")
 
 def p_exp5(p):
@@ -1675,25 +1675,24 @@ def p_exp5(p):
     '''
     if topOperador() in OP_MUL_DIV:
 
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_leftOperand = popOperandos()
-        quad_leftMem = popMemoria()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        leftOperand = popOperandos()
+        leftMem = popMemoria()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
-
-        if quad_resultType == 'error':
+        resultType = semCube.getResultType(leftType, rightType, operator)
+        if resultType == 'error':
             print('Error: Type Mismatch')
         else:
-            quad_resultIndex = nextAvailTemp(quad_resultType)
-            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
-            pushOperando(quad_resultIndex)
-            pushMemoria(quad_resultIndex)
-            pushTipo(quad_resultType)
+            temporal = nextAvailTemp(resultType)
+            QuadGenerate(operator, leftMem, rightMem, temporal)
+            pushOperando(temporal)
+            pushMemoria(temporal)
+            pushTipo(resultType)
     #print("EXP5")
 
 def p_exp6(p):
@@ -1729,25 +1728,25 @@ def p_exp9(p):
     exp9 :
     '''
     if topOperador() in OP_REL:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_leftOperand = popOperandos()
-        quad_leftMem = popMemoria()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        leftOperand = popOperandos()
+        leftMem = popMemoria()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if quad_resultType == 'error':
+        if resultType == 'error':
             print('Error: Type Mismatch')
         else:
-            quad_resultIndex = nextAvailTemp(quad_resultType)
-            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
-            pushOperando(quad_resultIndex)
-            pushMemoria(quad_resultIndex)
-            pushTipo(quad_resultType)
+            temporal = nextAvailTemp(resultType)
+            QuadGenerate(operator, leftMem, rightMem, temporal)
+            pushOperando(temporal)
+            pushMemoria(temporal)
+            pushTipo(resultType)
 
     #print("EXP9")
 
@@ -1767,25 +1766,25 @@ def p_exp11(p):
     exp11 :
     '''
     if topOperador() in OP_LOGICOS:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_leftOperand = popOperandos()
-        quad_leftMem = popMemoria()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        leftOperand = popOperandos()
+        leftMem = popMemoria()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if quad_resultType == 'error':
+        if resultType == 'error':
             print('Error: Type Mismatch')
         else:
-            quad_resultIndex = nextAvailTemp(quad_resultType)
-            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
-            pushOperando(quad_resultIndex)
-            pushMemoria(quad_resultIndex)
-            pushTipo(quad_resultType)
+            temporal = nextAvailTemp(resultType)
+            QuadGenerate(operator, leftMem, rightMem, temporal)
+            pushOperando(temporal)
+            pushMemoria(temporal)
+            pushTipo(resultType)
     #print("EXP11")
 
 
@@ -1806,24 +1805,23 @@ def p_sec2(p):
     sec2 :
     '''
     if topOperador() in OP_ASIG:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_leftOperand = popOperandos()
-        quad_leftMem = popMemoria()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
-
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        leftOperand = popOperandos()
+        leftMem = popMemoria()
+        leftType = popTipos()
+        operator = popOperadores()
         global semCube
         global functionDirectory
 
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.varExist(GLOB, quad_leftOperand):
-            if quad_resultType == 'error':
+        if functionDirectory.varExist(currentFunc, leftOperand) or functionDirectory.varExist(GLOB, leftOperand):
+            if resultType == 'error':
                 print("Error: Operacion invalida")
             else:
-                QuadGenerate(quad_operator, quad_rightMem, '', quad_leftMem)
+                QuadGenerate(operator, rightMem, '', leftMem)
         else:
             print("Error al intentar asignar una variable")
     #print("SEC2")
@@ -1846,18 +1844,18 @@ def p_sec4(p):
     global semCube
     if topOperador() in OP_SECUENCIALES:
         print("Voy a ejecutar pnSEc4")
-        quad_Operando = popOperandos()
-        quad_rightType = popTipos()
-        quad_rightMem = popMemoria()
-        quad_operator = popOperadores()
+        Operando = popOperandos()
+        rightType = popTipos()
+        rightMem = popMemoria()
+        operator = popOperadores()
 
-        quad_resultType = semCube.getResultType(quad_operator, quad_rightType, '')
+        resultType = semCube.getResultType(operator, rightType, '')
 
-        if quad_resultType == 'error':
+        if resultType == 'error':
             print("Error: Operacion invalida")
         else:
-            QuadGenerate(quad_operator, quad_rightMem, '', quad_operator)
-            pushOperador(quad_operator)
+            QuadGenerate(operator, rightMem, '', operator)
+            pushOperador(operator)
     #print("SEC4")
 
 def p_sec5(p):
@@ -1967,22 +1965,22 @@ def p_ciclos5(p):
     ciclos5 :
     '''
     if topOperador() in OP_ASIG:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_leftOperand = popOperandos()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        leftOperand = popOperandos()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
         global functionDirectory
 
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.varExist(GLOB, quad_leftOperand):
-            if quad_resultType == 'error':
+        if functionDirectory.varExist(currentFunc, leftOperand) or functionDirectory.varExist(GLOB, leftOperand):
+            if resultType == 'error':
                 print("Error: Operacion invalida")
             else:
-                QuadGenerate(quad_operator, quad_rightOperand, '', quad_leftOperand)
+                QuadGenerate(operator, rightOperand, '', leftOperand)
         else:
             print("Error")
     #print("CICLOS5")
@@ -2011,22 +2009,22 @@ def p_ciclos7(p):
     ciclos7 :
     '''
     if topOperador() in OP_REL:
-        quad_rightOperand = popOperandos()
-        quad_rightType = popTipos()
-        quad_leftOperand = popOperandos()
-        quad_leftType = popTipos()
-        quad_operator = popOperadores()
+        rightOperand = popOperandos()
+        rightType = popTipos()
+        leftOperand = popOperandos()
+        leftType = popTipos()
+        operator = popOperadores()
 
         global semCube
-        quad_resultType = semCube.getResultType(quad_leftType, quad_rightType, quad_operator)
+        resultType = semCube.getResultType(leftType, rightType, operator)
 
-        if quad_resultType == 'error':
+        if resultType == 'error':
             print('Error: Type Mismatch')
         else:
-            quad_resultIndex = nextAvailTemp(quad_resultType)
-            QuadGenerate(quad_operator, quad_leftOperand, quad_rightOperand, quad_resultIndex)
-            pushOperando(quad_resultIndex)
-            pushTipo(quad_resultType)
+            temporal = nextAvailTemp(resultType)
+            QuadGenerate(operator, leftOperand, rightOperand, temporal)
+            pushOperando(temporal)
+            pushTipo(resultType)
 
         exp_type = popTipos()
         if (exp_type != 'bool' or exp_type == 'error'):
@@ -2270,7 +2268,6 @@ def p_matrizAcc(p):
 
         # Checa las dimensiones
         varDimensiones = functionDirectory.getDimsVar(currentFunc, auxDIM)
-        print("MAT: ", auxDIM)
         if varDimensiones == -1:
             varDimensiones = functionDirectory.getDimsVar(GLOB, auxDIM)  # Busca en global
             if varDimensiones == -1:  # si no hay en global...
