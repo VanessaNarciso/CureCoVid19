@@ -35,7 +35,7 @@ class funcDir:
     #Agrega variable a la tabla de variables correspondiente a la función
     def addVarFunc(self, nombre, nombreVar, tipoVar, renglonesVar, columnasVar, memPos):
 
-        if self.directorio_funciones[nombre]['variables'].var_add(nombreVar, tipoVar, renglonesVar, columnasVar,
+        if self.directorio_funciones[nombre]['variables'].addVar(nombreVar, tipoVar, renglonesVar, columnasVar,
                                                                   memPos):
             print("Variable: ", nombreVar, " creada en la funcion:  ", nombre)
         else:
@@ -43,18 +43,18 @@ class funcDir:
 
     #Verifica si una variable es dimensionada y dado el caso lo actualiza
     def updateDimFunc(self, nombre, nombreVar, renglones, columnas):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
             if columnas > 0:
-                return self.directorio_funciones[nombre]['variables'].var_upadateDims(nombreVar, renglones, columnas)
+                return self.directorio_funciones[nombre]['variables'].updateVarDims(nombreVar, renglones, columnas)
             else:
-                return self.directorio_funciones[nombre]['variables'].var_upadateDims(nombreVar, renglones, -1)
+                return self.directorio_funciones[nombre]['variables'].updateVarDims(nombreVar, renglones, -1)
         else:
             print("Error: La variable ", nombreVar, "no existe en este contexto ", nombre)
             return None
 
     #Verifica si una variable es dimensionada en determinado contexto
     def isDimensionadaVar(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
             print("Directorio de func de ", nombreVar, "col: ", self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'])
 
             if self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'] > 0 or self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones'] > 0:
@@ -66,7 +66,7 @@ class funcDir:
 
     #Genera una lista con las dimensiones de una variable dimensionada
     def getDimsVar(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
             dim = [self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['columnas'], self.directorio_funciones[nombre]['variables'].tabla_variables[nombreVar]['renglones']]
             return dim
         else:
@@ -74,15 +74,15 @@ class funcDir:
 
     #Busca el tipo de una variable que ya ha sido creada
     def searchVarType(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
-            return self.directorio_funciones[nombre]['variables'].var_searchType(nombreVar)
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
+            return self.directorio_funciones[nombre]['variables'].searchVarType(nombreVar)
         else:
             print("Error: Variable: ", nombreVar ," no existe en este contexto: ", nombre)
             return None
 
     #Verifica si la variable existe en la tabla de variables de una función determinada
     def varExist(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
             return True
         else:
             return False
@@ -100,8 +100,8 @@ class funcDir:
 
     #Obtiene la posición de memoria virtual de una variable
     def funcMemory(self, nombre, nombreVar):
-        if self.directorio_funciones[nombre]['variables'].varExist(nombreVar):
-            return  self.directorio_funciones[nombre]['variables'].var_searchMemPos(nombreVar)
+        if self.directorio_funciones[nombre]['variables'].existVar(nombreVar):
+            return  self.directorio_funciones[nombre]['variables'].searchVarMemPos(nombreVar)
         else:
             print("Error: La variable: ", nombreVar, "no existe en este contexto: ", nombre)
 

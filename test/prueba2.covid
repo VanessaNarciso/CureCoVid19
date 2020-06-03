@@ -15,7 +15,7 @@ funcion int mult(int a, int b){
     regresa(a*b);
 }
 
-funcion int div(int a, int b){
+funcion float div(int a, int b){
     regresa(a/b);
 }
 
