@@ -1,15 +1,15 @@
 programa operaciones;
 var int:
-a,b,sum,res,mult,div;
+a,b,res;
 
 principal()
 {
-sum = a+b;
-res = a-b;
-mult = a*b;
-div = a/b;
+a=1;
+b=2;
+res = a+b;
+escribe(res);
 
-escribe(sum,res,mult,div);
+escribe("HOLA MUNDO");
 
 }
 
