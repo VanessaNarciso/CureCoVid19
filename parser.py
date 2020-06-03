@@ -2368,17 +2368,14 @@ def p_carga(p):
 
 parser = yacc.yacc()
 
-# CODIGO PARA PRUEBAS (EN FOLDER DE PRUEBAS)
+# CODIGO PARA PRUEBAS (EN FOLDER DE TEST)
 def main():
-    #name = input('File name: ')
-    name = "test/" + "prueba1" + ".covid" #Para probar, cambia el nombre del archivo
+    name = "test/" + "prueba1" + ".covid"
     print(name)
     try:
         f = open(name,'r', encoding='utf-8')
-        #QuadTemporal = ('0', '0', '0', '0')
-        #pushQuad(QuadTemporal)
         result = parser.parse(f.read())
-        print(result)
+        #print(result)
         f.close()
     except EOFError:
         print (EOFError)

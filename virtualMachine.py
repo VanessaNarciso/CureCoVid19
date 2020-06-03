@@ -4,7 +4,9 @@ import numpy as np
 import statistics as statistics
 import matplotlib.pyplot as plt
 
-# Se declaran constantes
+'''
+Declaracion de constantes
+'''
 GBL = 'globales'
 LCL = 'locales'
 CONST_TEMPORAL = 'temporal'
@@ -13,8 +15,10 @@ CONST_RETORNO_VALOR = 'retorno'
 CONST_FUNCION_RETORNO = 'funcion'
 ESPACIO_MEMORIA = 1000
 
-
-# Se inicializan las instancias de memoria default, global y funcion principal
+'''
+Inicializamos las instancias de memoria de defaul
+Globla y funcion principal
+'''
 mem_GLOBAL = virtualMem('global')
 mem_PRINCIPAL = virtualMem('principal')
 
@@ -30,7 +34,7 @@ pilaTemporal = []
 pilaEjecucion = []
 pilaCorriendo = ''
 
-# Se declaran los espacios de memoria por tipo
+# Declaracion de espacio de memoria por tipo de memoria
 limite_intGlobales = ESPACIO_MEMORIA
 limite_floatGlobales = limite_intGlobales + ESPACIO_MEMORIA
 limite_stringsGlobales = limite_floatGlobales + ESPACIO_MEMORIA
@@ -56,8 +60,10 @@ limite_stringsConstantes = limite_floatConstantes + ESPACIO_MEMORIA
 limite_charConstantes = limite_stringsConstantes + ESPACIO_MEMORIA
 limite_dfConstantes = limite_charConstantes + ESPACIO_MEMORIA
 
+'''
+Funciones de control de las pilas
+'''
 
-######## Funciones que controlan las pilas
 
 # Funcion para hacer push a las diferenes pilas y poder manear las diferentes instancias de memmoria
 def push(pilaNom, mem):
@@ -74,6 +80,7 @@ def push(pilaNom, mem):
         global pilaFuncion
         pilaFuncion.append(mem)
 
+
 # Funcion para hacer pop a las diferenes pilas y poder manear las diferentes instancias de memmoria
 def pop(pilaNom):
     if pilaNom == CONST_TEMPORAL:
@@ -88,6 +95,7 @@ def pop(pilaNom):
     elif pilaNom == CONST_FUNCION_RETORNO:
         global pilaFuncion
         return pilaFuncion.pop()
+
 
 # Funcion para sacar pop de las principales pilas a las diferenes pilas y poder manear las diferentes instancias de memmoria
 def top(pilaNom):
@@ -104,13 +112,18 @@ def top(pilaNom):
             return 'vacia'
         return pilaEjecucion[aux]
 
+
 # Declaramos la primera instancia de la memoria principal
 push(CONST_EJECUCION, mem_PRINCIPAL)
 
-# Permite obtener los valores de la clase memoria, mandando la instacnia de memoria, la direccion y el tipo
+'''
+Funcion que permite sacar los valores de la clase memoria, mandando la instacnia de memoria, la direccion y el tipo
+'''
+
+
 def getValor(memVirtual, memDireccion, memTipo):
     global mem_GLOBAL
-    try: # En caso de que sea un apuntador
+    try:  # En caso de que sea un apuntador
         if memDireccion[-1] == '!':
             memDireccion = getValor(memVirtual, memDireccion[0:-1], getTipo(memDireccion[0:-1]))
             memTipo = getTipo(memDireccion)
@@ -126,14 +139,20 @@ def getValor(memVirtual, memDireccion, memTipo):
             print("Error Maquina Virtual: No se encontró sección {} de memoria".format(seccion))
             sys.exit()
     except:
-        print("Error Maquina Virtual: ", sys.exc_info()[0], " en seccion {}, en direccion {}, en indice {}.".format(seccion, memDireccion, cuaIndice))
+        print("Error Maquina Virtual: ", sys.exc_info()[0],
+              " en seccion {}, en direccion {}, en indice {}.".format(seccion, memDireccion, cuaIndice))
         sys.exit()
     return valor
 
-# Permite insertar los valores a la clase memoria, mandando la instacnia de memoria, la direccion y el tipo
+
+'''
+Funcion que permite meter los valores a la clase memoria, mandando la instacnia de memoria, la direccion y el tipo
+'''
+
+
 def llenarValor(memVirtual, memDireccion, memTipo, valor):
     global mem_GLOBAL
-    try: # En caso de que sea un apuntador
+    try:  # En caso de que sea un apuntador
         if memDireccion[-1] == '!':
             memDireccion = getValor(memVirtual, memDireccion[0:-1], getTipo(memDireccion[0:-1]))
             memTipo = getTipo(memDireccion)
@@ -151,7 +170,11 @@ def llenarValor(memVirtual, memDireccion, memTipo, valor):
         return
 
 
-# Obtiene la sección de la memoria mediante el número
+'''
+Esta funcion ayuda a sacar la seccion de la memoria, mediante el numero
+'''
+
+
 def getSeccion(direccion):
     global pilaCorriendo
     try:
@@ -161,17 +184,24 @@ def getSeccion(direccion):
         pass
     direccion = int(direccion)
     # GLOBALES y CONSTANTES se guardan donde mismo
-    if ((direccion >= 0 and direccion < limite_dfGlobales) or (direccion >= limite_boolTemporales and direccion <= limite_dfConstantes)):
+    if ((direccion >= 0 and direccion < limite_dfGlobales) or (
+            direccion >= limite_boolTemporales and direccion <= limite_dfConstantes)):
         return GBL
     # LOCALES y TEMPORALES se guardan donde mismo
-    if ((direccion >= limite_dfGlobales and direccion < limite_dfLocales) or (direccion >= limite_dfLocales and direccion < limite_boolTemporales)):
+    if ((direccion >= limite_dfGlobales and direccion < limite_dfLocales) or (
+            direccion >= limite_dfLocales and direccion < limite_boolTemporales)):
         return LCL
     else:
         print("Error Maquina Virtual: {} no se encuentra dentro de ninguna seccion".format(direccion))
         sys.exit()
         return
 
-# Obtiene el tipo al que pertenece la direccion que recibe como parámetro
+
+'''
+Esta funcion permite sacar el tipo, al que pertenece la direccion que se le envia
+'''
+
+
 def getTipo(direccion):
     global pilaCorriendo
     try:
@@ -180,15 +210,30 @@ def getTipo(direccion):
     except:
         pass
     direccion = int(direccion)
-    if ((direccion >= 0 and direccion < limite_intGlobales) or (direccion >= limite_dfGlobales and direccion < limite_intLocales) or (direccion >= limite_dfLocales and direccion < limite_intTemporales) or (direccion >= limite_boolTemporales and direccion < limite_intConstantes)):
+    if ((direccion >= 0 and direccion < limite_intGlobales) or (
+            direccion >= limite_dfGlobales and direccion < limite_intLocales) or (
+            direccion >= limite_dfLocales and direccion < limite_intTemporales) or (
+            direccion >= limite_boolTemporales and direccion < limite_intConstantes)):
         return 'int'
-    if ((direccion >= limite_intGlobales and direccion < limite_floatGlobales) or (direccion >= limite_intLocales and direccion < limite_floatLocales) or (direccion >= limite_intTemporales and direccion < limite_floatTemporales) or (direccion >= limite_intConstantes and direccion < limite_floatConstantes)):
+    if ((direccion >= limite_intGlobales and direccion < limite_floatGlobales) or (
+            direccion >= limite_intLocales and direccion < limite_floatLocales) or (
+            direccion >= limite_intTemporales and direccion < limite_floatTemporales) or (
+            direccion >= limite_intConstantes and direccion < limite_floatConstantes)):
         return 'float'
-    if ((direccion >= limite_floatGlobales and direccion < limite_stringsGlobales) or (direccion >= limite_floatLocales and  direccion < limite_stringsLocales) or (direccion >= limite_floatTemporales and direccion < limite_stringsTemporales) or (direccion >= limite_floatConstantes and direccion < limite_stringsConstantes)):
+    if ((direccion >= limite_floatGlobales and direccion < limite_stringsGlobales) or (
+            direccion >= limite_floatLocales and direccion < limite_stringsLocales) or (
+            direccion >= limite_floatTemporales and direccion < limite_stringsTemporales) or (
+            direccion >= limite_floatConstantes and direccion < limite_stringsConstantes)):
         return 'string'
-    if ((direccion >= limite_stringsGlobales and direccion < limite_charGlobales) or (direccion >= limite_stringsLocales and direccion <limite_charLocales) or (direccion >= limite_stringsTemporales and direccion < limite_charTemporales) or (direccion >= limite_stringsConstantes and direccion < limite_charConstantes)):
+    if ((direccion >= limite_stringsGlobales and direccion < limite_charGlobales) or (
+            direccion >= limite_stringsLocales and direccion < limite_charLocales) or (
+            direccion >= limite_stringsTemporales and direccion < limite_charTemporales) or (
+            direccion >= limite_stringsConstantes and direccion < limite_charConstantes)):
         return 'char'
-    if ((direccion >= limite_charGlobales and direccion < limite_dfGlobales) or (direccion >= limite_charLocales and direccion < limite_dfLocales) or (direccion >= limite_charTemporales and direccion < limite_dfTemporales) or (direccion >= limite_charConstantes and direccion < limite_dfConstantes)):
+    if ((direccion >= limite_charGlobales and direccion < limite_dfGlobales) or (
+            direccion >= limite_charLocales and direccion < limite_dfLocales) or (
+            direccion >= limite_charTemporales and direccion < limite_dfTemporales) or (
+            direccion >= limite_charConstantes and direccion < limite_dfConstantes)):
         return 'dataframe'
     if (direccion >= limite_dfTemporales and direccion < limite_boolTemporales):
         return 'bool'
@@ -197,16 +242,22 @@ def getTipo(direccion):
         sys.exit()
         return
 
-# Obtiene el signo
+
+'''
+Funcion operadores, para sacar el signo
+'''
+
+
 def operadores(signo):
     global cuadruplo
     global pilaCorriendo
     if signo == '+':
-        if cuadruplo[1][0] == '{' and cuadruplo[1][-1] == '}':  # En caso de que se refiera a la suma de la direccion de vector
+        if cuadruplo[1][0] == '{' and cuadruplo[1][
+            -1] == '}':  # En caso de que se refiera a la suma de la direccion de vector
             valor1 = int(cuadruplo[1][1:-1])
             valor2 = getValor(pilaCorriendo, cuadruplo[2], getTipo(cuadruplo[2]))
             valor2 = int(valor2)
-        else: # Suma normal de dos valores
+        else:  # Suma normal de dos valores
             tipo1 = getTipo(cuadruplo[1])
             tipo2 = getTipo(cuadruplo[2])
             valor1 = getValor(pilaCorriendo, cuadruplo[1], tipo1)
@@ -218,7 +269,7 @@ def operadores(signo):
                 valor1 = float(valor1);
 
             if tipo2 == 'int':
-                valor2 = int (valor2)
+                valor2 = int(valor2)
             elif tipo2 == 'float':
                 valor2 = float(valor2)
             pass
@@ -265,24 +316,34 @@ def operadores(signo):
     llenarValor(pilaCorriendo, cuadruplo[3], getTipo(cuadruplo[3]), res)
 
 
-# Verifica que los indices esten dentro del dataframe o arreglo
+'''
+ Verifica que los indices esten dentro del dataframe o arreglo
+'''
+
+
 def verificar(arr, de, a):
     l = len(arr) - 1
     if de < 0 or de > l:
-        print("Error Maquina Virtual: el inidice {} no esta dentro del rango del dataframe o arreglo 0 a {} ".format(de,l))
+        print("Error Maquina Virtual: el inidice {} no esta dentro del rango del dataframe o arreglo 0 a {} ".format(de,
+                                                                                                                     l))
         sys.exit()
         return False
-    if  a < 0 or a > l:
-        print("Error Maquina Virtual: el inidice {} no esta dentro del rango del dataframe o arreglo 0 a {} ".format(a,l))
+    if a < 0 or a > l:
+        print("Error Maquina Virtual: el inidice {} no esta dentro del rango del dataframe o arreglo 0 a {} ".format(a,
+                                                                                                                     l))
         sys.exit()
         return False
     return True
 
 
-###### FUNCION PRINCIPAL
-## De acuerdo con los cuadruplos la función decide qué ejecutar
+'''
+    FUNCION PRINCIPAL
+    Usa los cuádruplos para detectar que debe de ejecutar.
+'''
+
+
 def correr():
-    # Se declaran las variables globales
+    # Se declaran las variables globales a utilizar
     global constLista
     global cuaLista
     global cuaIndice
@@ -292,7 +353,7 @@ def correr():
     global sigCuaIndice
     global pilaCorriendo
 
-    # Guardar todos los constantes antes de correr los demas cuadruplo
+    # Ciclo que permite guardar todos los constantes antes de correr los demas cuadruplo
     for cons in constLista:
         llenarValor(mem_GLOBAL, cons[3], cons[1], cons[2])
 
@@ -390,8 +451,89 @@ def correr():
                 print("Error Maquina Virtual: El valor {} no pertence a los indices.".format(valor + 1))
                 sys.exit()
                 return
-
+        elif cuadruplo[0] == 'ordena':
+            inicio = int(cuadruplo[1])
+            tam = int(cuadruplo[2])
+            tipo = getTipo(cuadruplo[1])
+            arr = []
+            # Crea arreglo a partir de los datos de memoria
+            for i in range(0, tam - 1):
+                valor = getValor(pilaCorriendo, inicio + i, tipo)
+                # Verifca que valor utilizar
+                try:
+                    int(valor)
+                    valor = int(valor)
+                except:
+                    try:
+                        float(valor)
+                        valor = float(valor)
+                    except:
+                        try:
+                            str(valor)
+                            tipo = 'char' if len(valor) == 1 else 'string'
+                        except:
+                            print("Error Maquina Virtual: {}".format(sys.exc_info()[0], cuaIndice))
+                arr.append(valor)
+            arr.sort()
+            for i in range(0, tam - 1): llenarValor(pilaCorriendo, inicio + i, tipo, arr[i])
+        elif cuadruplo[0] == 'encontrar':
+            inicio = int(cuadruplo[1])
+            tipo = getTipo(cuadruplo[1])
+            aux = cuadruplo[2].split('#')
+            tam = int(aux[0][1:])
+            buscado = int(aux[1][:])
+            arr = []
+            # Crea arreglo a partir de los datos de memoria
+            for i in range(0, tam - 1):
+                valor = getValor(pilaCorriendo, inicio + i, tipo)
+                # Verifca que valor utilizar
+                try:
+                    int(valor)
+                    valor = int(valor)
+                except:
+                    try:
+                        float(valor)
+                        valor = float(valor)
+                    except:
+                        try:
+                            str(valor)
+                            valor = 'char' if len(valor) == 1 else 'string'
+                        except:
+                            print("Error Maquina Virtual: {}".format(sys.exc_info()[0], cuaIndice))
+                arr.append(valor)
+            llenarValor(pilaCorriendo, cuadruplo[3], tipo, arr.index(buscado))
         # FUNCIONES ESPECIALES
+        # Mediana
+        elif cuadruplo[0] == 'mediana':
+            subArreglo = []
+            tipo = getTipo(cuadruplo[3])
+            arreglo = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
+            aux = cuadruplo[2].split('#')
+            if (aux[0] != '0' and aux[1] != '0'):  # Si vienen 0 significa que es todo el arreglo
+                de = int(aux[0][1:])
+                a = int(aux[1][:])
+                # Si es -1, significa que es 0
+                if (aux[0] == -1):
+                    de = 0
+                if (aux[1] == -1):
+                    a = 0
+                if verificar(arreglo, de, a):  # Verificar con cualquier arreglo, ya que deben de ser del mismo tamaño
+                    for r in range(de, a + 1): subArreglo.append(
+                        arreglo[r])  # Crea arreglo a partir de los datos sacados
+                    try:
+                        llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.median(subArreglo))
+                    except:
+                        print(
+                            "Error Maquina Virtual: El arreglo no tiene mediana, en el rango de {} a {}".format(de, a))
+                        sys.exit()
+                        return
+            else:
+                try:
+                    llenarValor(pilaCorriendo, cuadruplo[3], tipo, statistics.median(arreglo))
+                except:
+                    print("Error Maquina Virtual: El arreglo no tiene mediana en todo el archivo")
+                    sys.exit()
+                    return
         # Media
         elif cuadruplo[0] == 'media':
             subArreglo = []
@@ -566,8 +708,8 @@ def correr():
                 except:
                     print("Error no se logro graficar el histograma")
                     sys.exit()
-        # lineal plot
-        elif cuadruplo[0] == 'lineal':
+        # plotline
+        elif cuadruplo[0] == 'plotline':
             subArreglo1 = []
             subArreglo2 = []
             arr1 = getValor(pilaCorriendo, cuadruplo[1], getTipo(cuadruplo[1]))
@@ -588,10 +730,10 @@ def correr():
                             plt.plot(axisX, subArreglo1, label='Dataframe 1')
                             plt.plot(axisX, subArreglo2, label='Dataframe 2')
                             plt.legend()
-                            plt.savefig("lineal.png")
+                            plt.savefig("plotline.png")
                             plt.show()
                             print(
-                                "WARNING Maquina Virtual: La imagen se guardo como lineal.png")
+                                "WARNING Maquina Virtual: En caso de que no se vea la imagen, se guardo como plotline.png")
                             plt.close()
                         except:
                             print("Error no se logro graficar")
@@ -603,10 +745,10 @@ def correr():
                         plt.plot(axisX, arr1, label='Dataframe 1')
                         plt.plot(axisX, arr2, label='Dataframe 2')
                         plt.legend()
-                        plt.savefig("lineal.png")
+                        plt.savefig("plotline.png")
                         plt.show()
                         print(
-                            "WARNING Maquina Virtual: La imagen se guardo como lineal.png")
+                            "WARNING Maquina Virtual: En caso de que no se vea la imagen, se guardo como plotline.png")
                         plt.close()
                     except:
                         print("Error no se logro graficar")
