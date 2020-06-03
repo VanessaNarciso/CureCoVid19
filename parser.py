@@ -707,10 +707,10 @@ def p_principal2(p):
     '''
 
     global currentFunc
-    global cuadruplos
+    global cuads
 
     currentFunc = GLOB
-    cuadruplos[popSaltos()] = ('GOTO', '', '', nextQuad())
+    cuads[popSaltos()] = ('GOTO', '', '', nextQuad())
 
     #print("PRINCIPAL2")
 
@@ -748,13 +748,13 @@ def p_addVariable(p):
     global currentType
     global currentVarName
     global currentCantVars
-    global boolDataf
+    global isDataf
 
     varName = p[-1]
     currentVarName = varName
     PosMem = nextAvailMemory(currentFunc, currentType)
 
-    functionDirectory.func_addVar(currentFunc, varName, currentType, 0, 0, PosMem)
+    functionDirectory.addVarFunc(currentFunc, varName, currentType, 0, 0, PosMem)
 
     currentCantVars += 1
 
@@ -788,21 +788,21 @@ def p_funDec1(p):
     global currentType
     global currentCantParams
     global currentCantVars
-    global returnBool
+    global isVoid
 
     currentCantVars = 0
     currentCantParams = 0
     currentFunc = p[-1]
     print("CAMBIO de CONTEXTO currentFunc = ", currentFunc)
     print("\n")
-    functionDirectory.func_add(currentFunc, currentType, currentCantParams, nextQuad())
+    functionDirectory.addFunc(currentFunc, currentType, currentCantParams, nextQuad())
 
     if functionDirectory.directorio_funciones[currentFunc]['tipo'] == 'void':
-        returnBool = False
+        isVoid = False
     else:
-        returnBool = True
+        isVoid = True
 
-    print("Return Bool : ", returnBool)
+    print("Return Bool : ", isVoid)
     print("\n")
 
     #print("FUNDEC1")
@@ -819,7 +819,7 @@ def p_funDec2(p):
 
     varName = p[-1]
     PosMem = nextAvailMemory(currentFunc, currentType)
-    functionDirectory.func_addVar(currentFunc, varName, currentType, 0, 0, PosMem)
+    functionDirectory.addVarFunc(currentFunc, varName, currentType, 0, 0, PosMem)
 
     currentCantParams += 1
     currentCantVars += 1
@@ -833,7 +833,7 @@ def p_funDec4(p):
     global currentFunc
     global currentCantParams
 
-    functionDirectory.func_UpdateParametros(currentFunc, currentCantParams)
+    functionDirectory.updateFuncParams(currentFunc, currentCantParams)
 
     #print("FUNDEC4")
 
@@ -841,7 +841,7 @@ def p_funDec7(p):
     '''
     funDec7 :
     '''
-    global returnBool
+    global isVoid
     # global returnDone
 
     global cont_IntLocales
@@ -881,152 +881,536 @@ def p_funCall1(p):
     '''
     funCall1 :
     '''
-    print("FUNCALL1")
+    global pFunciones
+    global pArgumentos
+    funcId = p[-1]
+
+    if funcId in functionDirectory.directorio_funciones:
+        pFunciones.append(funcId)
+
+        QuadGenerate('ERA', funcId, '', '')
+        pArgumentos.append(0)
+
+    else:
+        print("Error: la funcion no existe")
+        sys.exit()
+        return
+    #print("FUNCALL1")
 
 def p_funCall3(p):
     '''
     funCall3 :
     '''
-    print("FUNCALL3")
+    global pArgumentos
+    global pFunciones
+    global currentFunc
+
+    argument = popOperandos()
+    argumentType = popTipos()
+    argumentMem = popMemoria()
+    function = pFunciones.pop()
+    args = pArgumentos.pop() + 1
+
+    pArgumentos.append(args)
+    parametro = 'param' + str(args)
+
+    Func_Parameters = functionDirectory.directorio_funciones[function]['numParams']
+
+    lista = functionDirectory.listaTipos(function)  ######PENDIENTE
+
+    if Func_Parameters >= args:
+        if lista[args - 1] == argumentType:
+            QuadGenerate('PARAMETER', argumentMem, '', parametro)
+        else:
+            print("Error: Parametros incorrectos")
+    else:
+        print("Error, muchos argumentos")
+        sys.exit()
+
+    pFunciones.append(function)
+    #print("FUNCALL3")
 
 def p_funCall5(p):
     '''
     funCall5 :
     '''
-    print("FUNCALL5")
+    global isVoid
+    global pFunciones
+    global pArgumentos
+
+    args = pArgumentos.pop()
+    funcion = pFunciones.pop()
+
+    # Verify that the last parameter points to null
+    if args == functionDirectory.directorio_funciones[funcion]['numParams']:
+        quadStartFunc = functionDirectory.directorio_funciones[funcion]['numQuads']
+
+        # Generate action GOSUB, procedure-name, '', initial address
+        QuadGenerate('GOSUB', funcion, nextQuad() + 1, quadStartFunc)
+
+    else:
+        print("Error: Mismatch de Argumentos")
+        sys.exit()
+        # FIXME:resultE
+
+    tipo = functionDirectory.directorio_funciones[funcion]['tipo']
+    if tipo != 'void':
+        quad_resultIndex = nextAvailTemp(tipo)
+        QuadGenerate('=', funcion, '', quad_resultIndex)
+        pushOperando(quad_resultIndex)
+        pushMemoria(quad_resultIndex)
+        pushTipo(tipo)
+    #print("FUNCALL5")
 
 
+### PRODUCCIONES PARA GENERAR CUADRUPLOS DE FUNCIONALIDADES EXTRA
 def p_funEsp1(p):
     '''
     funEsp1 :
     '''
-    print("FUNESP1")
+    pFunciones.append(str(p[-1]))
+    #print("FUNESP1")
+
 
 def p_funEsp2(p):
     '''
     funEsp2 :
     '''
-    print("FUNESP2")
+    global pFunciones
+
+    funName = pFunciones.pop()
+
+    indice2 = popOperandos()
+    indiceTipo2 = popTipos()
+    indiceMem2 = popMemoria()
+
+    indice1 = popOperandos()
+    indiceTipo1 = popTipos()
+    indiceMem1 = popMemoria()
+
+    dfName = popOperandos()
+    dfTipo = popTipos()
+    dfMem = popMemoria()
+
+    if (indiceTipo1 != 'int' or indiceTipo2 != 'int'):
+        sys.exit("Error en Funcion especial: {}".format(funName))
+
+    if (dfTipo == 'string' or dfTipo == 'char'):
+        sys.exit(
+            "Error en Funcion especial: {} . El tipo del primer parametro no es dataframe o arreglo de enteros o flotantes.".format(
+                funName))
+
+    temporal = nextAvailTemp('float')
+    tempTipo = 'float'
+    indice1 = indice1 - 1
+    indice2 = indice2 - 1
+
+    indices = '%' + str(indice1) + '#' + str(indice2)
+
+    QuadGenerate(funName, dfMem, indices, temporal)
+    pushOperando(temporal)
+    pushTipo(tempTipo)
+    pushMemoria(temporal)
+    #print("FUNESP2")
 
 def p_funEsp3(p):
     '''
     funEsp3 :
     '''
-    print("FUNESP3")
+    global pFunciones
+
+    funName = pFunciones.pop()
+
+    indice2 = popOperandos()
+    indiceTipo2 = popTipos()
+    indiceMem2 = popMemoria()
+
+    indice1 = popOperandos()
+    indiceTipo1 = popTipos()
+    indiceMem1 = popMemoria()
+
+    dfName2 = popOperandos()
+    dfTipo2 = popTipos()
+    dfMem2 = popMemoria()
+
+    dfName1 = popOperandos()
+    dfTipo1 = popTipos()
+    dfMem1 = popMemoria()
+
+    if (indiceTipo1 == 'int' and indiceTipo2 == 'int'):
+        if (dfTipo1 == 'dataframe' and dfTipo2 == 'dataframe'):
+            temporal = nextAvailTemp('float')
+            tempTipo = 'float'
+
+            dfs = "%" + str(dfMem1) + "#" + str(dfMem2)
+            indxs = "%" + str(int(indice1) - 1) + "#" + str(int(indice2) - 1)
+
+            QuadGenerate('correlacion', dfs, indxs, temporal)
+
+            pushOperando(temporal)
+            pushTipo(tempTipo)
+            pushMemoria(temporal)
+        else:
+            sys.exit("Error en Funcion Especial Correlaciona. Los primeros dos parametros no son dataframes")
+    else:
+        sys.exit("Error en Funcion Especial Correlaciona. Los indices deben ser enteros")
+
+    #print("FUNESP3")
 
 def p_funEspVoid1(p):
     '''
     pnFunEspVoid1 :
     '''
-    print("FUNESPVOID1")
+    #print("FUNESPVOID1")
+
+    funName = pFunciones.pop()
+
+    parName3 = popOperandos()
+    parTipo3 = popTipos()
+    parMem3 = popMemoria()
+
+    parName2 = popOperandos()
+    parTipo2 = popTipos()
+    parMem2 = popMemoria()
+
+    parName1 = popOperandos()
+    parTipo1 = popTipos()
+    parMem1 = popMemoria()
+
+    if (funName == 'histograma'):
+        if (parTipo1 == 'dataframe' or parTipo1 == 'int' or parTipo1 == 'float'):
+            if (parTipo2 == 'int' and parTipo3 == 'int'):
+                QuadGenerate("histograma", parMem1, int(parName2) - 1, int(parName3) - 1)
+            else:
+                sys.exit(
+                    "Error en Funciones Especiales Void (Histograma). El tipo del segundo y tercer parametro debe ser int.")
+        else:
+            sys.exit(
+                "Error en Funciones Especiales Void (Histograma). El tipo del primer parametro debe ser dataframe, int o float.")
+    elif (funName == 'plotline'):
+        if ((parTipo1 == 'dataframe' or parTipo1 == 'int' or parTipo1 == 'float') and (
+                parTipo2 == 'dataframe' or parTipo2 == 'int' or parTipo2 == 'float') and (parTipo1 == parTipo2)):
+            if (parTipo3 == 'int'):
+                QuadGenerate("plotline", parMem1, parMem2, parMem3)
+            else:
+                sys.exit("Error en Funciones Especiales Void (Plotline). El tipo del tercer parametro debe ser entera")
+
+        else:
+            sys.exit(
+                "Error en Funciones Especiales Void (Plotline). El tipo del primer y segundo parametro debe ser dataframe o constante entera o flotante")
+
+
+### Producciones para puntos neurálgicos de constantes
 
 def p_neg(p):
     '''
     neg :
     '''
-    print("NEG")
+    global negativo
+    negativo = True
+    #print("NEG")
 
 def p_cteInt(p):
     '''
     cteInt :
     '''
-    print("CTEINT")
+    if negativo:
+        pushConstante(-1 * p[-1])
+    else:
+        pushConstante(p[-1])
+    #print("CTEINT")
 
 def p_cteFloat(p):
     '''
     cteFloat :
     '''
-    print("CTEFLOAT")
+    if negativo:
+        pushConstante(-1 * p[-1])
+    else:
+        pushConstante(p[-1])
+    #print("CTEFLOAT")
 
 def p_cteChar(p):
     '''
     cteChar :
     '''
-    print("CTECHAR")
+    pushConstante(p[-1])
+    #print("CTECHAR")
 
 def p_cteStr(p):
     '''
     cteStr :
     '''
-    print("CTESTR")
+    print("p-1 : ", p[-1])
+    pushConstante(p[-1])
+    #print("CTESTR")
 
+
+## Producciones para puntos neurálgicos de EXPRESIONES
 def p_pExp1(p):
     '''
     pExp1 :
     '''
-    print("PEXP1")
+    global currentFunc
+    global functionDirectory
+    global pOperandos
+    global pTipos
+    global forBool
+    global varFor
+    global isArray
+    global currentVarName
+
+    idName = p[-1]
+    idType = functionDirectory.searchVarType(currentFunc, idName)
+    if not idType:  # Si no la encuentra en el contexto actual, cambia de contexto a Tipos
+        idType = functionDirectory.searchVarType(GLOB, idName)
+        print("Ahora busca la variable en el contexto Global ")
+
+    if not idType:
+        print("Error: Variable ", idName, " no declarada")
+        return
+
+    varPosMem = functionDirectory.funcMemory(currentFunc, idName)
+    if not varPosMem:
+        varPosMem = functionDirectory.funcMemory(GLOB, idName)
+
+    if varPosMem < 0:
+        print("Error: Variable ", idName, " no declarada")
+        return
+
+    if forBool:
+        varFor = idName
+
+    isDim = functionDirectory.isDimensionadaVar(currentFunc, idName)
+
+    print("Exp1, DIMENSIONADA: ", isDim)
+
+    if isDim == -1:  # sigfinica que no esta en este contexto
+        isDim = functionDirectory.isDimensionadaVar(GLOB, idName)
+
+    if isDim == 1:
+        isArray = True
+        currentVarName = idName
+    elif isDim == 0:
+        isArray = False
+    else:
+        isArray = False
+        sys.exit("Error. No se ha declarado la variable : ", idName)
+        return
+
+    pushOperando(idName)
+    pushMemoria(varPosMem)
+    pushTipo(idType)
+
+    print("\n")
+    #print("PEXP1")
 
 def p_exp2(p):
     '''
     exp2 :
     '''
-    print("EXP2")
+    global pOper
+
+    if p[-1] not in OP_SUM_RES:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
+    #print("EXP2")
 
 def p_exp3(p):
     '''
     exp3 :
     '''
+    global pOper
+
+    if p[-1] not in OP_MUL_DIV:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
     print("EXP3")
 
 def p_exp4(p):
     '''
     exp4 :
     '''
-    print("EXP4")
+    if topOperador() in OP_SUM_RES:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_leftOperand = popOperandos()
+        quad_leftMem = popMemoria()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if quad_resultType == 'error':
+            errorTypeMismatch()
+        else:
+            quad_resultIndex = nextAvailTemp(quad_resultType)
+            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
+            pushOperando(quad_resultIndex)
+            pushMemoria(quad_resultIndex)
+            pushTipo(quad_resultType)
+    #print("EXP4")
 
 def p_exp5(p):
     '''
     exp5 :
     '''
-    print("EXP5")
+    if topOperador() in OP_MUL_DIV:
+
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_leftOperand = popOperandos()
+        quad_leftMem = popMemoria()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if quad_resultType == 'error':
+            print('Error: Type Mismatch')
+        else:
+            quad_resultIndex = nextAvailTemp(quad_resultType)
+            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
+            pushOperando(quad_resultIndex)
+            pushMemoria(quad_resultIndex)
+            pushTipo(quad_resultType)
+    #print("EXP5")
 
 def p_exp6(p):
     '''
     exp6 :
     '''
-    print("EXP6")
+    global pOper
+    pushOperador('(')
+    print("pushOperador: '('")
+    #print("EXP6")
 
 def p_exp7(p):
     '''
     exp7 :
     '''
-    print("EXP7")
+    tipo = popOperadores()
+    print("Quita fondo Falso ')'")
+    #print("EXP7")
 
 def p_exp8(p):
     '''
     exp8 :
     '''
-    print("EXP8")
+    global popOperadores
+    if p[-1] not in OP_REL:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
+    #print("EXP8")
 
 def p_exp9(p):
     '''
     exp9 :
     '''
-    print("EXP9")
+    if topOperador() in OP_REL:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_leftOperand = popOperandos()
+        quad_leftMem = popMemoria()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if quad_resultType == 'error':
+            print('Error: Type Mismatch')
+        else:
+            quad_resultIndex = nextAvailTemp(quad_resultType)
+            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
+            pushOperando(quad_resultIndex)
+            pushMemoria(quad_resultIndex)
+            pushTipo(quad_resultType)
+
+    #print("EXP9")
 
 def p_exp10(p):
     '''
     exp10 :
     '''
-    print("EXP10")
+    global pOper
+    if p[-1] not in OP_LOGICOS:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
+    #print("EXP10")
 
 def p_exp11(p):
     '''
     exp11 :
     '''
-    print("EXP11")
+    if topOperador() in OP_LOGICOS:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_leftOperand = popOperandos()
+        quad_leftMem = popMemoria()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if quad_resultType == 'error':
+            print('Error: Type Mismatch')
+        else:
+            quad_resultIndex = nextAvailTemp(quad_resultType)
+            QuadGenerate(quad_operator, quad_leftMem, quad_rightMem, quad_resultIndex)
+            pushOperando(quad_resultIndex)
+            pushMemoria(quad_resultIndex)
+            pushTipo(quad_resultType)
+    #print("EXP11")
 
 def p_sec1(p):
     '''
     sec1 :
     '''
-    print("SEC1")
+    global pOper
+    if p[-1] not in OP_ASIG:
+        print("Error: Operador no esperado")
+    else:
+        pushOperador(p[-1])
+    #print("SEC1")
 
 def p_sec2(p):
     '''
     sec2 :
     '''
-    print("SEC2")
+    if topOperador() in OP_ASIG:
+        quad_rightOperand = popOperandos()
+        quad_rightType = popTipos()
+        quad_rightMem = popMemoria()
+        quad_leftOperand = popOperandos()
+        quad_leftMem = popMemoria()
+        quad_leftType = popTipos()
+        quad_operator = popOperadores()
+
+        global semCube
+        global functionDirectory
+
+        quad_resultType = semCube.getType(quad_leftType, quad_rightType, quad_operator)
+
+        if functionDirectory.varExist(currentFunc, quad_leftOperand) or functionDirectory.varExist(GLOB, quad_leftOperand):
+            if quad_resultType == 'error':
+                print("Error: Operacion invalida")
+            else:
+                QuadGenerate(quad_operator, quad_rightMem, '', quad_leftMem)
+        else:
+            print("Error al intentar asignar una variable")
+    #print("SEC2")
 
 def p_sec3(p):
     '''
